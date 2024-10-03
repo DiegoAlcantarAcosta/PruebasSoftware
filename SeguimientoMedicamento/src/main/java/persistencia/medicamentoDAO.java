@@ -10,6 +10,7 @@ import entidades.Medicamento;
 import interfaces.IMedicamentoDAO;
 import excepciones.PersistenciaExcepcion;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -40,7 +41,7 @@ public class medicamentoDAO implements IMedicamentoDAO {
             em.close();
         }
     }
-    
+
     @Override
     public Medicamento obtener(String nombre) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
@@ -50,14 +51,17 @@ public class medicamentoDAO implements IMedicamentoDAO {
             Medicamento medicamento = em.createQuery("SELECT m FROM Medicamento m WHERE m.nombre = :nombre", Medicamento.class)
                     .setParameter("nombre", nombre)
                     .getSingleResult();
-
             em.getTransaction().commit();
             return medicamento;
+        } catch (NoResultException e) {
+            em.getTransaction().rollback();
+            throw new PersistenciaExcepcion("No se encontró ningún medicamento con el nombre: " + nombre, e);
         } catch (Exception e) {
             em.getTransaction().rollback();
+            e.printStackTrace();
+            throw new PersistenciaExcepcion("Error al obtener el medicamento", e);
         } finally {
             em.close();
-            return null;
         }
     }
 
@@ -84,19 +88,23 @@ public class medicamentoDAO implements IMedicamentoDAO {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
         try {
-            Medicamento medicamentoBuscado = em.find(Medicamento.class, 1);
-        em.remove(medicamentoBuscado);
-        em.getTransaction().commit();
-        return true;
+            Medicamento medicamentoBuscado = em.find(Medicamento.class, medicamento.getId());
+
+            if (medicamentoBuscado != null) {
+                em.remove(medicamentoBuscado);
+                em.getTransaction().commit();
+                return true;
+            } else {
+                em.getTransaction().rollback();
+                throw new PersistenciaExcepcion("El medicamento no fue encontrado para eliminar.");
+            }
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
-            throw e;
-        }finally {
+            throw new PersistenciaExcepcion("Error al eliminar el medicamento", e);
+        } finally {
             em.close();
         }
     }
-
-    
 
 }

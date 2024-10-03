@@ -1,3 +1,5 @@
+package test;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
@@ -46,17 +48,17 @@ public class TestMetodos {
         assertEquals(true, resultado);
     }
     
-    /*@Test
+    @Test
     public void testObtenerMedicamento() throws PersistenciaExcepcion {
         medicamentoDAO medicamentoDAO=new medicamentoDAO();
-        Medicamento medicamento=medicamentoDAO.obtener("Ibuprofeno");
-        assertEquals( "Ibuprofeno", medicamento.getNombre());
+        Medicamento medicamento=medicamentoDAO.obtener("mitroson");
+        assertEquals( "mitroson", medicamento.getNombre());
     }
     
     @Test
     public void testEditarMedicamento() throws PersistenciaExcepcion {
         medicamentoDAO medicamentoDAO=new medicamentoDAO();
-        Medicamento medicamento=medicamentoDAO.obtener("Ibuprofeno");
+        Medicamento medicamento=medicamentoDAO.obtener("mitroson");
         medicamento.setNombre("OtroNombre");
         boolean resultado=medicamentoDAO.editar(medicamento);
         assertEquals( true, resultado);
@@ -65,16 +67,9 @@ public class TestMetodos {
     @Test
     public void testEliminarMedicamento() throws PersistenciaExcepcion {
         medicamentoDAO medicamentoDAO=new medicamentoDAO();
-        Medicamento medicamento=medicamentoDAO.obtener("OtroNombre");
+        Medicamento medicamento=medicamentoDAO.obtener("simon");
         boolean resultado=medicamentoDAO.eliminar(medicamento);
         assertEquals( true, resultado);
-    }*/
-    
-    
+    }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

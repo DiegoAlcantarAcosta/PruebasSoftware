@@ -1,4 +1,5 @@
 persistencia\registroDAO.class
+test\Main.class
 entidades\Medicamento_.class
 conexionEM\IConexion.class
 persistencia\medicamentoDAO.class

@@ -43,8 +43,27 @@ public class Medicamento implements Serializable {
     @Column (name = "cantidad", nullable = false)
     int cantidad;
 
-    @OneToMany(mappedBy = "jugador",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "IdMedicamento",cascade = CascadeType.ALL)
     private List<Registro> lista;
+
+    public Medicamento(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad, List<Registro> lista) {
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
+        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.cantidad = cantidad;
+        this.lista = lista;
+    }
+
+    public Medicamento(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
+        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.cantidad = cantidad;
+    }
+    
+    
     
     public Medicamento(Long id, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
         this.id = id;

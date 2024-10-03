@@ -5,6 +5,8 @@
 
 package entidades;
 
+import test.Pruebas;
+
 /**
  *
  * @author haloa
@@ -12,6 +14,8 @@ package entidades;
 public class SeguimientoMedicamento {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Pruebas pruebasxd = new Pruebas();
+        
+        pruebasxd.pruebasxd();
     }
 }

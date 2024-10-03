@@ -24,9 +24,6 @@ public class Registro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column (name = "medicamento", nullable = false)
-    Medicamento medicamento;
-    
     @Column (name = "horaConsumo", nullable = false)
     Date horaConsumo;
     
@@ -39,9 +36,17 @@ public class Registro implements Serializable {
     @JoinColumn (name = "id_medicamento", nullable = false)
     private Medicamento IdMedicamento;
 
+    public Registro(Medicamento medicamento, Date horaConsumo, int cantidadConsumo, boolean tomado, Medicamento IdMedicamento) {
+        this.horaConsumo = horaConsumo;
+        this.cantidadConsumo = cantidadConsumo;
+        this.tomado = tomado;
+        this.IdMedicamento = IdMedicamento;
+    }
+
+    
+    
     public Registro(Long id, Medicamento medicamento, Date horaConsumo, int cantidadConsumo, boolean tomado, Medicamento IdMedicamento) {
         this.id = id;
-        this.medicamento = medicamento;
         this.horaConsumo = horaConsumo;
         this.cantidadConsumo = cantidadConsumo;
         this.tomado = tomado;
@@ -51,13 +56,6 @@ public class Registro implements Serializable {
     public Registro() {
     }
 
-    public Medicamento getMedicamento() {
-        return medicamento;
-    }
-
-    public void setMedicamento(Medicamento medicamento) {
-        this.medicamento = medicamento;
-    }
 
     public Date getHoraConsumo() {
         return horaConsumo;

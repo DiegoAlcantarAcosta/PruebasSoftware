@@ -31,14 +31,33 @@ public class medicamentoDAO implements IMedicamentoDAO {
         try {
             em.persist(medicamento);
             em.getTransaction().commit();
-
             return true;
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
-            throw e;
+            throw new PersistenciaExcepcion("Error al agregar el medicamento", e);
         } finally {
             em.close();
+        }
+    }
+    
+    @Override
+    public Medicamento obtener(String nombre) throws PersistenciaExcepcion {
+        EntityManager em = conexion.abrir();
+        em.getTransaction().begin();
+
+        try {
+            Medicamento medicamento = em.createQuery("SELECT m FROM Medicamento m WHERE m.nombre = :nombre", Medicamento.class)
+                    .setParameter("nombre", nombre)
+                    .getSingleResult();
+
+            em.getTransaction().commit();
+            return medicamento;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+            return null;
         }
     }
 
@@ -77,5 +96,7 @@ public class medicamentoDAO implements IMedicamentoDAO {
             em.close();
         }
     }
+
+    
 
 }

@@ -91,9 +91,6 @@ public class Registro implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "entidades.RegistroEntity[ id=" + id + " ]";
-    }
+   
 
 }

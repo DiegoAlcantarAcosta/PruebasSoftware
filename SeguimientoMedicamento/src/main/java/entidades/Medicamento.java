@@ -17,11 +17,10 @@ import javax.persistence.Table;
 
 /**
  *
- * @author haloa
+ * @author USER
  */
 @Entity
 @Table(name = "Medicamento")
-
 public class Medicamento implements Serializable {
     
     @Id
@@ -46,27 +45,7 @@ public class Medicamento implements Serializable {
     @OneToMany(mappedBy = "IdMedicamento",cascade = CascadeType.ALL)
     private List<Registro> lista;
 
-    public Medicamento(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad, List<Registro> lista) {
-        this.nombre = nombre;
-        this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
-        this.tipoConsumo = tipoConsumo;
-        this.cantidad = cantidad;
-        this.lista = lista;
-    }
-
     public Medicamento(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
-        this.nombre = nombre;
-        this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
-        this.tipoConsumo = tipoConsumo;
-        this.cantidad = cantidad;
-    }
-    
-    
-    
-    public Medicamento(Long id, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
-        this.id = id;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
         this.horaPrimeraDosis = horaPrimeraDosis;
@@ -76,8 +55,25 @@ public class Medicamento implements Serializable {
 
     public Medicamento() {
     }
+
+    public Medicamento(Long id, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
+        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.cantidad = cantidad;
+    }
     
     
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -119,17 +115,14 @@ public class Medicamento implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public Long getId() {
-        return id;
+    public List<Registro> getLista() {
+        return lista;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLista(List<Registro> lista) {
+        this.lista = lista;
     }
-
-    @Override
-    public String toString() {
-        return "entidades.MedicamentoEntity[ id=" + id + " ]";
-    }
-
+    
+   
+    
 }

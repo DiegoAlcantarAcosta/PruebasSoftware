@@ -1,11 +1,12 @@
-entidades\Medicamento.class
-entidades\Registro_.class
 persistencia\registroDAO.class
 entidades\Medicamento_.class
 conexionEM\IConexion.class
-entidades\SeguimientoMedicamento.class
-excepciones\PersistenciaExcepcion.class
+persistencia\medicamentoDAO.class
+test\Pruebas.class
 interfaces\IMedicamentoDAO.class
 entidades\Registro.class
 conexionEM\Conexion.class
+entidades\Medicamento.class
+entidades\Registro_.class
+excepciones\PersistenciaExcepcion.class
 interfaces\IRegistroDAO.class

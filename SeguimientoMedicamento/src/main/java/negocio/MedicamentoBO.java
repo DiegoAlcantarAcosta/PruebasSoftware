@@ -52,12 +52,26 @@ public class MedicamentoBO implements IMedicamentoBO {
 
     @Override
     public boolean EditarMedicamento(MedicamentoDTO medicamentoDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if(medicamentoDAO.editar(DTOaEntity(medicamentoDTO))){
+                return true;
+            }
+        } catch (PersistenciaExcepcion ex) {
+            Logger.getLogger(MedicamentoBO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
     public boolean EliminarMedicamento(MedicamentoDTO medicamentoDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            if(medicamentoDAO.eliminar(DTOaEntity(medicamentoDTO))){
+                return true;
+            }
+        } catch (PersistenciaExcepcion ex) {
+            Logger.getLogger(MedicamentoBO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override

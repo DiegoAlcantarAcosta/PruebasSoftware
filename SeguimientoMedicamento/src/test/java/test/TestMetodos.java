@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import persistencia.medicamentoDAO;
+import persistencia.MedicamentoDAO;
 
 /**
  *
@@ -42,7 +42,7 @@ public class TestMetodos {
     
     @Test
     public void testAgregarMedicamento() throws PersistenciaExcepcion {
-        medicamentoDAO medicamentoDAO=new medicamentoDAO();
+        MedicamentoDAO medicamentoDAO=new MedicamentoDAO();
         Medicamento medicamento = new Medicamento("Ibuprofeno", 1.0f, 1.0d, "Oral", 1);
         boolean resultado=medicamentoDAO.agregar(medicamento);
         assertEquals(true, resultado);
@@ -50,14 +50,14 @@ public class TestMetodos {
     
     @Test
     public void testObtenerMedicamento() throws PersistenciaExcepcion {
-        medicamentoDAO medicamentoDAO=new medicamentoDAO();
+        MedicamentoDAO medicamentoDAO=new MedicamentoDAO();
         Medicamento medicamento=medicamentoDAO.obtener("mitroson");
         assertEquals( "mitroson", medicamento.getNombre());
     }
     
     @Test
     public void testEditarMedicamento() throws PersistenciaExcepcion {
-        medicamentoDAO medicamentoDAO=new medicamentoDAO();
+        MedicamentoDAO medicamentoDAO=new MedicamentoDAO();
         Medicamento medicamento=medicamentoDAO.obtener("mitroson");
         medicamento.setNombre("OtroNombre");
         boolean resultado=medicamentoDAO.editar(medicamento);
@@ -66,7 +66,7 @@ public class TestMetodos {
     
     @Test
     public void testEliminarMedicamento() throws PersistenciaExcepcion {
-        medicamentoDAO medicamentoDAO=new medicamentoDAO();
+        MedicamentoDAO medicamentoDAO=new MedicamentoDAO();
         Medicamento medicamento=medicamentoDAO.obtener("simon");
         boolean resultado=medicamentoDAO.eliminar(medicamento);
         assertEquals( true, resultado);

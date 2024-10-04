@@ -1,20 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
-/**
- *
- * @author ITSON
- */
+import dto.MedicamentoDTO;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import negocio.MedicamentoBO;
+
 public class FormEditarMedicamento extends javax.swing.JFrame {
+
+    private String flujo;
+    private MedicamentoBO medicamentoBO;
+    private MedicamentoDTO medicamentoDTO;
 
     /**
      * Creates new form FormEditarMedicamento
      */
-    public FormEditarMedicamento() {
+    public FormEditarMedicamento(String flujo, MedicamentoDTO medicamentoDTO) {
         initComponents();
+        this.flujo = flujo;
+        this.medicamentoDTO = medicamentoDTO;
+        medicamentoBO = new MedicamentoBO();
+
+        txtNombre.setText(medicamentoDTO.getNombre());
+        cbxTipoConsumo.setSelectedItem(medicamentoDTO.getTipoConsumo());
+        txtCantidad.setText("" + medicamentoDTO.getCantidad());
+        txtFrecuencia.setText("" + medicamentoDTO.getFrecuencia());
+        txtPrimeraDosis.setText("" + medicamentoDTO.getHoraPrimeraDosis());
     }
 
     /**
@@ -28,8 +38,19 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
 
         panFondo4 = new javax.swing.JPanel();
         labelTitulo4 = new javax.swing.JLabel();
-        btnRegresar4 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         labelTitulo5 = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        labelTipoCosumo = new javax.swing.JLabel();
+        cbxTipoConsumo = new javax.swing.JComboBox<>();
+        labelCantidad = new javax.swing.JLabel();
+        txtCantidad = new javax.swing.JTextField();
+        labelFrecuencia = new javax.swing.JLabel();
+        txtFrecuencia = new javax.swing.JTextField();
+        labelPrimeraDosis = new javax.swing.JLabel();
+        txtPrimeraDosis = new javax.swing.JTextField();
+        btnRegresar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,32 +59,100 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         labelTitulo4.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         labelTitulo4.setText("Increible Sistema de Toma de Medicamentos");
 
-        btnRegresar4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        btnRegresar4.setText("Regresar");
-        btnRegresar4.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresar4ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
 
         labelTitulo5.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelTitulo5.setText("Editar Medicamento");
 
+        labelNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelNombre.setText("Nombre:");
+
+        txtNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        labelTipoCosumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelTipoCosumo.setText("Tipo de Consumo:");
+
+        cbxTipoConsumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        cbxTipoConsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tableta", "Jarabe" }));
+
+        labelCantidad.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelCantidad.setText("Cantidad:");
+
+        txtCantidad.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
+
+        labelFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelFrecuencia.setText("Frecuencia:");
+
+        txtFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtFrecuencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFrecuenciaKeyTyped(evt);
+            }
+        });
+
+        labelPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelPrimeraDosis.setText("Hora de Primera Dosis:");
+
+        txtPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtPrimeraDosis.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrimeraDosisKeyTyped(evt);
+            }
+        });
+
+        btnRegresar1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        btnRegresar1.setText("Editar Medicamento");
+        btnRegresar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panFondo4Layout = new javax.swing.GroupLayout(panFondo4);
         panFondo4.setLayout(panFondo4Layout);
         panFondo4Layout.setHorizontalGroup(
             panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panFondo4Layout.createSequentialGroup()
-                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panFondo4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnRegresar4))
+                        .addComponent(btnRegresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegresar1))
                     .addGroup(panFondo4Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelTitulo5)
                             .addComponent(labelTitulo4))))
                 .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panFondo4Layout.createSequentialGroup()
+                    .addGap(14, 14, 14)
+                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(labelNombre)
+                        .addComponent(labelTipoCosumo)
+                        .addComponent(labelCantidad)
+                        .addComponent(labelFrecuencia)
+                        .addComponent(labelPrimeraDosis))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNombre)
+                        .addComponent(txtFrecuencia, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                        .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                        .addComponent(cbxTipoConsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
+                    .addContainerGap(15, Short.MAX_VALUE)))
         );
         panFondo4Layout.setVerticalGroup(
             panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,8 +162,33 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
-                .addComponent(btnRegresar4)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar)
+                    .addComponent(btnRegresar1))
                 .addContainerGap())
+            .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panFondo4Layout.createSequentialGroup()
+                    .addGap(89, 89, 89)
+                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelNombre)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelTipoCosumo)
+                        .addComponent(cbxTipoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelCantidad)
+                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(90, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -89,18 +203,74 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegresar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar4ActionPerformed
-        FormInicio formInicio = new FormInicio();
-        formInicio.setVisible(true);
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+        formObtenerMedicamento.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnRegresar4ActionPerformed
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void txtFrecuenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFrecuenciaKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtFrecuenciaKeyTyped
+
+    private void txtPrimeraDosisKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimeraDosisKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrimeraDosisKeyTyped
+
+    private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
+        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty() || txtPrimeraDosis.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            MedicamentoDTO medicamentoNuevoDTO = new MedicamentoDTO(
+                    txtNombre.getText(),
+                    Double.parseDouble(txtFrecuencia.getText()),
+                    Double.parseDouble(txtPrimeraDosis.getText()),
+                    cbxTipoConsumo.getSelectedItem().toString(),
+                    Integer.parseInt(txtCantidad.getText())
+            );
+
+            if (medicamentoBO.EditarMedicamento(medicamentoNuevoDTO)) {
+                JOptionPane.showMessageDialog(null, "¡Medicamento Editado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+                formObtenerMedicamento.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo Editar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnRegresar1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegresar4;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnRegresar1;
+    private javax.swing.JComboBox<String> cbxTipoConsumo;
+    private javax.swing.JLabel labelCantidad;
+    private javax.swing.JLabel labelFrecuencia;
+    private javax.swing.JLabel labelNombre;
+    private javax.swing.JLabel labelPrimeraDosis;
+    private javax.swing.JLabel labelTipoCosumo;
     private javax.swing.JLabel labelTitulo4;
     private javax.swing.JLabel labelTitulo5;
     private javax.swing.JPanel panFondo4;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtFrecuencia;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPrimeraDosis;
     // End of variables declaration//GEN-END:variables
 }

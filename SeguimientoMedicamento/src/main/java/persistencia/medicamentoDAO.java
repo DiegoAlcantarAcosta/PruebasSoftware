@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package persistencia;
 
 import conexionEM.Conexion;
@@ -12,15 +8,11 @@ import excepciones.PersistenciaExcepcion;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
-/**
- *
- * @author haloa
- */
-public class medicamentoDAO implements IMedicamentoDAO {
+public class MedicamentoDAO implements IMedicamentoDAO {
 
     private final IConexion conexion;
 
-    public medicamentoDAO() {
+    public MedicamentoDAO() {
         conexion = new Conexion();
     }
 

@@ -1,20 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
-/**
- *
- * @author ITSON
- */
+import dto.MedicamentoDTO;
+import dto.RegistroDTO;
+import javax.swing.JOptionPane;
+import negocio.RegistroBO;
+
 public class FormTomarMedicamento extends javax.swing.JFrame {
 
+    private String flujo;
+    private MedicamentoDTO medicamentoDTO;
+    private RegistroDTO registroDTO;
+    private RegistroBO registroBo;
+    
     /**
      * Creates new form FormTomarMedicamento
      */
-    public FormTomarMedicamento() {
+    public FormTomarMedicamento(String flujo, MedicamentoDTO medicamentoDTO) {
+        //papus aqui el gomez del pasado, no entiendo bien como tienen en mente hacer esto del registro.
+        //si le mueven para que jale, es probable que el codigo puesto aqui funcione
+        //ya depende de que tanto muevan Nyejejejeje ahi se las arreglan ando con la natasha salu2
         initComponents();
+        this.flujo = flujo;
+        this.medicamentoDTO = medicamentoDTO;
+        registroBo = new RegistroBO();
+        
+        labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
+        labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
+        labelCantidad.setText("Cantidad: "+medicamentoDTO.getCantidad());
+        labelFrecuencia.setText("Frecuencia: "+medicamentoDTO.getFrecuencia());
+        labelPrimeraDosis.setText("Hora de Primera Dosis: "+medicamentoDTO.getHoraPrimeraDosis());
     }
 
     /**
@@ -30,6 +44,14 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
         labelTitulo = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         labelTitulo1 = new javax.swing.JLabel();
+        labelPrimeraDosis = new javax.swing.JLabel();
+        labelFrecuencia = new javax.swing.JLabel();
+        labelCantidad = new javax.swing.JLabel();
+        labelTipoConsumo = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JLabel();
+        labelTitulo2 = new javax.swing.JLabel();
+        btnRegresar1 = new javax.swing.JButton();
+        labelTitulo3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,20 +71,65 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
         labelTitulo1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelTitulo1.setText("Tomar Medicamento");
 
+        labelPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelPrimeraDosis.setText("Hora de Primera Dosis:");
+
+        labelFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelFrecuencia.setText("Frecuencia:");
+
+        labelCantidad.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelCantidad.setText("Cantidad:");
+
+        labelTipoConsumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelTipoConsumo.setText("Tipo de Consumo:");
+
+        labelNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelNombre.setText("Nombre:");
+
+        labelTitulo2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        labelTitulo2.setText("¿Quieres marcar como tomado este");
+
+        btnRegresar1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        btnRegresar1.setText("Marcar Medicamento como Tomado");
+        btnRegresar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresar1ActionPerformed(evt);
+            }
+        });
+
+        labelTitulo3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        labelTitulo3.setText("Medicamento?");
+
         javax.swing.GroupLayout panFondoLayout = new javax.swing.GroupLayout(panFondo);
         panFondo.setLayout(panFondoLayout);
         panFondoLayout.setHorizontalGroup(
             panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panFondoLayout.createSequentialGroup()
                 .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panFondoLayout.createSequentialGroup()
+                            .addGap(14, 14, 14)
+                            .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelTitulo1)
+                                .addComponent(labelTitulo)
+                                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(labelNombre)
+                                    .addComponent(labelTipoConsumo)
+                                    .addComponent(labelCantidad)
+                                    .addComponent(labelFrecuencia)
+                                    .addComponent(labelPrimeraDosis))))
+                        .addGroup(panFondoLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(btnRegresar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegresar1)))
                     .addGroup(panFondoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnRegresar))
-                    .addGroup(panFondoLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGap(52, 52, 52)
                         .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTitulo1)
-                            .addComponent(labelTitulo))))
+                            .addGroup(panFondoLayout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(labelTitulo3))
+                            .addComponent(labelTitulo2))))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         panFondoLayout.setVerticalGroup(
@@ -72,8 +139,24 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
                 .addComponent(labelTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
-                .addComponent(btnRegresar)
+                .addGap(18, 18, 18)
+                .addComponent(labelNombre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTipoConsumo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCantidad)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(labelTitulo2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTitulo3)
+                .addGap(18, 18, 18)
+                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar)
+                    .addComponent(btnRegresar1))
                 .addContainerGap())
         );
 
@@ -89,18 +172,39 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormInicio formInicio = new FormInicio();
-        formInicio.setVisible(true);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+        formObtenerMedicamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
+        if (registroBo.tomaDeMedicamento(registroDTO)){
+            JOptionPane.showMessageDialog(null, "¡Medicamento Tomado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+            formObtenerMedicamento.setVisible(true);
+            this.dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No se pudo Tomar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegresar1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnRegresar1;
+    private javax.swing.JLabel labelCantidad;
+    private javax.swing.JLabel labelFrecuencia;
+    private javax.swing.JLabel labelNombre;
+    private javax.swing.JLabel labelPrimeraDosis;
+    private javax.swing.JLabel labelTipoConsumo;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelTitulo1;
+    private javax.swing.JLabel labelTitulo2;
+    private javax.swing.JLabel labelTitulo3;
     private javax.swing.JPanel panFondo;
     // End of variables declaration//GEN-END:variables
 }

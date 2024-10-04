@@ -4,17 +4,39 @@
  */
 package presentacion;
 
+import dto.MedicamentoDTO;
+import dto.RegistroDTO;
+import negocio.RegistroBO;
+
 /**
  *
  * @author ITSON
  */
 public class FormProximaDosis extends javax.swing.JFrame {
 
+    private String flujo;
+    private MedicamentoDTO medicamentoDTO;
+    private RegistroDTO registroDTO;
+    private RegistroBO registroBo;
+    
     /**
      * Creates new form FormProximaDosis
      */
-    public FormProximaDosis() {
+    public FormProximaDosis(String flujo, MedicamentoDTO medicamentoDTO) {
         initComponents();
+        this.flujo = flujo;
+        this.medicamentoDTO = medicamentoDTO;
+        registroBo = new RegistroBO();
+        
+        labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
+        labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
+        labelCantidad.setText("Cantidad: "+medicamentoDTO.getCantidad());
+        labelFrecuencia.setText("Frecuencia: "+medicamentoDTO.getFrecuencia());
+        labelPrimeraDosis.setText("Hora de Primera Dosis: "+medicamentoDTO.getHoraPrimeraDosis()); 
+        //esta madre tampoco se como la quieren hacer, asi que hice que consultara la ultima toma del medicamento
+        //y le sumara la frecuencia a la que debe de tomar???? relamente este no va a funcionar XD
+        //como dije en el FormTomarMedicamento ahi le buscan q pedo
+        labelProximaDosis.setText(""+(registroBo.consultarUltimaToma(medicamentoDTO)+medicamentoDTO.getFrecuencia()));
     }
 
     /**
@@ -30,6 +52,13 @@ public class FormProximaDosis extends javax.swing.JFrame {
         labelTitulo = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         labelTitulo1 = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JLabel();
+        labelTipoConsumo = new javax.swing.JLabel();
+        labelCantidad = new javax.swing.JLabel();
+        labelFrecuencia = new javax.swing.JLabel();
+        labelPrimeraDosis = new javax.swing.JLabel();
+        labelTitulo2 = new javax.swing.JLabel();
+        labelProximaDosis = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,6 +78,27 @@ public class FormProximaDosis extends javax.swing.JFrame {
         labelTitulo1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelTitulo1.setText("Proxima Dosis");
 
+        labelNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelNombre.setText("Nombre:");
+
+        labelTipoConsumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelTipoConsumo.setText("Tipo de Consumo:");
+
+        labelCantidad.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelCantidad.setText("Cantidad:");
+
+        labelFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelFrecuencia.setText("Frecuencia:");
+
+        labelPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelPrimeraDosis.setText("Hora de Primera Dosis:");
+
+        labelTitulo2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        labelTitulo2.setText("La proxima Dosis sera en:");
+
+        labelProximaDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelProximaDosis.setText("Error! proxima dosis no encontra D:");
+
         javax.swing.GroupLayout panFondoLayout = new javax.swing.GroupLayout(panFondo);
         panFondo.setLayout(panFondoLayout);
         panFondoLayout.setHorizontalGroup(
@@ -62,7 +112,19 @@ public class FormProximaDosis extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelTitulo1)
-                            .addComponent(labelTitulo))))
+                            .addComponent(labelTitulo)
+                            .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(labelNombre)
+                                .addComponent(labelTipoConsumo)
+                                .addComponent(labelCantidad)
+                                .addComponent(labelFrecuencia)
+                                .addComponent(labelPrimeraDosis))))
+                    .addGroup(panFondoLayout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(labelTitulo2))
+                    .addGroup(panFondoLayout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(labelProximaDosis)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         panFondoLayout.setVerticalGroup(
@@ -72,7 +134,21 @@ public class FormProximaDosis extends javax.swing.JFrame {
                 .addComponent(labelTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(labelNombre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTipoConsumo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCantidad)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelProximaDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
                 .addContainerGap())
         );
@@ -89,18 +165,26 @@ public class FormProximaDosis extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormInicio formInicio = new FormInicio();
-        formInicio.setVisible(true);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+        formObtenerMedicamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JLabel labelCantidad;
+    private javax.swing.JLabel labelFrecuencia;
+    private javax.swing.JLabel labelNombre;
+    private javax.swing.JLabel labelPrimeraDosis;
+    private javax.swing.JLabel labelProximaDosis;
+    private javax.swing.JLabel labelTipoConsumo;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelTitulo1;
+    private javax.swing.JLabel labelTitulo2;
     private javax.swing.JPanel panFondo;
     // End of variables declaration//GEN-END:variables
 }

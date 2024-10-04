@@ -1,18 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
-/**
- *
- * @author ITSON
- */
 public class FormInicio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormInicio
-     */
     public FormInicio() {
         initComponents();
     }
@@ -152,6 +141,7 @@ public class FormInicio extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -161,27 +151,43 @@ public class FormInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        FormEliminarMedicamento formEliminarMedicamento = new FormEliminarMedicamento();
-        formEliminarMedicamento.setVisible(true);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Eliminar");
+        formObtenerMedicamento.setVisible(true);
         this.dispose();
+        
+//        FormEliminarMedicamento formEliminarMedicamento = new FormEliminarMedicamento();
+//        formEliminarMedicamento.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        FormEditarMedicamento formEditarMedicamento = new FormEditarMedicamento();
-        formEditarMedicamento.setVisible(true);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Editar");
+        formObtenerMedicamento.setVisible(true);
         this.dispose();
+        
+//        FormEditarMedicamento formEditarMedicamento = new FormEditarMedicamento();
+//        formEditarMedicamento.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnTomarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarActionPerformed
-        FormTomarMedicamento formTomarMedicamento = new FormTomarMedicamento();
-        formTomarMedicamento.setVisible(true);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Tomar");
+        formObtenerMedicamento.setVisible(true);
         this.dispose();
+        
+//        FormTomarMedicamento formTomarMedicamento = new FormTomarMedicamento();
+//        formTomarMedicamento.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_btnTomarActionPerformed
 
     private void btnProximaDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximaDosisActionPerformed
-        FormProximaDosis proxima = new FormProximaDosis();
-        proxima.setVisible(true);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Proxima Dosis");
+        formObtenerMedicamento.setVisible(true);
         this.dispose();
+        
+//        FormProximaDosis proxima = new FormProximaDosis();
+//        proxima.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_btnProximaDosisActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed

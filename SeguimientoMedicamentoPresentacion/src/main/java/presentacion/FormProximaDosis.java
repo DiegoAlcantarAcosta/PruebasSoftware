@@ -1,23 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
+import casoDeUsoProximaDosis.CasoDeUsoProximaDosis;
+import casoDeUsoProximaDosis.CasoDeUsoProximaDosisException;
+import casoDeUsoProximaDosis.ICasoDeUsoProximaDosis;
 import dto.MedicamentoDTO;
 import dto.RegistroDTO;
-import negocio.RegistroBO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author ITSON
- */
 public class FormProximaDosis extends javax.swing.JFrame {
 
     private String flujo;
     private MedicamentoDTO medicamentoDTO;
     private RegistroDTO registroDTO;
-    private RegistroBO registroBo;
+    private ICasoDeUsoProximaDosis casoDeUsoProximaDosis;
     
     /**
      * Creates new form FormProximaDosis
@@ -26,17 +22,21 @@ public class FormProximaDosis extends javax.swing.JFrame {
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
-        registroBo = new RegistroBO();
+        casoDeUsoProximaDosis = new CasoDeUsoProximaDosis();
         
         labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
         labelCantidad.setText("Cantidad: "+medicamentoDTO.getCantidad());
         labelFrecuencia.setText("Frecuencia: "+medicamentoDTO.getFrecuencia());
         labelPrimeraDosis.setText("Hora de Primera Dosis: "+medicamentoDTO.getHoraPrimeraDosis()); 
-        //esta madre tampoco se como la quieren hacer, asi que hice que consultara la ultima toma del medicamento
-        //y le sumara la frecuencia a la que debe de tomar???? relamente este no va a funcionar XD
-        //como dije en el FormTomarMedicamento ahi le buscan q pedo
-        labelProximaDosis.setText(""+(registroBo.consultarUltimaToma(medicamentoDTO)+medicamentoDTO.getFrecuencia()));
+        try {
+            //esta madre tampoco se como la quieren hacer, asi que hice que consultara la ultima toma del medicamento
+            //y le sumara la frecuencia a la que debe de tomar???? relamente este no va a funcionar XD
+            //como dije en el FormTomarMedicamento ahi le buscan q pedo
+            labelProximaDosis.setText(""+(casoDeUsoProximaDosis.consultarUltimaToma(medicamentoDTO)+medicamentoDTO.getFrecuencia()));
+        } catch (CasoDeUsoProximaDosisException ex) {
+            Logger.getLogger(FormProximaDosis.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

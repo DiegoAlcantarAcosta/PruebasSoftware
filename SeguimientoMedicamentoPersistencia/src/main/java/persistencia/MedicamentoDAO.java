@@ -56,8 +56,7 @@ public class MedicamentoDAO implements IMedicamentoDAO {
             em.close();
         }
     }
-
-    @Override
+@Override
     public boolean editar(Medicamento medicamento) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();

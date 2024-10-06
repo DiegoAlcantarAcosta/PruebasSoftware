@@ -2,9 +2,6 @@ package conversor;
 
 import dto.MedicamentoDTO;
 import entidades.Medicamento;
-import excepciones.PersistenciaExcepcion;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Conversor {
 
@@ -33,15 +30,4 @@ public class Conversor {
         );
         return medicamentoDTO;
     }
-    /*public MedicamentoDTO ObtenerMedicamento(String Nombre) {
-        try {
-            Medicamento medicamento = medicamentoDAO.obtener(Nombre);
-            if (medicamento != (null)) {
-                return EntityaDTO(medicamento);
-            }
-        } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }*/
 }

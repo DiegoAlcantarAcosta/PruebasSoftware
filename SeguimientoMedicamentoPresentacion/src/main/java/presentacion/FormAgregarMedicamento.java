@@ -3,7 +3,11 @@ package presentacion;
 import dto.MedicamentoDTO;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import dto.
+import casoDeUsoAgregar.CasoDeUsoAgregar;
+import casoDeUsoAgregar.CasoDeUsoAgregarException;
+import casoDeUsoAgregar.ICasoDeUsoAgregar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FormAgregarMedicamento extends javax.swing.JFrame {
 
@@ -207,14 +211,18 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
                     Integer.parseInt(txtCantidad.getText())
             );
 
-            MedicamentoBO medicamentoBO = new MedicamentoBO();
-            if (medicamentoBO.AgregarMedicamento(medicamentoDTO)) {
-                JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                FormInicio formInicio = new FormInicio();
-                formInicio.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo agregar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            ICasoDeUsoAgregar casoDeUsoAgregar = new CasoDeUsoAgregar();
+            try {
+                if (casoDeUsoAgregar.AgregarMedicamento(medicamentoDTO)) {
+                    JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    FormInicio formInicio = new FormInicio();
+                    formInicio.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo agregar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (CasoDeUsoAgregarException ex) {
+                Logger.getLogger(FormAgregarMedicamento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnAgregarMedicamentoActionPerformed

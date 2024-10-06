@@ -1,14 +1,18 @@
 package presentacion;
 
+import casoDeUsoEditar.CasoDeUsoEditar;
+import casoDeUsoEditar.CasoDeUsoEditarException;
+import casoDeUsoEditar.ICasoDeUsoEditar;
 import dto.MedicamentoDTO;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import negocio.MedicamentoBO;
 
 public class FormEditarMedicamento extends javax.swing.JFrame {
 
     private String flujo;
-    private MedicamentoBO medicamentoBO;
+    private ICasoDeUsoEditar casoDeUsoEditar;
     private MedicamentoDTO medicamentoDTO;
 
     /**
@@ -18,7 +22,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
-        medicamentoBO = new MedicamentoBO();
+        casoDeUsoEditar = new CasoDeUsoEditar();
 
         txtNombre.setText(medicamentoDTO.getNombre());
         cbxTipoConsumo.setSelectedItem(medicamentoDTO.getTipoConsumo());
@@ -79,7 +83,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         labelTipoCosumo.setText("Tipo de Consumo:");
 
         cbxTipoConsumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        cbxTipoConsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tableta", "Jarabe" }));
+        cbxTipoConsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tableta", "mL" }));
 
         labelCantidad.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelCantidad.setText("Cantidad:");
@@ -245,13 +249,17 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
                     Integer.parseInt(txtCantidad.getText())
             );
 
-            if (medicamentoBO.EditarMedicamento(medicamentoNuevoDTO)) {
-                JOptionPane.showMessageDialog(null, "¡Medicamento Editado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
-                formObtenerMedicamento.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo Editar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                if (casoDeUsoEditar.EditarMedicamento(medicamentoNuevoDTO)) {
+                    JOptionPane.showMessageDialog(null, "¡Medicamento Editado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+                    formObtenerMedicamento.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo Editar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (CasoDeUsoEditarException ex) {
+                Logger.getLogger(FormEditarMedicamento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnRegresar1ActionPerformed

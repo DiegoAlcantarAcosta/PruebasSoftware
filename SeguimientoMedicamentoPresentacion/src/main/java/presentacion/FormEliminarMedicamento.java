@@ -1,21 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
+import casoDeUsoEliminar.CasoDeUsoEliminar;
+import casoDeUsoEliminar.CasoDeUsoEliminarException;
+import casoDeUsoEliminar.ICasoDeUsoEliminar;
 import dto.MedicamentoDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import negocio.MedicamentoBO;
 
-/**
- *
- * @author ITSON
- */
 public class FormEliminarMedicamento extends javax.swing.JFrame {
 
     private String flujo;
-    private MedicamentoBO medicamentoBO;
+    private ICasoDeUsoEliminar casoDeUsoEliminar;
     private MedicamentoDTO medicamentoDTO;
     
     /**
@@ -25,7 +21,7 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
-        medicamentoBO = new MedicamentoBO();
+        casoDeUsoEliminar = new CasoDeUsoEliminar();
         
         labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
@@ -188,14 +184,18 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (medicamentoBO.EliminarMedicamento(medicamentoDTO)){
-            JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
-            formObtenerMedicamento.setVisible(true);
-            this.dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "No se pudo Eliminar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (casoDeUsoEliminar.EliminarMedicamento(medicamentoDTO)){
+                JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+                formObtenerMedicamento.setVisible(true);
+                this.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "No se pudo Eliminar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (CasoDeUsoEliminarException ex) {
+            Logger.getLogger(FormEliminarMedicamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 

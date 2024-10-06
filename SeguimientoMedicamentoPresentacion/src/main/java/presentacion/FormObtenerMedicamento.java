@@ -1,13 +1,17 @@
 package presentacion;
 
+import casoDeUsoObtener.CasoDeUsoObtener;
+import casoDeUsoObtener.CasoDeUsoObtenerException;
+import casoDeUsoObtener.ICasoDeUsoObtener;
 import dto.MedicamentoDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import negocio.MedicamentoBO;
 
 public class FormObtenerMedicamento extends javax.swing.JFrame {
 
     private String flujo;
-    private MedicamentoBO medicamentoBO;
+    private ICasoDeUsoObtener casoDeUsoObtener;
     private MedicamentoDTO medicamentoDTO;
 
     /**
@@ -17,7 +21,7 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
         initComponents();
         this.flujo = flujo;
         labelTitulo1.setText(flujo + " Medicamento");
-        medicamentoBO = new MedicamentoBO();
+        casoDeUsoObtener = new CasoDeUsoObtener();
     }
 
     /**
@@ -136,7 +140,11 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
         if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            medicamentoDTO = medicamentoBO.ObtenerMedicamento(txtNombre.getText());
+            try {
+                medicamentoDTO = casoDeUsoObtener.ObtenerMedicamento(txtNombre.getText());
+            } catch (CasoDeUsoObtenerException ex) {
+                Logger.getLogger(FormObtenerMedicamento.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             if (medicamentoDTO != null) {
                 switch (flujo) {

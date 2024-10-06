@@ -1,16 +1,20 @@
 package presentacion;
 
+import casoDeUsoMarcarTomado.CasoDeUsoMarcarTomado;
+import casoDeUsoMarcarTomado.CasoDeUsoMarcarTomadoException;
+import casoDeUsoMarcarTomado.ICasoDeUsoMarcarTomado;
 import dto.MedicamentoDTO;
 import dto.RegistroDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import negocio.RegistroBO;
 
 public class FormTomarMedicamento extends javax.swing.JFrame {
 
     private String flujo;
     private MedicamentoDTO medicamentoDTO;
     private RegistroDTO registroDTO;
-    private RegistroBO registroBo;
+    private ICasoDeUsoMarcarTomado casoDeUsoMarcarTomado;
     
     /**
      * Creates new form FormTomarMedicamento
@@ -22,7 +26,7 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
-        registroBo = new RegistroBO();
+        casoDeUsoMarcarTomado = new CasoDeUsoMarcarTomado();
         
         labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
@@ -182,14 +186,18 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
-        if (registroBo.tomaDeMedicamento(registroDTO)){
-            JOptionPane.showMessageDialog(null, "¡Medicamento Tomado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
-            formObtenerMedicamento.setVisible(true);
-            this.dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "No se pudo Tomar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (casoDeUsoMarcarTomado.tomaDeMedicamento(registroDTO)){
+                JOptionPane.showMessageDialog(null, "¡Medicamento Tomado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+                formObtenerMedicamento.setVisible(true);
+                this.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "No se pudo Tomar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (CasoDeUsoMarcarTomadoException ex) {
+            Logger.getLogger(FormTomarMedicamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRegresar1ActionPerformed
 

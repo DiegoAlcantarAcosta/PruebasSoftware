@@ -27,7 +27,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         casoDeUsoEditar = new CasoDeUsoEditar();
         this.usuarioDTO = usuarioDTO;
         
-        labelCodigon.setText(medicamentoDTO.getCodigo());
+        labelCodigon.setText(medicamentoDTO.getCodigo()+"");
         txtNombre.setText(medicamentoDTO.getNombre());
         cbxTipoConsumo.setSelectedItem(medicamentoDTO.getTipoConsumo());
         txtCantidad.setText("" + medicamentoDTO.getCantidad());

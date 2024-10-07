@@ -217,7 +217,7 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
 
             ICasoDeUsoAgregar casoDeUsoAgregar = new CasoDeUsoAgregar();
             try {
-                if (casoDeUsoAgregar.AgregarMedicamento(medicamentoDTO)) {
+                if (casoDeUsoAgregar.AgregarMedicamento(usuarioDTO,medicamentoDTO)) {
                     JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     FormInicio formInicio = new FormInicio(usuarioDTO);
                     formInicio.setVisible(true);

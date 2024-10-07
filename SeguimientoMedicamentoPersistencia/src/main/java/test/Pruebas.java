@@ -17,15 +17,14 @@
 //    public void pruebasxd(){
 //     
 //    
-//    Medicamento medicamento1 = new Medicamento("mitroson", 1.0f, 1.0d, "Oral", 1);
-//    Medicamento medicamento2 = new Medicamento("simon", 1.0f, 1.0d, "Oral", 1);
+//    Medicamento medicamento1 = new Medicamento(1,"mitroson", 1.0f, 1.0d, "Oral", 1);
+//    Medicamento m=new Medicamento
 //    EntityManager em = conexion.abrir();
 //        
 //
 //        try {
 //            em.getTransaction().begin();
 //            em.persist(medicamento1);
-//            em.persist(medicamento2);
 //            em.getTransaction().commit();
 //
 //        } catch (Exception e) {

@@ -20,15 +20,16 @@ public class CasoDeUsoIniciarSesion implements ICasoDeUsoIniciarSesion{
     }
     
     @Override
-    public boolean iniciarSesion(UsuarioDTO usuarioDTO) throws CasoDeUsoIniciarSesionException {
+    public int iniciarSesion(UsuarioDTO usuarioDTO) throws CasoDeUsoIniciarSesionException {
         try {
-            if(usuarioDAO.iniciarSesion(conversor.usuarioDTOaEntity(usuarioDTO))){
-                return true;
-            }
+            return usuarioDAO.iniciarSesion(conversor.usuarioDTOaEntity(usuarioDTO));
+                
+            
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(CasoDeUsoIniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
-        return false;
+        return -1;
     }
 
     

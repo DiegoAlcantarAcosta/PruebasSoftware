@@ -160,15 +160,15 @@ public class FormIniciarSesion extends javax.swing.JFrame {
             ICasoDeUsoIniciarSesion casoDeUsoIniciarSesion = new CasoDeUsoIniciarSesion();
 
             try {
-                if (casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO)) {
+                    int id=casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
+                    usuarioDTO.setCodigo(id);
                     FormInicio formInicio = new FormInicio(usuarioDTO);
                     formInicio.setVisible(true);
                     this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Datos incorrectos. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                
             } catch (CasoDeUsoIniciarSesionException ex) {
                 Logger.getLogger(FormIniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Datos incorrectos. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed

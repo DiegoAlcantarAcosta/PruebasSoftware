@@ -6,6 +6,7 @@ public class FormInicio extends javax.swing.JFrame {
 
     private UsuarioDTO usuarioDTO;
     
+    
     public FormInicio(UsuarioDTO usuarioDTO) {
         initComponents();
         this.usuarioDTO = usuarioDTO;

@@ -35,7 +35,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public boolean iniciarSesion(Usuario usuario) throws PersistenciaExcepcion {
+    public int iniciarSesion(Usuario usuario) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();;
         
@@ -44,11 +44,11 @@ public class UsuarioDAO implements IUsuarioDAO {
                     .setParameter("nombreUsuario", usuario.getNombreUsuario())
                     .getSingleResult();
 
-            if (usuarioNuevo != null && usuario.getContrasenia().equals(usuario.getContrasenia())) {
+            if (usuarioNuevo != null && usuarioNuevo.getContrasenia().equals(usuario.getContrasenia())) {
                 em.getTransaction().commit();
-                return true;
+                return usuarioNuevo.getCodigo();
             } else {
-                return false;
+                throw new PersistenciaExcepcion("Ese usuario no existe");
             }
         } catch (NoResultException e) {
             em.getTransaction().rollback();
@@ -57,6 +57,33 @@ public class UsuarioDAO implements IUsuarioDAO {
             em.getTransaction().rollback();
             e.printStackTrace();
             throw new PersistenciaExcepcion("Error al iniciar sesión", e);
+        } finally {
+            em.close();
+        }
+    }
+    
+    @Override
+    public Usuario buscarUsuarioPorCodigo(int codigo) throws PersistenciaExcepcion {
+        EntityManager em = conexion.abrir();
+        em.getTransaction().begin();
+
+        try {
+            Usuario usuarioEncontrado = em.createQuery("SELECT u FROM Usuario u WHERE u.codigo = :codigo", Usuario.class)
+                    .setParameter("codigo", codigo)
+                    .getSingleResult();
+            System.out.println(usuarioEncontrado);
+            em.getTransaction().commit();
+            return usuarioEncontrado;
+
+        } catch (NoResultException e) {
+            em.getTransaction().rollback();
+            throw new PersistenciaExcepcion("Usuario no encontrado con el código: " + codigo, e);
+
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+            throw new PersistenciaExcepcion("Error al buscar el usuario por código", e);
+
         } finally {
             em.close();
         }

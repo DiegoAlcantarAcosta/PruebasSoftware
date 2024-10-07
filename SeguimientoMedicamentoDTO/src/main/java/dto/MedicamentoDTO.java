@@ -1,6 +1,7 @@
 package dto;
 
 public class MedicamentoDTO {
+    private int codigoDueno;
     private int codigo;
     private String nombre;
     private double frecuencia;
@@ -27,6 +28,18 @@ public class MedicamentoDTO {
         this.tipoConsumo = tipoConsumo;
         this.Cantidad = Cantidad;
     }
+
+    public MedicamentoDTO(int codigoDueno, int codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
+        this.codigoDueno = codigoDueno;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
+        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.Cantidad = Cantidad;
+    }
+    
+    
 
     public int getCodigo() {
         return codigo;

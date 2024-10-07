@@ -27,22 +27,22 @@ public class Medicamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(unique = true, nullable = false)
+    @Column(name="codigo", nullable = false)
     private int codigo;
     
-    @Column (name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
     
-    @Column (name = "frecuencia", nullable = false)
+    @Column(name = "frecuencia", nullable = false)
     private double frecuencia;
     
-    @Column (name = "horaPrimerDosis", nullable = false)
+    @Column(name = "horaPrimerDosis", nullable = false)
     private double horaPrimeraDosis;
     
-    @Column (name = "tipoConsumo", nullable = false)
+    @Column(name = "tipoConsumo", nullable = false)
     private String tipoConsumo;
     
-    @Column (name = "cantidad", nullable = false)
+    @Column(name = "cantidad", nullable = false)
     private int cantidad;
 
     @ManyToOne

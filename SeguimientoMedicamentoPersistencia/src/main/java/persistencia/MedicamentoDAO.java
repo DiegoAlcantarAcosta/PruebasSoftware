@@ -3,6 +3,7 @@ package persistencia;
 import conexionEM.Conexion;
 import conexionEM.IConexion;
 import entidades.Medicamento;
+import entidades.Usuario;
 import interfaces.IMedicamentoDAO;
 import excepciones.PersistenciaExcepcion;
 import javax.persistence.EntityManager;
@@ -22,13 +23,22 @@ public class MedicamentoDAO implements IMedicamentoDAO {
         em.getTransaction().begin();
 
         try {
+            Usuario usuario = em.find(Usuario.class, medicamento.getUsuario().getId());
+
+            if (usuario == null) {
+                throw new PersistenciaExcepcion("Usuario no encontrado con ID: " + medicamento.getUsuario().getId());
+            }
+
+            medicamento.setUsuario(usuario);
             em.persist(medicamento);
             em.getTransaction().commit();
             return true;
+
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
             throw new PersistenciaExcepcion("Error al agregar el medicamento", e);
+
         } finally {
             em.close();
         }

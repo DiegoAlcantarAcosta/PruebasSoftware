@@ -15,14 +15,19 @@ import javax.persistence.Table;
 @Table(name = "Usuario")
 public class Usuario implements Serializable {
     
+    private static int contadorCodigo = 1;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column (name = "nombreUsuario", nullable = false)
+    @Column(name="codigo", nullable = false)
+    private int codigo;
+    
+    @Column(name = "nombreUsuario", nullable = false)
     private String nombreUsuario;
     
-    @Column (name = "contrasenia", nullable = false)
+    @Column(name = "contrasenia", nullable = false)
     private String contrasenia;
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
@@ -31,15 +36,33 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
+    public Usuario(int codigo, String nombreUsuario, String contrasenia) {
+        this.codigo = codigo;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasenia = contrasenia;
+    }
+    
+    
+
     public Usuario(Long id, String nombreUsuario, String contrasenia) {
         this.id = id;
+        this.codigo=contadorCodigo++;
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
     }
 
     public Usuario(String nombreUsuario, String contrasenia) {
+        this.codigo=contadorCodigo++;
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
+    }
+
+    public static int getContadorCodigo() {
+        return contadorCodigo;
+    }
+
+    public static void setContadorCodigo(int contadorCodigo) {
+        Usuario.contadorCodigo = contadorCodigo;
     }
 
     public Long getId() {
@@ -48,6 +71,14 @@ public class Usuario implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombreUsuario() {
@@ -65,7 +96,7 @@ public class Usuario implements Serializable {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-    
+
     public List<Medicamento> getMedicamentos() {
         return medicamentos;
     }
@@ -73,6 +104,14 @@ public class Usuario implements Serializable {
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", codigo=" + codigo + ", nombreUsuario=" + nombreUsuario + ", contrasenia=" + contrasenia + ", medicamentos=" + medicamentos + '}';
+    }
+
+    
+    
     
     
 }

@@ -33,6 +33,7 @@ public class Conversor {
     
     public Medicamento medicamentoDTOaEntity(MedicamentoDTO medicamentoDTO) {
         Medicamento medicamento = new Medicamento(
+                
                 medicamentoDTO.getCodigo(),
                 medicamentoDTO.getNombre(),
                 medicamentoDTO.getFrecuencia(),
@@ -58,13 +59,14 @@ public class Conversor {
     public UsuarioDTO usuarioEntityaDTO(Usuario usuario){
         UsuarioDTO usuarioDTO = new UsuarioDTO(
                 usuario.getNombreUsuario(),
-                usuario.getContrasenia()
+                usuario.getContrasenia(),
+                usuario.getCodigo()
         );
         return usuarioDTO;
     }
     
     public Usuario usuarioDTOaEntity(UsuarioDTO usuarioDTO){
-        Usuario usuario = new Usuario(
+        Usuario usuario = new Usuario(usuarioDTO.getCodigo(),
                 usuarioDTO.getNombreUsuario(),
                 usuarioDTO.getContrasenia()
         );

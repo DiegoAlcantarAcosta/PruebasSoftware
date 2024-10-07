@@ -5,6 +5,7 @@ import casoDeUsoProximaDosis.CasoDeUsoProximaDosisException;
 import casoDeUsoProximaDosis.ICasoDeUsoProximaDosis;
 import dto.MedicamentoDTO;
 import dto.RegistroDTO;
+import dto.UsuarioDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,15 +15,17 @@ public class FormProximaDosis extends javax.swing.JFrame {
     private MedicamentoDTO medicamentoDTO;
     private RegistroDTO registroDTO;
     private ICasoDeUsoProximaDosis casoDeUsoProximaDosis;
+    private UsuarioDTO usuarioDTO;
     
     /**
      * Creates new form FormProximaDosis
      */
-    public FormProximaDosis(String flujo, MedicamentoDTO medicamentoDTO) {
+    public FormProximaDosis(String flujo, MedicamentoDTO medicamentoDTO, UsuarioDTO usuarioDTO) {
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
         casoDeUsoProximaDosis = new CasoDeUsoProximaDosis();
+        this.usuarioDTO = usuarioDTO;
         
         labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
@@ -169,7 +172,7 @@ public class FormProximaDosis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed

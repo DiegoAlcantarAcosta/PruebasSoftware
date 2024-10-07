@@ -6,16 +6,20 @@ import javax.swing.JOptionPane;
 import casoDeUsoAgregar.CasoDeUsoAgregar;
 import casoDeUsoAgregar.CasoDeUsoAgregarException;
 import casoDeUsoAgregar.ICasoDeUsoAgregar;
+import dto.UsuarioDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FormAgregarMedicamento extends javax.swing.JFrame {
 
+    private UsuarioDTO usuarioDTO;
+    
     /**
      * Creates new form FormAgregarMedicamento
      */
-    public FormAgregarMedicamento() {
+    public FormAgregarMedicamento(UsuarioDTO usuarioDTO) {
         initComponents();
+        this.usuarioDTO = usuarioDTO;
     }
 
     /**
@@ -194,7 +198,7 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormInicio formInicio = new FormInicio();
+        FormInicio formInicio = new FormInicio(usuarioDTO);
         formInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -215,7 +219,7 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
             try {
                 if (casoDeUsoAgregar.AgregarMedicamento(medicamentoDTO)) {
                     JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    FormInicio formInicio = new FormInicio();
+                    FormInicio formInicio = new FormInicio(usuarioDTO);
                     formInicio.setVisible(true);
                     this.dispose();
                 } else {

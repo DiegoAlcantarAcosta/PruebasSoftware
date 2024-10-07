@@ -1,8 +1,8 @@
-package test;
-
-public class Main {
-    public static void main(String[] args) {
-        Pruebas pruebas = new Pruebas();
-        pruebas.pruebasxd();
-    }
-}
+//package test;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        Pruebas pruebas = new Pruebas();
+//        pruebas.pruebasxd();
+//    }
+//}

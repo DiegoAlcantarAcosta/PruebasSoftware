@@ -35,19 +35,19 @@ public class MedicamentoDAO implements IMedicamentoDAO {
     }
 
     @Override
-    public Medicamento obtener(String nombre) throws PersistenciaExcepcion {
+    public Medicamento obtener(String codigo) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
 
         try {
-            Medicamento medicamento = em.createQuery("SELECT m FROM Medicamento m WHERE m.nombre = :nombre", Medicamento.class)
-                    .setParameter("nombre", nombre)
+            Medicamento medicamento = em.createQuery("SELECT m FROM Medicamento m WHERE m.codigo = :codigo", Medicamento.class)
+                    .setParameter("codigo", codigo)
                     .getSingleResult();
             em.getTransaction().commit();
             return medicamento;
         } catch (NoResultException e) {
             em.getTransaction().rollback();
-            throw new PersistenciaExcepcion("No se encontró ningún medicamento con el nombre: " + nombre, e);
+            throw new PersistenciaExcepcion("No se encontró ningún medicamento con el código: " + codigo, e);
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
@@ -56,19 +56,27 @@ public class MedicamentoDAO implements IMedicamentoDAO {
             em.close();
         }
     }
-@Override
+
+    @Override
     public boolean editar(Medicamento medicamento) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
         try {
-            Medicamento medicamentoBuscado = em.find(Medicamento.class, 1L);
-            em.merge(medicamentoBuscado);
-            em.getTransaction().commit();
-            return true;
+            Medicamento medicamentoBuscado = em.createQuery("SELECT m FROM Medicamento m WHERE m.codigo = :codigo", Medicamento.class)
+                    .setParameter("codigo", medicamento.getCodigo())
+                    .getSingleResult();
+            if (medicamentoBuscado != null) {
+                em.merge(medicamento);
+                em.getTransaction().commit();
+                return true;
+            } else {
+                em.getTransaction().rollback();
+                throw new PersistenciaExcepcion("No se encontró el medicamento para editar.");
+            }
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
-            throw e;
+            throw new PersistenciaExcepcion("Error al editar el medicamento", e);
         } finally {
             em.close();
         }
@@ -79,7 +87,9 @@ public class MedicamentoDAO implements IMedicamentoDAO {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
         try {
-            Medicamento medicamentoBuscado = em.find(Medicamento.class, medicamento.getId());
+            Medicamento medicamentoBuscado = em.createQuery("SELECT m FROM Medicamento m WHERE m.codigo = :codigo", Medicamento.class)
+                    .setParameter("codigo", medicamento.getCodigo())
+                    .getSingleResult();
 
             if (medicamentoBuscado != null) {
                 em.remove(medicamentoBuscado);

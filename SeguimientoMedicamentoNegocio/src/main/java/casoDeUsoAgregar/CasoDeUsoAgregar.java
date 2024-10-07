@@ -21,9 +21,8 @@ public class CasoDeUsoAgregar implements ICasoDeUsoAgregar{
     
     @Override
     public boolean AgregarMedicamento(MedicamentoDTO medicamentoDTO) throws CasoDeUsoAgregarException {
-        
         try {
-            if (medicamentoDAO.agregar(conversor.DTOaEntity(medicamentoDTO))) {
+            if (medicamentoDAO.agregar(conversor.medicamentoDTOaEntity(medicamentoDTO))) {
                 return true;
             }
         } catch (PersistenciaExcepcion ex) {

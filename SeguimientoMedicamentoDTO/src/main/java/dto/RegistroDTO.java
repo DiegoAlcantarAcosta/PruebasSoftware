@@ -41,18 +41,4 @@ public class RegistroDTO {
         this.tomado = tomado;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("RegistroDTO{");
-        sb.append("horaConsumo=").append(horaConsumo);
-        sb.append(", cantidadConsumo=").append(cantidadConsumo);
-        sb.append(", tomado=").append(tomado);
-        sb.append('}');
-        return sb.toString();
-    }
-    
-    
-    
-    
 }

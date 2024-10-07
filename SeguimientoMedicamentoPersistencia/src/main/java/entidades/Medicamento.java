@@ -12,13 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author USER
- */
 @Entity
 @Table(name = "Medicamento")
 public class Medicamento implements Serializable {
@@ -27,45 +25,54 @@ public class Medicamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Column(unique = true, nullable = false)
+    private String codigo;
+    
     @Column (name = "nombre", nullable = false)
-    String nombre;
+    private String nombre;
     
     @Column (name = "frecuencia", nullable = false)
-    double frecuencia;
+    private double frecuencia;
     
     @Column (name = "horaPrimerDosis", nullable = false)
-    double horaPrimeraDosis;
+    private double horaPrimeraDosis;
     
     @Column (name = "tipoConsumo", nullable = false)
-    String tipoConsumo;
+    private String tipoConsumo;
     
     @Column (name = "cantidad", nullable = false)
-    int cantidad;
+    private int cantidad;
 
-    @OneToMany(mappedBy = "IdMedicamento",cascade = CascadeType.ALL)
-    private List<Registro> lista;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
-    public Medicamento(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
-        this.nombre = nombre;
-        this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
-        this.tipoConsumo = tipoConsumo;
-        this.cantidad = cantidad;
-    }
+    @OneToMany(mappedBy = "medicamento", cascade = CascadeType.ALL)
+    private List<Registro> registros;
 
     public Medicamento() {
     }
 
-    public Medicamento(Long id, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
+    public Medicamento(Long id, String codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad, Usuario usuario, List<Registro> registros) {
         this.id = id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
+        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.cantidad = cantidad;
+        this.usuario = usuario;
+        this.registros = registros;
+    }
+
+    public Medicamento(String codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
         this.horaPrimeraDosis = horaPrimeraDosis;
         this.tipoConsumo = tipoConsumo;
         this.cantidad = cantidad;
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -75,6 +82,14 @@ public class Medicamento implements Serializable {
         this.id = id;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -115,12 +130,20 @@ public class Medicamento implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public List<Registro> getLista() {
-        return lista;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setLista(List<Registro> lista) {
-        this.lista = lista;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<Registro> getRegistros() {
+        return registros;
+    }
+
+    public void setRegistros(List<Registro> registros) {
+        this.registros = registros;
     }
     
    

@@ -4,6 +4,7 @@ import casoDeUsoEditar.CasoDeUsoEditar;
 import casoDeUsoEditar.CasoDeUsoEditarException;
 import casoDeUsoEditar.ICasoDeUsoEditar;
 import dto.MedicamentoDTO;
+import dto.UsuarioDTO;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,16 +15,19 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
     private String flujo;
     private ICasoDeUsoEditar casoDeUsoEditar;
     private MedicamentoDTO medicamentoDTO;
+    private UsuarioDTO usuarioDTO;
 
     /**
      * Creates new form FormEditarMedicamento
      */
-    public FormEditarMedicamento(String flujo, MedicamentoDTO medicamentoDTO) {
+    public FormEditarMedicamento(String flujo, MedicamentoDTO medicamentoDTO, UsuarioDTO usuarioDTO) {
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
         casoDeUsoEditar = new CasoDeUsoEditar();
-
+        this.usuarioDTO = usuarioDTO;
+        
+        labelCodigon.setText(medicamentoDTO.getCodigo());
         txtNombre.setText(medicamentoDTO.getNombre());
         cbxTipoConsumo.setSelectedItem(medicamentoDTO.getTipoConsumo());
         txtCantidad.setText("" + medicamentoDTO.getCantidad());
@@ -55,6 +59,8 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         labelPrimeraDosis = new javax.swing.JLabel();
         txtPrimeraDosis = new javax.swing.JTextField();
         btnRegresar1 = new javax.swing.JButton();
+        labelCodigo = new javax.swing.JLabel();
+        labelCodigon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,40 +129,46 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             }
         });
 
+        labelCodigo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelCodigo.setText("Codigo:");
+
+        labelCodigon.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelCodigon.setText("xxxx-xxxx-xxxx-xxxx");
+
         javax.swing.GroupLayout panFondo4Layout = new javax.swing.GroupLayout(panFondo4);
         panFondo4.setLayout(panFondo4Layout);
         panFondo4Layout.setHorizontalGroup(
             panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panFondo4Layout.createSequentialGroup()
-                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panFondo4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegresar1))
-                    .addGroup(panFondo4Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTitulo5)
-                            .addComponent(labelTitulo4))))
-                .addContainerGap(14, Short.MAX_VALUE))
-            .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panFondo4Layout.createSequentialGroup()
-                    .addGap(14, 14, 14)
-                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(labelNombre)
-                        .addComponent(labelTipoCosumo)
-                        .addComponent(labelCantidad)
-                        .addComponent(labelFrecuencia)
-                        .addComponent(labelPrimeraDosis))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelNombre)
+                            .addComponent(labelTipoCosumo)
+                            .addComponent(labelCantidad)
+                            .addComponent(labelFrecuencia)
+                            .addComponent(labelPrimeraDosis)
+                            .addComponent(labelCodigo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombre)
+                            .addComponent(txtFrecuencia)
+                            .addComponent(txtPrimeraDosis)
+                            .addComponent(cbxTipoConsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelCodigon)))
                     .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNombre)
-                        .addComponent(txtFrecuencia, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                        .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                        .addComponent(cbxTipoConsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
-                    .addContainerGap(15, Short.MAX_VALUE)))
+                        .addGroup(panFondo4Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(btnRegresar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegresar1))
+                        .addGroup(panFondo4Layout.createSequentialGroup()
+                            .addGap(14, 14, 14)
+                            .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelTitulo5)
+                                .addComponent(labelTitulo4)))))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         panFondo4Layout.setVerticalGroup(
             panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,34 +177,35 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
                 .addComponent(labelTitulo4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCodigo)
+                    .addComponent(labelCodigon))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTipoCosumo)
+                    .addComponent(cbxTipoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCantidad)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
                     .addComponent(btnRegresar1))
                 .addContainerGap())
-            .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panFondo4Layout.createSequentialGroup()
-                    .addGap(89, 89, 89)
-                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelNombre)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelTipoCosumo)
-                        .addComponent(cbxTipoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelCantidad)
-                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(90, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,7 +224,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -252,7 +265,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             try {
                 if (casoDeUsoEditar.EditarMedicamento(medicamentoNuevoDTO)) {
                     JOptionPane.showMessageDialog(null, "¡Medicamento Editado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+                    FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
                     formObtenerMedicamento.setVisible(true);
                     this.dispose();
                 } else {
@@ -269,6 +282,8 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar1;
     private javax.swing.JComboBox<String> cbxTipoConsumo;
     private javax.swing.JLabel labelCantidad;
+    private javax.swing.JLabel labelCodigo;
+    private javax.swing.JLabel labelCodigon;
     private javax.swing.JLabel labelFrecuencia;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPrimeraDosis;

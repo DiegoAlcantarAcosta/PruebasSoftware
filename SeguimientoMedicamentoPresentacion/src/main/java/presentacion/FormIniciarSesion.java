@@ -1,5 +1,13 @@
 package presentacion;
 
+import casoDeUsoIniciarSesion.CasoDeUsoIniciarSesion;
+import casoDeUsoIniciarSesion.CasoDeUsoIniciarSesionException;
+import casoDeUsoIniciarSesion.ICasoDeUsoIniciarSesion;
+import dto.UsuarioDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 public class FormIniciarSesion extends javax.swing.JFrame {
 
     /**
@@ -7,6 +15,7 @@ public class FormIniciarSesion extends javax.swing.JFrame {
      */
     public FormIniciarSesion() {
         initComponents();
+        
     }
 
     /**
@@ -140,9 +149,28 @@ public class FormIniciarSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        FormInicio formInicio = new FormInicio();
-        formInicio.setVisible(true);
-        this.dispose();
+        if (txtUsuario.getText().isEmpty() || txtContraseña.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            UsuarioDTO usuarioDTO = new UsuarioDTO(
+                    txtUsuario.getText(),
+                    txtContraseña.getText()
+            );
+
+            ICasoDeUsoIniciarSesion casoDeUsoIniciarSesion = new CasoDeUsoIniciarSesion();
+
+            try {
+                if (casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO)) {
+                    FormInicio formInicio = new FormInicio(usuarioDTO);
+                    formInicio.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Datos incorrectos. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (CasoDeUsoIniciarSesionException ex) {
+                Logger.getLogger(FormIniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed

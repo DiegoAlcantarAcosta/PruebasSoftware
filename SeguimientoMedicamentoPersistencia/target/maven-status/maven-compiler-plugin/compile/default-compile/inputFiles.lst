@@ -1,11 +1,14 @@
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\excepciones\PersistenciaExcepcion.java
-D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\conexionEM\Conexion.java
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\persistencia\RegistroDAO.java
-D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\test\Main.java
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\conexionEM\IConexion.java
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\entidades\Medicamento.java
+D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\persistencia\UsuarioDAO.java
+D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\entidades\Usuario.java
+D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\interfaces\IMedicamentoDAO.java
+D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\conexionEM\Conexion.java
+D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\test\Main.java
+D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\interfaces\IUsuarioDAO.java
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\test\Pruebas.java
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\interfaces\IRegistroDAO.java
-D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\interfaces\IMedicamentoDAO.java
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\persistencia\MedicamentoDAO.java
 D:\Berry\Documents\NetBeansProjects\PruebasSoftware\SeguimientoMedicamentoPersistencia\src\main\java\entidades\Registro.java

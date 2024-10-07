@@ -24,7 +24,7 @@ public class CasoDeUsoObtener implements ICasoDeUsoObtener{
         try {
             Medicamento medicamento = medicamentoDAO.obtener(Nombre);
             if (medicamento != (null)) {
-                return conversor.EntityaDTO(medicamento);
+                return conversor.medicamentoEntityaDTO(medicamento);
             }
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(CasoDeUsoObtener.class.getName()).log(Level.SEVERE, null, ex);

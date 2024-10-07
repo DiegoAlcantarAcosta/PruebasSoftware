@@ -4,6 +4,7 @@ import casoDeUsoObtener.CasoDeUsoObtener;
 import casoDeUsoObtener.CasoDeUsoObtenerException;
 import casoDeUsoObtener.ICasoDeUsoObtener;
 import dto.MedicamentoDTO;
+import dto.UsuarioDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -13,15 +14,17 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
     private String flujo;
     private ICasoDeUsoObtener casoDeUsoObtener;
     private MedicamentoDTO medicamentoDTO;
+    private UsuarioDTO usuarioDTO;
 
     /**
      * Creates new form FormObtenerMedicamento
      */
-    public FormObtenerMedicamento(String flujo) {
+    public FormObtenerMedicamento(String flujo, UsuarioDTO usuarioDTO) {
         initComponents();
         this.flujo = flujo;
         labelTitulo1.setText(flujo + " Medicamento");
         casoDeUsoObtener = new CasoDeUsoObtener();
+        this.usuarioDTO = usuarioDTO;
     }
 
     /**
@@ -131,7 +134,7 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormInicio formInicio = new FormInicio();
+        FormInicio formInicio = new FormInicio(usuarioDTO);
         formInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -149,22 +152,22 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
             if (medicamentoDTO != null) {
                 switch (flujo) {
                     case "Eliminar" -> {
-                        FormEliminarMedicamento formEliminarMedicamento = new FormEliminarMedicamento(flujo, medicamentoDTO);
+                        FormEliminarMedicamento formEliminarMedicamento = new FormEliminarMedicamento(flujo, medicamentoDTO, usuarioDTO);
                         formEliminarMedicamento.setVisible(true);
                         this.dispose();
                     }
                     case "Editar" -> {
-                        FormEditarMedicamento formEditarMedicamento = new FormEditarMedicamento(flujo, medicamentoDTO);
+                        FormEditarMedicamento formEditarMedicamento = new FormEditarMedicamento(flujo, medicamentoDTO, usuarioDTO);
                         formEditarMedicamento.setVisible(true);
                         this.dispose();
                     }
                     case "Tomar" -> {
-                        FormTomarMedicamento formTomarMedicamento = new FormTomarMedicamento(flujo, medicamentoDTO);
+                        FormTomarMedicamento formTomarMedicamento = new FormTomarMedicamento(flujo, medicamentoDTO, usuarioDTO);
                         formTomarMedicamento.setVisible(true);
                         this.dispose();
                     }
                     case "Proxima Dosis" -> {
-                        FormProximaDosis proxima = new FormProximaDosis(flujo, medicamentoDTO);
+                        FormProximaDosis proxima = new FormProximaDosis(flujo, medicamentoDTO, usuarioDTO);
                         proxima.setVisible(true);
                         this.dispose();
                     }

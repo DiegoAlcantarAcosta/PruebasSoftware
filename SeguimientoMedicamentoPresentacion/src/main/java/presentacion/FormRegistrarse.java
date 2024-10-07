@@ -4,6 +4,12 @@
  */
 package presentacion;
 
+import casoDeUsoRegistrarse.CasoDeUsoRegistrarse;
+import casoDeUsoRegistrarse.CasoDeUsoRegistrarseException;
+import casoDeUsoRegistrarse.ICasoDeUsoRegistrarse;
+import dto.UsuarioDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -157,11 +163,29 @@ public class FormRegistrarse extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
-        JOptionPane.showConfirmDialog(this, "Te registraste correctamente");
-        
-        FormIniciarSesion formIniciarSesion = new FormIniciarSesion();
-        formIniciarSesion.setVisible(true);
-        this.dispose();
+        if (txtUsuario.getText().isEmpty() || txtContraseña.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            UsuarioDTO usuarioDTO = new UsuarioDTO(
+                    txtUsuario.getText(),
+                    txtContraseña.getText()
+            );
+            ICasoDeUsoRegistrarse casoDeUsoRegistrarse = new CasoDeUsoRegistrarse();
+            
+            try {
+                if(casoDeUsoRegistrarse.registrarse(usuarioDTO)){
+                    JOptionPane.showMessageDialog(null, "Te registraste correctamente. Inicia Sesion!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    FormIniciarSesion formIniciarSesion = new FormIniciarSesion();
+                    formIniciarSesion.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Datos incorrectos. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (CasoDeUsoRegistrarseException ex) {
+                Logger.getLogger(FormRegistrarse.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,8 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Registro")
 public class Registro implements Serializable {
 
     @Id
@@ -17,33 +20,34 @@ public class Registro implements Serializable {
     private Long id;
     
     @Column (name = "horaConsumo", nullable = false)
-    Date horaConsumo;
+    private Date horaConsumo;
     
     @Column (name = "cantidadConsumo", nullable = false)
-    int cantidadConsumo;
+    private int cantidadConsumo;
     
     @Column (name = "tomado", nullable = false)
-    boolean tomado;
+    private boolean tomado;
 
-    @JoinColumn (name = "id_medicamento", nullable = false)
-    private Medicamento IdMedicamento;
+    @ManyToOne
+    @JoinColumn(name = "medicamento_id", nullable = false)
+    private Medicamento medicamento;
 
-    public Registro(Medicamento medicamento, Date horaConsumo, int cantidadConsumo, boolean tomado, Medicamento IdMedicamento) {
-        this.horaConsumo = horaConsumo;
-        this.cantidadConsumo = cantidadConsumo;
-        this.tomado = tomado;
-        this.IdMedicamento = IdMedicamento;
-    }
-
-    
-    
-    public Registro(Long id, Medicamento medicamento, Date horaConsumo, int cantidadConsumo, boolean tomado, Medicamento IdMedicamento) {
+    public Registro(Long id, Date horaConsumo, int cantidadConsumo, boolean tomado, Medicamento medicamento) {
         this.id = id;
         this.horaConsumo = horaConsumo;
         this.cantidadConsumo = cantidadConsumo;
         this.tomado = tomado;
-        this.IdMedicamento = IdMedicamento;
+        this.medicamento = medicamento;
     }
+
+    public Registro(Date horaConsumo, int cantidadConsumo, boolean tomado, Medicamento medicamento) {
+        this.horaConsumo = horaConsumo;
+        this.cantidadConsumo = cantidadConsumo;
+        this.tomado = tomado;
+        this.medicamento = medicamento;
+    }
+
+   
 
     public Registro() {
     }
@@ -72,8 +76,14 @@ public class Registro implements Serializable {
     public void setTomado(boolean tomado) {
         this.tomado = tomado;
     }
-
     
+    public Medicamento getMedicamento() {
+        return medicamento;
+    }
+
+    public void setMedicamento(Medicamento medicamento) {
+        this.medicamento = medicamento;
+    }
     
     public Long getId() {
         return id;

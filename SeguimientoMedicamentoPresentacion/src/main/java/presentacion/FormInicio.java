@@ -1,9 +1,16 @@
 package presentacion;
 
+import dto.UsuarioDTO;
+
 public class FormInicio extends javax.swing.JFrame {
 
-    public FormInicio() {
+    private UsuarioDTO usuarioDTO;
+    
+    public FormInicio(UsuarioDTO usuarioDTO) {
         initComponents();
+        this.usuarioDTO = usuarioDTO;
+       
+        labelSubTitulo.setText("¡Bienvenido "+ usuarioDTO.getNombreUsuario()+"!");
     }
 
     /**
@@ -145,13 +152,13 @@ public class FormInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        FormAgregarMedicamento formAgregarMedicamento = new FormAgregarMedicamento();
+        FormAgregarMedicamento formAgregarMedicamento = new FormAgregarMedicamento(usuarioDTO);
         formAgregarMedicamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Eliminar");
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Eliminar", usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
         
@@ -161,7 +168,7 @@ public class FormInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Editar");
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Editar", usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
         
@@ -171,7 +178,7 @@ public class FormInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnTomarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Tomar");
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Tomar", usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
         
@@ -181,7 +188,7 @@ public class FormInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTomarActionPerformed
 
     private void btnProximaDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximaDosisActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Proxima Dosis");
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento("Proxima Dosis", usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
         

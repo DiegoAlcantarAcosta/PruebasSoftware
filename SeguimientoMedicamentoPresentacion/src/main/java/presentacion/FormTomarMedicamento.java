@@ -5,6 +5,7 @@ import casoDeUsoMarcarTomado.CasoDeUsoMarcarTomadoException;
 import casoDeUsoMarcarTomado.ICasoDeUsoMarcarTomado;
 import dto.MedicamentoDTO;
 import dto.RegistroDTO;
+import dto.UsuarioDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -15,11 +16,12 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
     private MedicamentoDTO medicamentoDTO;
     private RegistroDTO registroDTO;
     private ICasoDeUsoMarcarTomado casoDeUsoMarcarTomado;
+    private UsuarioDTO usuarioDTO;
     
     /**
      * Creates new form FormTomarMedicamento
      */
-    public FormTomarMedicamento(String flujo, MedicamentoDTO medicamentoDTO) {
+    public FormTomarMedicamento(String flujo, MedicamentoDTO medicamentoDTO, UsuarioDTO usuarioDTO) {
         //papus aqui el gomez del pasado, no entiendo bien como tienen en mente hacer esto del registro.
         //si le mueven para que jale, es probable que el codigo puesto aqui funcione
         //ya depende de que tanto muevan Nyejejejeje ahi se las arreglan ando con la natasha salu2
@@ -27,6 +29,7 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
         casoDeUsoMarcarTomado = new CasoDeUsoMarcarTomado();
+        this.usuarioDTO = usuarioDTO;
         
         labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
@@ -180,7 +183,7 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -189,7 +192,7 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
         try {
             if (casoDeUsoMarcarTomado.tomaDeMedicamento(registroDTO)){
                 JOptionPane.showMessageDialog(null, "¡Medicamento Tomado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
                 formObtenerMedicamento.setVisible(true);
                 this.dispose();
             }

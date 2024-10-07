@@ -4,6 +4,7 @@ import casoDeUsoEliminar.CasoDeUsoEliminar;
 import casoDeUsoEliminar.CasoDeUsoEliminarException;
 import casoDeUsoEliminar.ICasoDeUsoEliminar;
 import dto.MedicamentoDTO;
+import dto.UsuarioDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -13,16 +14,18 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
     private String flujo;
     private ICasoDeUsoEliminar casoDeUsoEliminar;
     private MedicamentoDTO medicamentoDTO;
-    
+    private UsuarioDTO usuarioDTO;
     /**
      * Creates new form FormEliminarMedicamento
      */
-    public FormEliminarMedicamento(String flujo, MedicamentoDTO medicamentoDTO) {
+    public FormEliminarMedicamento(String flujo, MedicamentoDTO medicamentoDTO, UsuarioDTO usuarioDTO) {
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
         casoDeUsoEliminar = new CasoDeUsoEliminar();
+        this.usuarioDTO = usuarioDTO;
         
+        labelCodigo.setText("Codigo: "+medicamentoDTO.getCodigo());
         labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
         labelCantidad.setText("Cantidad: "+medicamentoDTO.getCantidad());
@@ -52,6 +55,7 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
         labelPrimeraDosis1 = new javax.swing.JLabel();
         labelPrimeraDosis2 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
+        labelCodigo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,7 +91,7 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
         labelPrimeraDosis.setText("Hora de Primera Dosis:");
 
         labelPrimeraDosis1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        labelPrimeraDosis1.setText("Seguro que quieres eliminar este medicamento?");
+        labelPrimeraDosis1.setText("¿Seguro que quieres eliminar este medicamento?");
 
         labelPrimeraDosis2.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelPrimeraDosis2.setForeground(new java.awt.Color(255, 51, 51));
@@ -100,6 +104,9 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
+
+        labelCodigo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelCodigo.setText("Codigo:");
 
         javax.swing.GroupLayout panFondo4Layout = new javax.swing.GroupLayout(panFondo4);
         panFondo4.setLayout(panFondo4Layout);
@@ -124,15 +131,17 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
                                         .addComponent(labelTipoConsumo)
                                         .addComponent(labelCantidad)
                                         .addComponent(labelFrecuencia)
-                                        .addComponent(labelPrimeraDosis))))
+                                        .addComponent(labelPrimeraDosis)
+                                        .addComponent(labelCodigo))))
                             .addGroup(panFondo4Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(labelPrimeraDosis1))
-                            .addGroup(panFondo4Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(labelPrimeraDosis2)))
+                                .addComponent(labelPrimeraDosis1)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panFondo4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(labelPrimeraDosis2)
+                .addGap(63, 63, 63))
         );
         panFondo4Layout.setVerticalGroup(
             panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +150,9 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
                 .addComponent(labelTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(labelCodigo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelNombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTipoConsumo)
@@ -151,11 +162,11 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
                 .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelPrimeraDosis1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelPrimeraDosis2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
                     .addComponent(btnEliminar))
@@ -178,7 +189,7 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+        FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
         formObtenerMedicamento.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -187,7 +198,7 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
         try {
             if (casoDeUsoEliminar.EliminarMedicamento(medicamentoDTO)){
                 JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo);
+                FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
                 formObtenerMedicamento.setVisible(true);
                 this.dispose();
             }
@@ -203,6 +214,7 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel labelCantidad;
+    private javax.swing.JLabel labelCodigo;
     private javax.swing.JLabel labelFrecuencia;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPrimeraDosis;

@@ -1,21 +1,39 @@
 package dto;
 
 public class MedicamentoDTO {
-    String nombre;
-    double frecuencia;
-    double horaPrimeraDosis;
-    String tipoConsumo;
-    int Cantidad;
+    private String codigo;
+    private String nombre;
+    private double frecuencia;
+    private double horaPrimeraDosis;
+    private String tipoConsumo;
+    private int Cantidad;
 
     public MedicamentoDTO() {
     }
-    
+
     public MedicamentoDTO(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
         this.nombre = nombre;
         this.frecuencia = frecuencia;
         this.horaPrimeraDosis = horaPrimeraDosis;
         this.tipoConsumo = tipoConsumo;
         this.Cantidad = Cantidad;
+    }
+
+    public MedicamentoDTO(String codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
+        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.Cantidad = Cantidad;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombre() {
@@ -58,20 +76,5 @@ public class MedicamentoDTO {
         this.Cantidad = Cantidad;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("MedicamentoDTO{");
-        sb.append("nombre=").append(nombre);
-        sb.append(", frecuencia=").append(frecuencia);
-        sb.append(", horaPrimeraDosis=").append(horaPrimeraDosis);
-        sb.append(", tipoConsumo=").append(tipoConsumo);
-        sb.append(", Cantidad=").append(Cantidad);
-        sb.append('}');
-        return sb.toString();
-    }
-    
-    
-    
     
 }

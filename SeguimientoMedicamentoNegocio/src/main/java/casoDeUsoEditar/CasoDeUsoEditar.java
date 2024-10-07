@@ -21,7 +21,7 @@ public class CasoDeUsoEditar implements ICasoDeUsoEditar{
     
     public boolean EditarMedicamento(MedicamentoDTO medicamentoDTO) throws CasoDeUsoEditarException{
         try {
-            if(medicamentoDAO.editar(conversor.DTOaEntity(medicamentoDTO))){
+            if(medicamentoDAO.editar(conversor.medicamentoDTOaEntity(medicamentoDTO))){
                 return true;
             }
         } catch (PersistenciaExcepcion ex) {

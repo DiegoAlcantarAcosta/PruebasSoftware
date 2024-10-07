@@ -47,6 +47,12 @@ public class Registro implements Serializable {
         this.medicamento = medicamento;
     }
 
+    public Registro(Date horaConsumo, int cantidadConsumo, boolean tomado) {
+        this.horaConsumo = horaConsumo;
+        this.cantidadConsumo = cantidadConsumo;
+        this.tomado = tomado;
+    }
+
    
 
     public Registro() {

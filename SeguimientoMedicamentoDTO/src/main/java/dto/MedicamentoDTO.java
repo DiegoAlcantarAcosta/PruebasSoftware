@@ -1,7 +1,7 @@
 package dto;
 
 public class MedicamentoDTO {
-    private String codigo;
+    private int codigo;
     private String nombre;
     private double frecuencia;
     private double horaPrimeraDosis;
@@ -19,7 +19,7 @@ public class MedicamentoDTO {
         this.Cantidad = Cantidad;
     }
 
-    public MedicamentoDTO(String codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
+    public MedicamentoDTO(int codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
@@ -28,11 +28,11 @@ public class MedicamentoDTO {
         this.Cantidad = Cantidad;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 

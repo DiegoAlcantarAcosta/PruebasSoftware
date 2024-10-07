@@ -21,12 +21,14 @@ import javax.persistence.Table;
 @Table(name = "Medicamento")
 public class Medicamento implements Serializable {
     
+    private static int contadorCodigo = 1;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(unique = true, nullable = false)
-    private String codigo;
+    private int codigo;
     
     @Column (name = "nombre", nullable = false)
     private String nombre;
@@ -53,9 +55,19 @@ public class Medicamento implements Serializable {
     public Medicamento() {
     }
 
-    public Medicamento(Long id, String codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad, Usuario usuario, List<Registro> registros) {
-        this.id = id;
+    public Medicamento(int codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
         this.codigo = codigo;
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
+        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.cantidad = cantidad;
+        this.usuario = usuario;
+    }
+
+    public Medicamento(Long id, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad, Usuario usuario, List<Registro> registros) {
+        this.id = id;
+        this.codigo = contadorCodigo++;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
         this.horaPrimeraDosis = horaPrimeraDosis;
@@ -65,8 +77,8 @@ public class Medicamento implements Serializable {
         this.registros = registros;
     }
 
-    public Medicamento(String codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
-        this.codigo = codigo;
+    public Medicamento(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
+        this.codigo = contadorCodigo++;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
         this.horaPrimeraDosis = horaPrimeraDosis;
@@ -82,11 +94,11 @@ public class Medicamento implements Serializable {
         this.id = id;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
     

@@ -1,8 +1,10 @@
 package conversor;
 
 import dto.MedicamentoDTO;
+import dto.RegistroDTO;
 import dto.UsuarioDTO;
 import entidades.Medicamento;
+import entidades.Registro;
 import entidades.Usuario;
 
 public class Conversor {
@@ -11,6 +13,24 @@ public class Conversor {
     public Conversor() {
     }
 
+     public Registro registroDTOaEntity(RegistroDTO registroDTO) {
+        Registro registro = new Registro(
+                registroDTO.getHoraConsumo(),
+                registroDTO.getCantidadConsumo(),
+                registroDTO.isTomado()
+        );
+        return registro;
+    }
+     
+     public RegistroDTO registroEntityaDTO(Registro registro) {
+        RegistroDTO registroDTO = new RegistroDTO(
+                registro.getHoraConsumo(),
+                registro.getCantidadConsumo(),
+                registro.isTomado()
+        );
+        return registroDTO;
+    }
+    
     public Medicamento medicamentoDTOaEntity(MedicamentoDTO medicamentoDTO) {
         Medicamento medicamento = new Medicamento(
                 medicamentoDTO.getCodigo(),

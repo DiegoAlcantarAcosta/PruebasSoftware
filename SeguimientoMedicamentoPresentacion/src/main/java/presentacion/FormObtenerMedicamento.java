@@ -55,7 +55,7 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
         labelTitulo1.setText("Obtener Medicamento");
 
         labelNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        labelNombre.setText("Nombre:");
+        labelNombre.setText("Código:");
 
         btnRegresar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         btnRegresar.setText("Regresar");
@@ -144,7 +144,7 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                medicamentoDTO = casoDeUsoObtener.ObtenerMedicamento(txtNombre.getText());
+                medicamentoDTO = casoDeUsoObtener.ObtenerMedicamento(Integer.parseInt( txtNombre.getText()),usuarioDTO);
             } catch (CasoDeUsoObtenerException ex) {
                 Logger.getLogger(FormObtenerMedicamento.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -45,19 +45,22 @@ public class MedicamentoDAO implements IMedicamentoDAO {
     }
 
     @Override
-    public Medicamento obtener(String codigo) throws PersistenciaExcepcion {
+    public Medicamento obtener(int codigo, int codigoUsuario) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
 
         try {
-            Medicamento medicamento = em.createQuery("SELECT m FROM Medicamento m WHERE m.codigo = :codigo", Medicamento.class)
+            Medicamento medicamento = em.createQuery(
+                    "SELECT m FROM Medicamento m WHERE m.codigo = :codigo AND m.usuario.codigo = :codigoUsuario",
+                    Medicamento.class)
                     .setParameter("codigo", codigo)
+                    .setParameter("codigoUsuario", codigoUsuario)
                     .getSingleResult();
             em.getTransaction().commit();
             return medicamento;
         } catch (NoResultException e) {
             em.getTransaction().rollback();
-            throw new PersistenciaExcepcion("No se encontró ningún medicamento con el código: " + codigo, e);
+            throw new PersistenciaExcepcion("No se encontró ningún medicamento con el código: " + codigo + " para el usuario con código: " + codigoUsuario, e);
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
@@ -68,21 +71,35 @@ public class MedicamentoDAO implements IMedicamentoDAO {
     }
 
     @Override
-    public boolean editar(Medicamento medicamento) throws PersistenciaExcepcion {
+    public boolean editar(Medicamento medicamento, int codigoUsuario) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
+
         try {
-            Medicamento medicamentoBuscado = em.createQuery("SELECT m FROM Medicamento m WHERE m.codigo = :codigo", Medicamento.class)
+            Medicamento medicamentoBuscado = em.createQuery(
+                    "SELECT m FROM Medicamento m WHERE m.codigo = :codigo AND m.usuario.codigo = :codigoUsuario",
+                    Medicamento.class)
                     .setParameter("codigo", medicamento.getCodigo())
+                    .setParameter("codigoUsuario", codigoUsuario)
                     .getSingleResult();
+
             if (medicamentoBuscado != null) {
-                em.merge(medicamento);
+                medicamentoBuscado.setNombre(medicamento.getNombre());
+                medicamentoBuscado.setFrecuencia(medicamento.getFrecuencia());
+                medicamentoBuscado.setHoraPrimeraDosis(medicamento.getHoraPrimeraDosis());
+                medicamentoBuscado.setTipoConsumo(medicamento.getTipoConsumo());
+                medicamentoBuscado.setCantidad(medicamento.getCantidad());
+
+                em.merge(medicamentoBuscado);
                 em.getTransaction().commit();
                 return true;
             } else {
                 em.getTransaction().rollback();
                 throw new PersistenciaExcepcion("No se encontró el medicamento para editar.");
             }
+        } catch (NoResultException e) {
+            em.getTransaction().rollback();
+            throw new PersistenciaExcepcion("No se encontró el medicamento para editar.", e);
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
@@ -93,22 +110,25 @@ public class MedicamentoDAO implements IMedicamentoDAO {
     }
 
     @Override
-    public boolean eliminar(Medicamento medicamento) throws PersistenciaExcepcion {
+    public boolean eliminar(int codigo, int codigoUsuario) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
+
         try {
-            Medicamento medicamentoBuscado = em.createQuery("SELECT m FROM Medicamento m WHERE m.codigo = :codigo", Medicamento.class)
-                    .setParameter("codigo", medicamento.getCodigo())
+            Medicamento medicamentoBuscado = em.createQuery(
+                    "SELECT m FROM Medicamento m WHERE m.codigo = :codigo AND m.usuario.codigo = :codigoUsuario",
+                    Medicamento.class)
+                    .setParameter("codigo", codigo)
+                    .setParameter("codigoUsuario", codigoUsuario)
                     .getSingleResult();
 
-            if (medicamentoBuscado != null) {
-                em.remove(medicamentoBuscado);
-                em.getTransaction().commit();
-                return true;
-            } else {
-                em.getTransaction().rollback();
-                throw new PersistenciaExcepcion("El medicamento no fue encontrado para eliminar.");
-            }
+            em.remove(medicamentoBuscado);
+            em.getTransaction().commit();
+            return true;
+
+        } catch (NoResultException e) {
+            em.getTransaction().rollback();
+            throw new PersistenciaExcepcion("El medicamento no fue encontrado para eliminar.", e);
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();

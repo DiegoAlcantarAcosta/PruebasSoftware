@@ -196,8 +196,8 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if (casoDeUsoEliminar.EliminarMedicamento(medicamentoDTO)){
-                JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            if (casoDeUsoEliminar.EliminarMedicamento(medicamentoDTO.getCodigo(),usuarioDTO.getCodigo())){
+                JOptionPane.showMessageDialog(null, "¡Medicamento eliminado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
                 formObtenerMedicamento.setVisible(true);
                 this.dispose();

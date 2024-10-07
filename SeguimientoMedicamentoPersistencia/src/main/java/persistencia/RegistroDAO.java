@@ -35,18 +35,22 @@ public class RegistroDAO implements IRegistroDAO {
     }
 
     @Override
-    public Double consultarUltimaToma(Medicamento medicamento) throws PersistenciaExcepcion {
+    public Registro consultarUltimaToma(Medicamento medicamento) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
+        
+        Long medicamentoId=medicamento.getId();
 
         try {
-            Registro registro = em.createQuery("SELECT r FROM Registro r WHERE r.medicamento = :medicamento ORDER BY r.horaConsumo DESC", Registro.class)
-                    .setParameter("medicamento", medicamento)
+            Registro registro = em.createQuery(
+                    "SELECT r FROM Registro r WHERE r.medicamento.id = :medicamentoId ORDER BY r.horaConsumo DESC",
+                    Registro.class)
+                    .setParameter("medicamentoId", medicamentoId)
                     .setMaxResults(1)
                     .getSingleResult();
-            
+
             em.getTransaction().commit();
-            return (double) registro.getHoraConsumo().getTime();
+            return registro;
         } catch (NoResultException e) {
             em.getTransaction().rollback();
             throw new PersistenciaExcepcion("No se encontró ninguna toma registrada para el medicamento", e);

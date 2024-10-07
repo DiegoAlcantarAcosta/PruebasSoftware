@@ -27,7 +27,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         casoDeUsoEditar = new CasoDeUsoEditar();
         this.usuarioDTO = usuarioDTO;
         
-        labelCodigon.setText(medicamentoDTO.getCodigo()+"");
+        labelCodigon.setText(""+medicamentoDTO.getCodigo());
         txtNombre.setText(medicamentoDTO.getNombre());
         cbxTipoConsumo.setSelectedItem(medicamentoDTO.getTipoConsumo());
         txtCantidad.setText("" + medicamentoDTO.getCantidad());
@@ -254,7 +254,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty() || txtPrimeraDosis.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            MedicamentoDTO medicamentoNuevoDTO = new MedicamentoDTO(
+            MedicamentoDTO medicamentoNuevoDTO = new MedicamentoDTO(medicamentoDTO.getCodigo(),
                     txtNombre.getText(),
                     Double.parseDouble(txtFrecuencia.getText()),
                     Double.parseDouble(txtPrimeraDosis.getText()),
@@ -263,7 +263,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             );
 
             try {
-                if (casoDeUsoEditar.EditarMedicamento(medicamentoNuevoDTO)) {
+                if (casoDeUsoEditar.EditarMedicamento(medicamentoNuevoDTO,usuarioDTO.getCodigo())) {
                     JOptionPane.showMessageDialog(null, "¡Medicamento Editado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
                     formObtenerMedicamento.setVisible(true);

@@ -166,8 +166,7 @@ public class FormRegistrarse extends javax.swing.JFrame {
         if (txtUsuario.getText().isEmpty() || txtContraseña.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            UsuarioDTO usuarioDTO = new UsuarioDTO(
-                    txtUsuario.getText(),
+            UsuarioDTO usuarioDTO = new UsuarioDTO(txtUsuario.getText(),
                     txtContraseña.getText()
             );
             ICasoDeUsoRegistrarse casoDeUsoRegistrarse = new CasoDeUsoRegistrarse();

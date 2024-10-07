@@ -28,9 +28,9 @@ public class CasoDeUsoEliminar implements ICasoDeUsoEliminar {
     }
     
     @Override
-    public boolean EliminarMedicamento(MedicamentoDTO medicamentoDTO) throws CasoDeUsoEliminarException{
+    public boolean EliminarMedicamento(int codigo,int codigoUsuario) throws CasoDeUsoEliminarException{
         try {
-            if(medicamentoDAO.eliminar(conversor.medicamentoDTOaEntity(medicamentoDTO))){
+            if(medicamentoDAO.eliminar(codigo,codigoUsuario)){
                 return true;
             }
         } catch (PersistenciaExcepcion ex) {

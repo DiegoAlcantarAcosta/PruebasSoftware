@@ -2,6 +2,7 @@ package casoDeUsoObtener;
 
 import conversor.Conversor;
 import dto.MedicamentoDTO;
+import dto.UsuarioDTO;
 import entidades.Medicamento;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IMedicamentoDAO;
@@ -20,9 +21,9 @@ public class CasoDeUsoObtener implements ICasoDeUsoObtener{
     }
     
     @Override
-    public MedicamentoDTO ObtenerMedicamento(String Nombre) throws CasoDeUsoObtenerException {
+    public MedicamentoDTO ObtenerMedicamento(int codigo,UsuarioDTO usuarioDTO) throws CasoDeUsoObtenerException {
         try {
-            Medicamento medicamento = medicamentoDAO.obtener(Nombre);
+            Medicamento medicamento = medicamentoDAO.obtener(codigo,usuarioDTO.getCodigo());
             if (medicamento != (null)) {
                 return conversor.medicamentoEntityaDTO(medicamento);
             }

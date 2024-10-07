@@ -6,6 +6,7 @@ import casoDeUsoMarcarTomado.ICasoDeUsoMarcarTomado;
 import dto.MedicamentoDTO;
 import dto.RegistroDTO;
 import dto.UsuarioDTO;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -14,7 +15,6 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
 
     private String flujo;
     private MedicamentoDTO medicamentoDTO;
-    private RegistroDTO registroDTO;
     private ICasoDeUsoMarcarTomado casoDeUsoMarcarTomado;
     private UsuarioDTO usuarioDTO;
     
@@ -22,20 +22,16 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
      * Creates new form FormTomarMedicamento
      */
     public FormTomarMedicamento(String flujo, MedicamentoDTO medicamentoDTO, UsuarioDTO usuarioDTO) {
-        //papus aqui el gomez del pasado, no entiendo bien como tienen en mente hacer esto del registro.
-        //si le mueven para que jale, es probable que el codigo puesto aqui funcione
-        //ya depende de que tanto muevan Nyejejejeje ahi se las arreglan ando con la natasha salu2
+        
         initComponents();
         this.flujo = flujo;
         this.medicamentoDTO = medicamentoDTO;
         casoDeUsoMarcarTomado = new CasoDeUsoMarcarTomado();
         this.usuarioDTO = usuarioDTO;
         
-        labelNombre.setText("Nombre: "+medicamentoDTO.getNombre());
-        labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
-        labelCantidad.setText("Cantidad: "+medicamentoDTO.getCantidad());
-        labelFrecuencia.setText("Frecuencia: "+medicamentoDTO.getFrecuencia());
-        labelPrimeraDosis.setText("Hora de Primera Dosis: "+medicamentoDTO.getHoraPrimeraDosis());
+        nombreField.setText(""+medicamentoDTO.getNombre());
+        consumoField.setText(""+medicamentoDTO.getTipoConsumo());
+        cantidadField.setText(""+medicamentoDTO.getCantidad());
     }
 
     /**
@@ -47,18 +43,22 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel3 = new javax.swing.JLabel();
         panFondo = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         labelTitulo1 = new javax.swing.JLabel();
-        labelPrimeraDosis = new javax.swing.JLabel();
-        labelFrecuencia = new javax.swing.JLabel();
         labelCantidad = new javax.swing.JLabel();
         labelTipoConsumo = new javax.swing.JLabel();
         labelNombre = new javax.swing.JLabel();
         labelTitulo2 = new javax.swing.JLabel();
         btnRegresar1 = new javax.swing.JButton();
         labelTitulo3 = new javax.swing.JLabel();
+        cantidadField = new javax.swing.JLabel();
+        nombreField = new javax.swing.JLabel();
+        consumoField = new javax.swing.JLabel();
+
+        jLabel3.setText("-----");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,12 +77,6 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
 
         labelTitulo1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelTitulo1.setText("Tomar Medicamento");
-
-        labelPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        labelPrimeraDosis.setText("Hora de Primera Dosis:");
-
-        labelFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        labelFrecuencia.setText("Frecuencia:");
 
         labelCantidad.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelCantidad.setText("Cantidad:");
@@ -107,6 +101,12 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
         labelTitulo3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         labelTitulo3.setText("Medicamento?");
 
+        cantidadField.setText("-----");
+
+        nombreField.setText("-----");
+
+        consumoField.setText("-----");
+
         javax.swing.GroupLayout panFondoLayout = new javax.swing.GroupLayout(panFondo);
         panFondo.setLayout(panFondoLayout);
         panFondoLayout.setHorizontalGroup(
@@ -119,12 +119,17 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
                             .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(labelTitulo1)
                                 .addComponent(labelTitulo)
-                                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(labelNombre)
-                                    .addComponent(labelTipoConsumo)
-                                    .addComponent(labelCantidad)
-                                    .addComponent(labelFrecuencia)
-                                    .addComponent(labelPrimeraDosis))))
+                                .addGroup(panFondoLayout.createSequentialGroup()
+                                    .addGap(4, 4, 4)
+                                    .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(labelNombre)
+                                        .addComponent(labelTipoConsumo)
+                                        .addComponent(labelCantidad))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cantidadField)
+                                        .addComponent(nombreField)
+                                        .addComponent(consumoField)))))
                         .addGroup(panFondoLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(btnRegresar)
@@ -147,16 +152,18 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo1)
                 .addGap(18, 18, 18)
-                .addComponent(labelNombre)
+                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNombre)
+                    .addComponent(nombreField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelTipoConsumo)
+                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTipoConsumo)
+                    .addComponent(consumoField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelCantidad)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCantidad)
+                    .addComponent(cantidadField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(labelTitulo2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo3)
@@ -189,8 +196,9 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
+        RegistroDTO registroDTO=new RegistroDTO(new Date(), medicamentoDTO.getCantidad(), true);
         try {
-            if (casoDeUsoMarcarTomado.tomaDeMedicamento(registroDTO)){
+            if (casoDeUsoMarcarTomado.tomaDeMedicamento(registroDTO, medicamentoDTO, usuarioDTO)){
                 JOptionPane.showMessageDialog(null, "¡Medicamento Tomado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
                 formObtenerMedicamento.setVisible(true);
@@ -207,15 +215,17 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnRegresar1;
+    private javax.swing.JLabel cantidadField;
+    private javax.swing.JLabel consumoField;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel labelCantidad;
-    private javax.swing.JLabel labelFrecuencia;
     private javax.swing.JLabel labelNombre;
-    private javax.swing.JLabel labelPrimeraDosis;
     private javax.swing.JLabel labelTipoConsumo;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelTitulo1;
     private javax.swing.JLabel labelTitulo2;
     private javax.swing.JLabel labelTitulo3;
+    private javax.swing.JLabel nombreField;
     private javax.swing.JPanel panFondo;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,6 +12,6 @@ import dto.MedicamentoDTO;
  */
 public interface ICasoDeUsoEliminar {
     
-    public boolean EliminarMedicamento(MedicamentoDTO medicamentoDTO) throws CasoDeUsoEliminarException;
+    public boolean EliminarMedicamento(int codigo,int codigoUsuario) throws CasoDeUsoEliminarException;
     
 }

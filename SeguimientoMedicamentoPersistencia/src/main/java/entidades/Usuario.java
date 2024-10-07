@@ -40,6 +40,7 @@ public class Usuario implements Serializable {
         this.codigo = codigo;
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
+        
     }
     
     

@@ -6,9 +6,9 @@ import excepciones.PersistenciaExcepcion;
 public interface IMedicamentoDAO  {
     public boolean agregar(Medicamento medicamento) throws PersistenciaExcepcion;
     
-    public Medicamento obtener(String nombre) throws PersistenciaExcepcion;
+    public Medicamento obtener(int codigo, int codigoUsuario) throws PersistenciaExcepcion ;
     
-    public boolean editar(Medicamento medicamento) throws PersistenciaExcepcion;
+    public boolean editar(Medicamento medicamento,int codigoUsuario) throws PersistenciaExcepcion;
     
-    public boolean eliminar(Medicamento medicamento) throws PersistenciaExcepcion;
+    public boolean eliminar(int codigo, int codigoUsuario) throws PersistenciaExcepcion;
 }

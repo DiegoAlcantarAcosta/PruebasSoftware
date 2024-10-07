@@ -1,7 +1,8 @@
 package casoDeUsoProximaDosis;
 
 import dto.MedicamentoDTO;
+import java.util.Date;
 
 public interface ICasoDeUsoProximaDosis {
-    public Double consultarUltimaToma(MedicamentoDTO medicamentoDTO) throws CasoDeUsoProximaDosisException;
+    public Date consultarUltimaToma(int codigo,int codigoUsuario) throws CasoDeUsoProximaDosisException;
 }

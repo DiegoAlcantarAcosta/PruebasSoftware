@@ -30,6 +30,7 @@ public class CasoDeUsoAgregar implements ICasoDeUsoAgregar{
         try {
             Medicamento medTemp=conversor.medicamentoDTOaEntity(medicamentoDTO);
             medTemp.setUsuario( usuarioDAO.buscarUsuarioPorCodigo(usuarioDTO.getCodigo()) );
+            medicamentoDAO.agregar(medTemp);
             return true;
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);

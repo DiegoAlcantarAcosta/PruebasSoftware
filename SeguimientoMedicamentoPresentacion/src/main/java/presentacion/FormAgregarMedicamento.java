@@ -112,7 +112,7 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
         });
 
         cbxTipoConsumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        cbxTipoConsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tableta", "Jarabe" }));
+        cbxTipoConsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ml", "pastilla(s)" }));
 
         javax.swing.GroupLayout panFondoLayout = new javax.swing.GroupLayout(panFondo);
         panFondo.setLayout(panFondoLayout);

@@ -5,41 +5,37 @@ public class MedicamentoDTO {
     private int codigo;
     private String nombre;
     private double frecuencia;
-    private double horaPrimeraDosis;
     private String tipoConsumo;
     private int Cantidad;
 
     public MedicamentoDTO() {
     }
 
-    public MedicamentoDTO(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
-        this.nombre = nombre;
-        this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
-        this.tipoConsumo = tipoConsumo;
-        this.Cantidad = Cantidad;
-    }
-
-    public MedicamentoDTO(int codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
+    public MedicamentoDTO(int codigo, String nombre, double frecuencia, String tipoConsumo, int Cantidad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
         this.tipoConsumo = tipoConsumo;
         this.Cantidad = Cantidad;
     }
+    
 
-    public MedicamentoDTO(int codigoDueno, int codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int Cantidad) {
+    public MedicamentoDTO(int codigoDueno, int codigo, String nombre, double frecuencia, String tipoConsumo, int Cantidad) {
         this.codigoDueno = codigoDueno;
         this.codigo = codigo;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
         this.tipoConsumo = tipoConsumo;
         this.Cantidad = Cantidad;
     }
-    
-    
+
+    public int getCodigoDueno() {
+        return codigoDueno;
+    }
+
+    public void setCodigoDueno(int codigoDueno) {
+        this.codigoDueno = codigoDueno;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -65,14 +61,6 @@ public class MedicamentoDTO {
         this.frecuencia = frecuencia;
     }
 
-    public double getHoraPrimeraDosis() {
-        return horaPrimeraDosis;
-    }
-
-    public void setHoraPrimeraDosis(double horaPrimeraDosis) {
-        this.horaPrimeraDosis = horaPrimeraDosis;
-    }
-
     public String getTipoConsumo() {
         return tipoConsumo;
     }
@@ -88,6 +76,9 @@ public class MedicamentoDTO {
     public void setCantidad(int Cantidad) {
         this.Cantidad = Cantidad;
     }
+
+    
+    
 
     
 }

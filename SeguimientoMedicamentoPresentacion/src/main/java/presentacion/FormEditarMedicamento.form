@@ -46,19 +46,18 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="labelNombre" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="labelTipoCosumo" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="labelCantidad" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="labelFrecuencia" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelPrimeraDosis" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="labelCodigo" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtFrecuencia" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtPrimeraDosis" alignment="0" max="32767" attributes="0"/>
                               <Component id="cbxTipoConsumo" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtCantidad" alignment="0" min="-2" pref="215" max="-2" attributes="0"/>
                               <Component id="labelCodigon" min="-2" max="-2" attributes="0"/>
@@ -116,12 +115,7 @@
                       <Component id="labelFrecuencia" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
                       <Component id="txtFrecuencia" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelPrimeraDosis" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="txtPrimeraDosis" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnRegresar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnRegresar1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -232,24 +226,6 @@
           </Properties>
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtFrecuenciaKeyTyped"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelPrimeraDosis">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Comic Sans MS" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Hora de Primera Dosis:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtPrimeraDosis">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Comic Sans MS" size="14" style="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPrimeraDosisKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnRegresar1">

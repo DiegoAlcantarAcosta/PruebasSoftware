@@ -38,14 +38,14 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
         labelTipoCosumo = new javax.swing.JLabel();
         labelCantidad = new javax.swing.JLabel();
         labelFrecuencia = new javax.swing.JLabel();
-        labelPrimeraDosis = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnAgregarMedicamento = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
         txtFrecuencia = new javax.swing.JTextField();
-        txtPrimeraDosis = new javax.swing.JTextField();
         cbxTipoConsumo = new javax.swing.JComboBox<>();
+        txtCodigo = new javax.swing.JTextField();
+        labelCodigo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,9 +68,6 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
 
         labelFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelFrecuencia.setText("Frecuencia:");
-
-        labelPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        labelPrimeraDosis.setText("Hora de Primera Dosis:");
 
         btnRegresar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         btnRegresar.setText("Regresar");
@@ -104,15 +101,13 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
             }
         });
 
-        txtPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        txtPrimeraDosis.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrimeraDosisKeyTyped(evt);
-            }
-        });
-
         cbxTipoConsumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         cbxTipoConsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ml", "pastilla(s)" }));
+
+        txtCodigo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        labelCodigo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        labelCodigo.setText("Código:");
 
         javax.swing.GroupLayout panFondoLayout = new javax.swing.GroupLayout(panFondo);
         panFondo.setLayout(panFondoLayout);
@@ -132,20 +127,20 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
                                 .addComponent(labelTitulo1)
                                 .addComponent(labelTitulo))))
                     .addGroup(panFondoLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(46, 46, 46)
                         .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(labelNombre)
                             .addComponent(labelTipoCosumo)
                             .addComponent(labelCantidad)
                             .addComponent(labelFrecuencia)
-                            .addComponent(labelPrimeraDosis))
+                            .addComponent(labelCodigo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                            .addComponent(txtFrecuencia, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                            .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                            .addComponent(cbxTipoConsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtCantidad)
+                            .addComponent(txtFrecuencia)
+                            .addComponent(cbxTipoConsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCodigo)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         panFondoLayout.setVerticalGroup(
@@ -155,10 +150,14 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
                 .addComponent(labelTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTitulo1)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNombre)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNombre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCodigo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTipoCosumo)
@@ -171,11 +170,7 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
                 .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
                 .addGroup(panFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
                     .addComponent(btnAgregarMedicamento))
@@ -204,13 +199,12 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnAgregarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMedicamentoActionPerformed
-        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty() || txtPrimeraDosis.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty()  || txtCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
+            MedicamentoDTO medicamentoDTO = new MedicamentoDTO(Integer.parseInt(txtCodigo.getText()),
                     txtNombre.getText(),
                     Double.parseDouble(txtFrecuencia.getText()),
-                    Double.parseDouble(txtPrimeraDosis.getText()),
                     cbxTipoConsumo.getSelectedItem().toString(),
                     Integer.parseInt(txtCantidad.getText())
             );
@@ -245,28 +239,21 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtFrecuenciaKeyTyped
 
-    private void txtPrimeraDosisKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimeraDosisKeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtPrimeraDosisKeyTyped
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbxTipoConsumo;
     private javax.swing.JLabel labelCantidad;
+    private javax.swing.JLabel labelCodigo;
     private javax.swing.JLabel labelFrecuencia;
     private javax.swing.JLabel labelNombre;
-    private javax.swing.JLabel labelPrimeraDosis;
     private javax.swing.JLabel labelTipoCosumo;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelTitulo1;
     private javax.swing.JPanel panFondo;
     private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtFrecuencia;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrimeraDosis;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,7 +30,6 @@ public class FormEliminarMedicamento extends javax.swing.JFrame {
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
         labelCantidad.setText("Cantidad: "+medicamentoDTO.getCantidad());
         labelFrecuencia.setText("Frecuencia: "+medicamentoDTO.getFrecuencia());
-        labelPrimeraDosis.setText("Hora de Primera Dosis: "+medicamentoDTO.getHoraPrimeraDosis());
         
     }
 

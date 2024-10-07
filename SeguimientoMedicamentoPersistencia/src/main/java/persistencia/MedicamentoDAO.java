@@ -86,7 +86,6 @@ public class MedicamentoDAO implements IMedicamentoDAO {
             if (medicamentoBuscado != null) {
                 medicamentoBuscado.setNombre(medicamento.getNombre());
                 medicamentoBuscado.setFrecuencia(medicamento.getFrecuencia());
-                medicamentoBuscado.setHoraPrimeraDosis(medicamento.getHoraPrimeraDosis());
                 medicamentoBuscado.setTipoConsumo(medicamento.getTipoConsumo());
                 medicamentoBuscado.setCantidad(medicamento.getCantidad());
 

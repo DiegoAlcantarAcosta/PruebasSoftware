@@ -32,7 +32,6 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         cbxTipoConsumo.setSelectedItem(medicamentoDTO.getTipoConsumo());
         txtCantidad.setText("" + medicamentoDTO.getCantidad());
         txtFrecuencia.setText("" + medicamentoDTO.getFrecuencia());
-        txtPrimeraDosis.setText("" + medicamentoDTO.getHoraPrimeraDosis());
     }
 
     /**
@@ -56,8 +55,6 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         txtCantidad = new javax.swing.JTextField();
         labelFrecuencia = new javax.swing.JLabel();
         txtFrecuencia = new javax.swing.JTextField();
-        labelPrimeraDosis = new javax.swing.JLabel();
-        txtPrimeraDosis = new javax.swing.JTextField();
         btnRegresar1 = new javax.swing.JButton();
         labelCodigo = new javax.swing.JLabel();
         labelCodigon = new javax.swing.JLabel();
@@ -111,16 +108,6 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             }
         });
 
-        labelPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        labelPrimeraDosis.setText("Hora de Primera Dosis:");
-
-        txtPrimeraDosis.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        txtPrimeraDosis.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrimeraDosisKeyTyped(evt);
-            }
-        });
-
         btnRegresar1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         btnRegresar1.setText("Editar Medicamento");
         btnRegresar1.addActionListener(new java.awt.event.ActionListener() {
@@ -142,18 +129,17 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             .addGroup(panFondo4Layout.createSequentialGroup()
                 .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panFondo4Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
                         .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(labelNombre)
                             .addComponent(labelTipoCosumo)
                             .addComponent(labelCantidad)
                             .addComponent(labelFrecuencia)
-                            .addComponent(labelPrimeraDosis)
                             .addComponent(labelCodigo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombre)
                             .addComponent(txtFrecuencia)
-                            .addComponent(txtPrimeraDosis)
                             .addComponent(cbxTipoConsumo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelCodigon)))
@@ -197,11 +183,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
                 .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrimeraDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(61, 61, 61)
                 .addGroup(panFondo4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
                     .addComponent(btnRegresar1))
@@ -243,21 +225,13 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtFrecuenciaKeyTyped
 
-    private void txtPrimeraDosisKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimeraDosisKeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtPrimeraDosisKeyTyped
-
     private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
-        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty() || txtPrimeraDosis.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty()  || txtCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             MedicamentoDTO medicamentoNuevoDTO = new MedicamentoDTO(medicamentoDTO.getCodigo(),
                     txtNombre.getText(),
                     Double.parseDouble(txtFrecuencia.getText()),
-                    Double.parseDouble(txtPrimeraDosis.getText()),
                     cbxTipoConsumo.getSelectedItem().toString(),
                     Integer.parseInt(txtCantidad.getText())
             );
@@ -286,7 +260,6 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
     private javax.swing.JLabel labelCodigon;
     private javax.swing.JLabel labelFrecuencia;
     private javax.swing.JLabel labelNombre;
-    private javax.swing.JLabel labelPrimeraDosis;
     private javax.swing.JLabel labelTipoCosumo;
     private javax.swing.JLabel labelTitulo4;
     private javax.swing.JLabel labelTitulo5;
@@ -294,6 +267,5 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtFrecuencia;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrimeraDosis;
     // End of variables declaration//GEN-END:variables
 }

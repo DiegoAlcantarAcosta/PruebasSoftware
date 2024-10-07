@@ -36,9 +36,6 @@ public class Medicamento implements Serializable {
     @Column(name = "frecuencia", nullable = false)
     private double frecuencia;
     
-    @Column(name = "horaPrimerDosis", nullable = false)
-    private double horaPrimeraDosis;
-    
     @Column(name = "tipoConsumo", nullable = false)
     private String tipoConsumo;
     
@@ -55,35 +52,41 @@ public class Medicamento implements Serializable {
     public Medicamento() {
     }
 
-    public Medicamento(int codigo, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
+    public Medicamento(int codigo, String nombre, double frecuencia, String tipoConsumo, int cantidad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
+        this.tipoConsumo = tipoConsumo;
+        this.cantidad = cantidad;
+    }
+    
+
+    public Medicamento(int codigo, String nombre, double frecuencia, String tipoConsumo, int cantidad, Usuario usuario) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.frecuencia = frecuencia;
         this.tipoConsumo = tipoConsumo;
         this.cantidad = cantidad;
         this.usuario = usuario;
     }
+    
 
-    public Medicamento(Long id, String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad, Usuario usuario, List<Registro> registros) {
+    public Medicamento(Long id, int codigo, String nombre, double frecuencia, String tipoConsumo, int cantidad, Usuario usuario) {
         this.id = id;
-        this.codigo = contadorCodigo++;
+        this.codigo = codigo;
         this.nombre = nombre;
         this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
         this.tipoConsumo = tipoConsumo;
         this.cantidad = cantidad;
         this.usuario = usuario;
-        this.registros = registros;
     }
 
-    public Medicamento(String nombre, double frecuencia, double horaPrimeraDosis, String tipoConsumo, int cantidad) {
-        this.codigo = contadorCodigo++;
-        this.nombre = nombre;
-        this.frecuencia = frecuencia;
-        this.horaPrimeraDosis = horaPrimeraDosis;
-        this.tipoConsumo = tipoConsumo;
-        this.cantidad = cantidad;
+    public static int getContadorCodigo() {
+        return contadorCodigo;
+    }
+
+    public static void setContadorCodigo(int contadorCodigo) {
+        Medicamento.contadorCodigo = contadorCodigo;
     }
 
     public Long getId() {
@@ -101,7 +104,7 @@ public class Medicamento implements Serializable {
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -116,14 +119,6 @@ public class Medicamento implements Serializable {
 
     public void setFrecuencia(double frecuencia) {
         this.frecuencia = frecuencia;
-    }
-
-    public double getHoraPrimeraDosis() {
-        return horaPrimeraDosis;
-    }
-
-    public void setHoraPrimeraDosis(double horaPrimeraDosis) {
-        this.horaPrimeraDosis = horaPrimeraDosis;
     }
 
     public String getTipoConsumo() {
@@ -157,6 +152,10 @@ public class Medicamento implements Serializable {
     public void setRegistros(List<Registro> registros) {
         this.registros = registros;
     }
+    
+    
+
+    
     
    
     

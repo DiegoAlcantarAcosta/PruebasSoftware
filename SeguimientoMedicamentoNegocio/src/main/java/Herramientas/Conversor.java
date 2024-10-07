@@ -37,7 +37,6 @@ public class Conversor {
                 medicamentoDTO.getCodigo(),
                 medicamentoDTO.getNombre(),
                 medicamentoDTO.getFrecuencia(),
-                medicamentoDTO.getHoraPrimeraDosis(),
                 medicamentoDTO.getTipoConsumo(),
                 medicamentoDTO.getCantidad()
         );
@@ -49,7 +48,6 @@ public class Conversor {
                 medicamento.getCodigo(),
                 medicamento.getNombre(),
                 medicamento.getFrecuencia(),
-                medicamento.getHoraPrimeraDosis(),
                 medicamento.getTipoConsumo(),
                 medicamento.getCantidad()
         );

@@ -40,19 +40,15 @@ public class UsuarioDAO implements IUsuarioDAO {
         em.getTransaction().begin();;
         
         try {
-            Usuario usuarioNuevo = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario", Usuario.class)
+            Usuario usuarioNuevo = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario AND u.contrasenia = :contrasenia", Usuario.class)
                     .setParameter("nombreUsuario", usuario.getNombreUsuario())
+                    .setParameter("contrasenia", usuario.getContrasenia())
                     .getSingleResult();
+            return usuarioNuevo.getCodigo();
 
-            if (usuarioNuevo != null && usuarioNuevo.getContrasenia().equals(usuario.getContrasenia())) {
-                em.getTransaction().commit();
-                return usuarioNuevo.getCodigo();
-            } else {
-                throw new PersistenciaExcepcion("Ese usuario no existe");
-            }
         } catch (NoResultException e) {
             em.getTransaction().rollback();
-            throw new PersistenciaExcepcion("Usuario no encontrado", e);
+            throw new PersistenciaExcepcion("Usuario o contraseña incorrectos", e);
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();

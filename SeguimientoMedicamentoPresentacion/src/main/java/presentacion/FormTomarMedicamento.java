@@ -209,6 +209,7 @@ public class FormTomarMedicamento extends javax.swing.JFrame {
             }
         } catch (CasoDeUsoMarcarTomadoException ex) {
             Logger.getLogger(FormTomarMedicamento.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnRegresar1ActionPerformed
 

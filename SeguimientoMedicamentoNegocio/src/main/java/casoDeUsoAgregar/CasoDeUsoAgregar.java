@@ -1,6 +1,6 @@
 package casoDeUsoAgregar;
 
-import conversor.Conversor;
+import Herramientas.Conversor;
 import dto.MedicamentoDTO;
 import dto.UsuarioDTO;
 import entidades.Medicamento;

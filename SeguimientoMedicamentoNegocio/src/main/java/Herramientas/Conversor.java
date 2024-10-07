@@ -1,4 +1,4 @@
-package conversor;
+package Herramientas;
 
 import dto.MedicamentoDTO;
 import dto.RegistroDTO;

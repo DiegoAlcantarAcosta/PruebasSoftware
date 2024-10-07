@@ -53,7 +53,7 @@ public class RegistroDAO implements IRegistroDAO {
             return registro;
         } catch (NoResultException e) {
             em.getTransaction().rollback();
-            throw new PersistenciaExcepcion("No se encontró ninguna toma registrada para el medicamento", e);
+            return null;
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();

@@ -1,6 +1,6 @@
 package casoDeUsoProximaDosis;
 
-import conversor.Conversor;
+import Herramientas.Conversor;
 import dto.MedicamentoDTO;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IRegistroDAO;

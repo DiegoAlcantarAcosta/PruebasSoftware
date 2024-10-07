@@ -18,12 +18,13 @@ import persistencia.MedicamentoDAO;
 import persistencia.RegistroDAO;
 
 public class CasoDeUsoMarcarTomado implements ICasoDeUsoMarcarTomado {
+
     private IMedicamentoDAO medicamentoDAO;
     private IRegistroDAO registroDAO;
     private Conversor conversor;
 
     public CasoDeUsoMarcarTomado() {
-        this.medicamentoDAO=new MedicamentoDAO();
+        this.medicamentoDAO = new MedicamentoDAO();
         this.registroDAO = new RegistroDAO();
         conversor = new Conversor();
     }
@@ -32,7 +33,7 @@ public class CasoDeUsoMarcarTomado implements ICasoDeUsoMarcarTomado {
     public boolean tomaDeMedicamento(RegistroDTO registroDTO, MedicamentoDTO medicamentoDTO, UsuarioDTO usuarioDTO) throws CasoDeUsoMarcarTomadoException {
         try {
             Medicamento medicamento = medicamentoDAO.obtener(medicamentoDTO.getCodigo(), usuarioDTO.getCodigo());
-            Registro registroTemp=registroDAO.consultarUltimaToma(medicamento);
+            Registro registroTemp = registroDAO.consultarUltimaToma(medicamento);
             if (registroTemp != null) {
                 Date ultimaToma = registroTemp.getHoraConsumo();
 
@@ -62,13 +63,17 @@ public class CasoDeUsoMarcarTomado implements ICasoDeUsoMarcarTomado {
                     long minutosTarde = TimeUnit.MILLISECONDS.toMinutes(diferenciaMilis);
                     long horasTarde = minutosTarde / 60;
                     minutosTarde = minutosTarde % 60;
+                    Registro registro = conversor.registroDTOaEntity(registroDTO);
+                    registro.setMedicamento(medicamento);
+                    registroDAO.tomaDeMedicamento(registro);
                     throw new CasoDeUsoMarcarTomadoException("Lo tomaste por " + horasTarde + " horas y " + minutosTarde + " minutos tarde.");
                 }
+            } else {
+                Registro registro = conversor.registroDTOaEntity(registroDTO);
+                registro.setMedicamento(medicamento);
+                registroDAO.tomaDeMedicamento(registro);
+                return true;
             }
-            Registro registro = conversor.registroDTOaEntity(registroDTO);
-            registro.setMedicamento(medicamento);
-            registroDAO.tomaDeMedicamento(registro);
-            return true;
 
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,6 +5,7 @@ import conexionEM.IConexion;
 import entidades.Usuario;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IUsuarioDAO;
+import java.sql.PreparedStatement;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
@@ -17,11 +18,43 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
+    public int asignarID() throws PersistenciaExcepcion {
+        EntityManager em = conexion.abrir();
+
+        try {
+            em.getTransaction().begin();
+
+            String sql = "SELECT MAX(u.codigo) FROM Usuario u";
+            Integer ultimoCodigo = (Integer) em.createQuery(sql).getSingleResult();
+
+            if (ultimoCodigo == null) {
+                ultimoCodigo = 0;
+            }
+
+            int siguienteCodigo = ultimoCodigo + 1;
+
+            em.getTransaction().commit();
+
+            return siguienteCodigo;
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new PersistenciaExcepcion("Error al asignar el siguiente ID", e);
+
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
     public boolean registrar(Usuario usuario) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();
 
         try {
+            usuario.setCodigo(asignarID());
             em.persist(usuario);
             em.getTransaction().commit();
             return true;
@@ -38,7 +71,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     public int iniciarSesion(Usuario usuario) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();
         em.getTransaction().begin();;
-        
+
         try {
             Usuario usuarioNuevo = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario AND u.contrasenia = :contrasenia", Usuario.class)
                     .setParameter("nombreUsuario", usuario.getNombreUsuario())
@@ -57,7 +90,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             em.close();
         }
     }
-    
+
     @Override
     public Usuario buscarUsuarioPorCodigo(int codigo) throws PersistenciaExcepcion {
         EntityManager em = conexion.abrir();

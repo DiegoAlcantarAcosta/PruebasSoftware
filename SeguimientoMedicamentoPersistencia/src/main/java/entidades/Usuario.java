@@ -10,13 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import persistencia.UsuarioDAO;
 
 @Entity
 @Table(name = "Usuario")
 public class Usuario implements Serializable {
-    
-    private static int contadorCodigo = 1;
-    
+        
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,28 +41,16 @@ public class Usuario implements Serializable {
         this.contrasenia = contrasenia;
         
     }
-    
-    
 
     public Usuario(Long id, String nombreUsuario, String contrasenia) {
         this.id = id;
-        this.codigo=contadorCodigo++;
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
     }
 
     public Usuario(String nombreUsuario, String contrasenia) {
-        this.codigo=contadorCodigo++;
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
-    }
-
-    public static int getContadorCodigo() {
-        return contadorCodigo;
-    }
-
-    public static void setContadorCodigo(int contadorCodigo) {
-        Usuario.contadorCodigo = contadorCodigo;
     }
 
     public Long getId() {

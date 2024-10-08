@@ -26,8 +26,8 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         this.medicamentoDTO = medicamentoDTO;
         casoDeUsoEditar = new CasoDeUsoEditar();
         this.usuarioDTO = usuarioDTO;
-        
-        labelCodigon.setText(""+medicamentoDTO.getCodigo());
+
+        labelCodigon.setText("" + medicamentoDTO.getCodigo());
         txtNombre.setText(medicamentoDTO.getNombre());
         cbxTipoConsumo.setSelectedItem(medicamentoDTO.getTipoConsumo());
         txtCantidad.setText("" + medicamentoDTO.getCantidad());
@@ -81,6 +81,11 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         labelNombre.setText("Nombre:");
 
         txtNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         labelTipoCosumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelTipoCosumo.setText("Tipo de Consumo:");
@@ -226,7 +231,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFrecuenciaKeyTyped
 
     private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
-        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty()  || txtCantidad.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             MedicamentoDTO medicamentoNuevoDTO = new MedicamentoDTO(medicamentoDTO.getCodigo(),
@@ -237,7 +242,7 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             );
 
             try {
-                if (casoDeUsoEditar.EditarMedicamento(medicamentoNuevoDTO,usuarioDTO.getCodigo())) {
+                if (casoDeUsoEditar.EditarMedicamento(medicamentoNuevoDTO, usuarioDTO.getCodigo())) {
                     JOptionPane.showMessageDialog(null, "¡Medicamento Editado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     FormObtenerMedicamento formObtenerMedicamento = new FormObtenerMedicamento(flujo, usuarioDTO);
                     formObtenerMedicamento.setVisible(true);
@@ -250,6 +255,15 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnRegresar1ActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();
+
+        // Si el carácter no es una letra, consumir el evento
+        if (!Character.isLetter(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;

@@ -60,7 +60,7 @@ public class MedicamentoDAO implements IMedicamentoDAO {
             return medicamento;
         } catch (NoResultException e) {
             em.getTransaction().rollback();
-            throw new PersistenciaExcepcion("No se encontró ningún medicamento con el código: " + codigo + " para el usuario con código: " + codigoUsuario, e);
+            return null;
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();

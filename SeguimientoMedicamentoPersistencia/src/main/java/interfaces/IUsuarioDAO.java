@@ -8,4 +8,5 @@ public interface IUsuarioDAO {
     
     public int iniciarSesion(Usuario usuario) throws PersistenciaExcepcion;
     public Usuario buscarUsuarioPorCodigo(int codigo) throws PersistenciaExcepcion;
+    public int asignarID()throws PersistenciaExcepcion;
 }

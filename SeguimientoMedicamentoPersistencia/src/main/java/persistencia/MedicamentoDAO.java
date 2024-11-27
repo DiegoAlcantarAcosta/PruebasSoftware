@@ -77,9 +77,9 @@ public class MedicamentoDAO implements IMedicamentoDAO {
 
         try {
             Medicamento medicamentoBuscado = em.createQuery(
-                    "SELECT m FROM Medicamento m WHERE m.codigo = :codigo AND m.usuario.codigo = :codigoUsuario",
+                    "SELECT m FROM Medicamento m WHERE m.id = :id AND m.usuario.codigo = :codigoUsuario",
                     Medicamento.class)
-                    .setParameter("codigo", medicamento.getCodigo())
+                    .setParameter("id", medicamento.getId())
                     .setParameter("codigoUsuario", codigoUsuario)
                     .getSingleResult();
 

@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Medicamento")
+@Table(name = "Medicamentos")
 public class Medicamento implements Serializable {
     
     private static int contadorCodigo = 1;

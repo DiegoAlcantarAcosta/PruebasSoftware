@@ -1,4 +1,4 @@
-package test;
+package testConMockito;
 import conexionEM.Conexion;
 import conexionEM.IConexion;
 import entidades.Medicamento;

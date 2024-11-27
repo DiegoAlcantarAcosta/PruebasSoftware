@@ -25,6 +25,9 @@
                 <version>0.8.11</version>
                 <!--Eliminating some classes in Junit local code Coverage[JaCoCo-->
                 <configuration>
+                    <includes>
+                        <include>**/persistencia/**</include>
+                    </includes>
                     <excludes>
                         <exclude>**/com//in/TestServiceApplication.class</exclude>
                     </excludes>

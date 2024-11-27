@@ -1,4 +1,4 @@
-package test;
+package testConMockito;
 
 import conexionEM.Conexion;
 import conexionEM.IConexion;
@@ -34,9 +34,9 @@ public class UsuarioDAOTest {
     @InjectMocks
     private UsuarioDAO usuarioDAO;
 
-    @BeforeEach
+     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this); // Inicializa los mocks
+        MockitoAnnotations.openMocks(this);
         when(conexionMock.abrir()).thenReturn(entityManagerMock);
         when(entityManagerMock.getTransaction()).thenReturn(transactionMock);
         usuarioDAO = new UsuarioDAO(conexionMock);
@@ -53,7 +53,7 @@ public class UsuarioDAOTest {
         
         usuarioDAO.registrar(usuario);
         
-        verify(entityManagerMock, times(1)).persist(usuario); // Verifica si el método persist fue llamado
+        verify(entityManagerMock, times(1)).persist(usuario);
         verify(transactionMock, times(1)).begin();
         verify(transactionMock, times(1)).commit();
     }
@@ -67,7 +67,6 @@ public class UsuarioDAOTest {
         Usuario usuarioMock = new Usuario();
         usuarioMock.setCodigo(1);
 
-        // Configura el mock para la consulta y parámetros
         when(entityManagerMock.createQuery(anyString(), eq(Usuario.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.setParameter(eq("nombreUsuario"), eq(usuario.getNombreUsuario()))).thenReturn(typedQueryMock);
         when(typedQueryMock.setParameter(eq("contrasenia"), eq(usuario.getContrasenia()))).thenReturn(typedQueryMock);
@@ -87,7 +86,6 @@ public class UsuarioDAOTest {
         usuario.setNombreUsuario("testUser");
         usuario.setContrasenia("wrongPassword");
 
-        // Simula el comportamiento del TypedQuery para que lance NoResultException
         when(entityManagerMock.createQuery(anyString(), eq(Usuario.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.setParameter(eq("nombreUsuario"), eq(usuario.getNombreUsuario()))).thenReturn(typedQueryMock);
         when(typedQueryMock.setParameter(eq("contrasenia"), eq(usuario.getContrasenia()))).thenReturn(typedQueryMock);
@@ -102,7 +100,6 @@ public class UsuarioDAOTest {
         Usuario usuarioMock = new Usuario();
         usuarioMock.setCodigo(codigo);
 
-        // Configura el mock para la consulta y parámetros
         when(entityManagerMock.createQuery(anyString(), eq(Usuario.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.setParameter(eq("codigo"), eq(codigo))).thenReturn(typedQueryMock);
         when(typedQueryMock.getSingleResult()).thenReturn(usuarioMock);
@@ -118,7 +115,6 @@ public class UsuarioDAOTest {
     public void testBuscarUsuarioPorCodigoNoExitoso() {
         int codigo = 1;
 
-        // Simula el comportamiento del TypedQuery para que lance NoResultException
         when(entityManagerMock.createQuery(anyString(), eq(Usuario.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.setParameter(eq("codigo"), eq(codigo))).thenReturn(typedQueryMock);
         when(typedQueryMock.getSingleResult()).thenThrow(NoResultException.class);
@@ -131,7 +127,6 @@ public class UsuarioDAOTest {
         Usuario usuarioMock = new Usuario();
         usuarioMock.setCodigo(1);
 
-        // Configura el mock para la consulta y parámetros
         when(entityManagerMock.createQuery(anyString(), eq(Usuario.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.setMaxResults(eq(1))).thenReturn(typedQueryMock);
         when(typedQueryMock.getSingleResult()).thenReturn(usuarioMock);

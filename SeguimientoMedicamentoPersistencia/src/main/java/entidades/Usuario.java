@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "Usuarios")
 public class Usuario implements Serializable {
     
     public static int contadorCodigo;
@@ -35,6 +35,15 @@ public class Usuario implements Serializable {
 
     public Usuario() {
     }
+
+    public Usuario(Long id, int codigo, String nombreUsuario, String contrasenia) {
+        this.id = id;
+        this.codigo = codigo;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasenia = contrasenia;
+    }
+    
+    
 
     public Usuario(int codigo, String nombreUsuario, String contrasenia) {
         this.codigo = codigo;

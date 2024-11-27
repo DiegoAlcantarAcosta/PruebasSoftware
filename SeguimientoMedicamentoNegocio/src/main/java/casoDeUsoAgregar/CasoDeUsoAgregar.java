@@ -12,26 +12,27 @@ import interfaces.IUsuarioDAO;
 import persistencia.MedicamentoDAO;
 import persistencia.UsuarioDAO;
 
-public class CasoDeUsoAgregar implements ICasoDeUsoAgregar{
+public class CasoDeUsoAgregar implements ICasoDeUsoAgregar {
+
     private IUsuarioDAO usuarioDAO;
     private IMedicamentoDAO medicamentoDAO;
     private Conversor conversor;
-    
+
     public CasoDeUsoAgregar() {
-        this.usuarioDAO=new UsuarioDAO();
+        this.usuarioDAO = new UsuarioDAO();
         this.medicamentoDAO = new MedicamentoDAO();
         conversor = new Conversor();
-        
+
     }
-    
+
     @Override
     public boolean AgregarMedicamento(UsuarioDTO usuarioDTO, MedicamentoDTO medicamentoDTO) throws CasoDeUsoAgregarException {
 
         try {
-            Medicamento medTemp=conversor.medicamentoDTOaEntity(medicamentoDTO);
-            medTemp.setUsuario( usuarioDAO.buscarUsuarioPorCodigo(usuarioDTO.getCodigo()) );
-            medicamentoDAO.agregar(medTemp);
-            return true;
+                Medicamento medTemp = conversor.medicamentoDTOaEntity(medicamentoDTO);
+                medTemp.setUsuario(usuarioDAO.buscarUsuarioPorCodigo(usuarioDTO.getCodigo()));
+                medicamentoDAO.agregar(medTemp);
+                return true;
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
         }

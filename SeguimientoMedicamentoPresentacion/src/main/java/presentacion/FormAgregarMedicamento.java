@@ -6,19 +6,24 @@ import javax.swing.JOptionPane;
 import casoDeUsoAgregar.CasoDeUsoAgregar;
 import casoDeUsoAgregar.CasoDeUsoAgregarException;
 import casoDeUsoAgregar.ICasoDeUsoAgregar;
+import casoDeUsoObtener.CasoDeUsoObtener;
+import casoDeUsoObtener.CasoDeUsoObtenerException;
+import casoDeUsoObtener.ICasoDeUsoObtener;
 import dto.UsuarioDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FormAgregarMedicamento extends javax.swing.JFrame {
 
+    private ICasoDeUsoObtener obtener;
     private UsuarioDTO usuarioDTO;
-    
+
     /**
      * Creates new form FormAgregarMedicamento
      */
     public FormAgregarMedicamento(UsuarioDTO usuarioDTO) {
         initComponents();
+        this.obtener = new CasoDeUsoObtener();
         this.usuarioDTO = usuarioDTO;
     }
 
@@ -86,6 +91,11 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
         });
 
         txtNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         txtCantidad.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -105,6 +115,11 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
         cbxTipoConsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ml", "pastilla(s)" }));
 
         txtCodigo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyTyped(evt);
+            }
+        });
 
         labelCodigo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         labelCodigo.setText("Código:");
@@ -199,7 +214,7 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnAgregarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMedicamentoActionPerformed
-        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty()  || txtCantidad.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             MedicamentoDTO medicamentoDTO = new MedicamentoDTO(Integer.parseInt(txtCodigo.getText()),
@@ -211,15 +226,16 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
 
             ICasoDeUsoAgregar casoDeUsoAgregar = new CasoDeUsoAgregar();
             try {
-                if (casoDeUsoAgregar.AgregarMedicamento(usuarioDTO,medicamentoDTO)) {
+                if (obtener.ObtenerMedicamento(medicamentoDTO.getCodigo(), usuarioDTO) != null) {
+                    JOptionPane.showMessageDialog(null, "¡Ese codigo ya esta usado!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    casoDeUsoAgregar.AgregarMedicamento(usuarioDTO, medicamentoDTO);
                     JOptionPane.showMessageDialog(null, "¡Medicamento agregado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     FormInicio formInicio = new FormInicio(usuarioDTO);
                     formInicio.setVisible(true);
                     this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo agregar el medicamento. Inténtalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (CasoDeUsoAgregarException ex) {
+            } catch (CasoDeUsoAgregarException | CasoDeUsoObtenerException ex) {
                 Logger.getLogger(FormAgregarMedicamento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -227,17 +243,36 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+
+        if (!Character.isDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void txtFrecuenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFrecuenciaKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+
+        if (!Character.isDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtFrecuenciaKeyTyped
+
+    private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();
+
+        // Si el carácter no es una letra, consumir el evento
+        if (!Character.isLetter(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;

@@ -66,6 +66,11 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
         });
 
         txtNombre.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         btnBuscarMedicamento.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         btnBuscarMedicamento.setText("Buscar Medicamento");
@@ -181,6 +186,14 @@ public class FormObtenerMedicamento extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnBuscarMedicamentoActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarMedicamento;

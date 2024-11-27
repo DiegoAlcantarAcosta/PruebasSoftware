@@ -13,36 +13,35 @@ public class MedicamentoDAO implements IMedicamentoDAO {
 
     private final IConexion conexion;
 
-    public MedicamentoDAO() {
-        conexion = new Conexion();
+
+    public MedicamentoDAO(IConexion conexion) {
+        this.conexion = conexion;
     }
 
     @Override
-    public boolean agregar(Medicamento medicamento) throws PersistenciaExcepcion {
-        EntityManager em = conexion.abrir();
-        em.getTransaction().begin();
+    public Medicamento agregar(Medicamento medicamento) throws PersistenciaExcepcion {
+    EntityManager em = conexion.abrir();
+    em.getTransaction().begin();
 
-        try {
-            Usuario usuario = em.find(Usuario.class, medicamento.getUsuario().getId());
+    try {
+        Usuario usuario = em.find(Usuario.class, medicamento.getUsuario().getId());
 
-            if (usuario == null) {
-                throw new PersistenciaExcepcion("Usuario no encontrado con ID: " + medicamento.getUsuario().getId());
-            }
-
-            medicamento.setUsuario(usuario);
-            em.persist(medicamento);
-            em.getTransaction().commit();
-            return true;
-
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            e.printStackTrace();
-            throw new PersistenciaExcepcion("Error al agregar el medicamento", e);
-
-        } finally {
-            em.close();
+        if (usuario == null) {
+            throw new PersistenciaExcepcion("Usuario no encontrado con ID: " + medicamento.getUsuario().getId());
         }
+
+        medicamento.setUsuario(usuario);
+        em.persist(medicamento);
+        em.getTransaction().commit();
+        return medicamento;
+
+    } catch (Exception e) {
+        em.getTransaction().rollback();
+        throw new PersistenciaExcepcion("Error al agregar el medicamento", e);
+    } finally {
+        em.close();
     }
+}
 
     @Override
     public Medicamento obtener(int codigo, int codigoUsuario) throws PersistenciaExcepcion {
@@ -58,12 +57,13 @@ public class MedicamentoDAO implements IMedicamentoDAO {
                     .getSingleResult();
             em.getTransaction().commit();
             return medicamento;
+
         } catch (NoResultException e) {
             em.getTransaction().rollback();
-            throw new PersistenciaExcepcion("No se encontró ningún medicamento con el código: " + codigo + " para el usuario con código: " + codigoUsuario, e);
+            throw new PersistenciaExcepcion("No se encontró el medicamento", e);
+
         } catch (Exception e) {
             em.getTransaction().rollback();
-            e.printStackTrace();
             throw new PersistenciaExcepcion("Error al obtener el medicamento", e);
         } finally {
             em.close();
@@ -101,7 +101,6 @@ public class MedicamentoDAO implements IMedicamentoDAO {
             throw new PersistenciaExcepcion("No se encontró el medicamento para editar.", e);
         } catch (Exception e) {
             em.getTransaction().rollback();
-            e.printStackTrace();
             throw new PersistenciaExcepcion("Error al editar el medicamento", e);
         } finally {
             em.close();
@@ -130,11 +129,9 @@ public class MedicamentoDAO implements IMedicamentoDAO {
             throw new PersistenciaExcepcion("El medicamento no fue encontrado para eliminar.", e);
         } catch (Exception e) {
             em.getTransaction().rollback();
-            e.printStackTrace();
             throw new PersistenciaExcepcion("Error al eliminar el medicamento", e);
         } finally {
             em.close();
         }
     }
-
 }

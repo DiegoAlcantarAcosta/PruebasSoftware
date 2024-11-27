@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "Usuario")
 public class Usuario implements Serializable {
     
-    private static int contadorCodigo = 1;
+    public static int contadorCodigo;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,6 +105,8 @@ public class Usuario implements Serializable {
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
     }
+    
+    
 
     @Override
     public String toString() {

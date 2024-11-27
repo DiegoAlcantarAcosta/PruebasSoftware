@@ -41,6 +41,11 @@ public class CasoDeUsoIniciarSesion implements ICasoDeUsoIniciarSesion{
         }
         return -1;
     }
+    
+    @Override
+    public void configurarCodigo()throws CasoDeUsoIniciarSesionException{
+        
+    }
 
     
     

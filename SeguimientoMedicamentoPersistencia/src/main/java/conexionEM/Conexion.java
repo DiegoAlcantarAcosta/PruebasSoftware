@@ -9,21 +9,23 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- *
- * @author Héctor Francisco Báez Luque
- * @author Diego Alcantar Acosta
+ * Implementación de la interfaz IConexion que se encarga de abrir la conexión a la base de datos utilizando JPA.
  */
-public class Conexion implements IConexion{
+public class Conexion implements IConexion {
 
-   /**
-     * Abre una conexión con la base de datos utilizando JPA.
-     * 
-     * @return Un objeto EntityManager que representa la conexión establecida.
-     */
+    private static EntityManagerFactory emf;
+
+    static {
+        emf = Persistence.createEntityManagerFactory("ConexionPU");
+    }
     @Override
     public EntityManager abrir() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConexionPU");
-        EntityManager em = emf.createEntityManager();
-        return em;
+        return emf.createEntityManager();
+    }
+    @Override
+    public void cerrar() {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
+        }
     }
 }

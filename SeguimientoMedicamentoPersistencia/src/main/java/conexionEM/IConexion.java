@@ -9,6 +9,7 @@ public interface IConexion {
      * 
      * @return Un objeto EntityManager que representa la conexión establecida.
      */
-    EntityManager abrir();
+    public EntityManager abrir();
+    public void cerrar();
     
 }

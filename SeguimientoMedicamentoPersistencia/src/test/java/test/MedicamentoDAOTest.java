@@ -1,4 +1,5 @@
 package test;
+import conexionEM.Conexion;
 import conexionEM.IConexion;
 import entidades.Medicamento;
 import entidades.Usuario;
@@ -18,7 +19,7 @@ import persistencia.MedicamentoDAO;
 public class MedicamentoDAOTest {
 
     @Mock
-    private IConexion mockConexion;
+    private Conexion mockConexion;
 
     @Mock
     private EntityManager mockEntityManager;

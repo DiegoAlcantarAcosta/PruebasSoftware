@@ -14,7 +14,7 @@ public class MedicamentoDAO implements IMedicamentoDAO {
     private final IConexion conexion;
 
 
-    public MedicamentoDAO(IConexion conexion) {
+    public MedicamentoDAO(Conexion conexion) {
         this.conexion = conexion;
     }
 

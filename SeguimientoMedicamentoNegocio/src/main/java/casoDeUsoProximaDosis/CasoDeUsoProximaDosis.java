@@ -1,6 +1,7 @@
 package casoDeUsoProximaDosis;
 
 import Herramientas.Conversor;
+import conexionEM.Conexion;
 import dto.MedicamentoDTO;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IRegistroDAO;
@@ -22,8 +23,8 @@ public class CasoDeUsoProximaDosis implements ICasoDeUsoProximaDosis{
     private Conversor conversor;
 
     public CasoDeUsoProximaDosis() {
-        this.medicamentoDAO=new MedicamentoDAO();
-        this.registroDAO = new RegistroDAO();
+        this.medicamentoDAO=new MedicamentoDAO(new Conexion());
+        this.registroDAO = new RegistroDAO(new Conexion());
         conversor = new Conversor();
     }
     

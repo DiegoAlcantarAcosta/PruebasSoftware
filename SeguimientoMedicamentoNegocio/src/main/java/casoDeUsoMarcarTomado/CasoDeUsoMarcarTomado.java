@@ -1,6 +1,7 @@
 package casoDeUsoMarcarTomado;
 
 import Herramientas.Conversor;
+import conexionEM.Conexion;
 import dto.MedicamentoDTO;
 import dto.RegistroDTO;
 import dto.UsuarioDTO;
@@ -24,8 +25,8 @@ public class CasoDeUsoMarcarTomado implements ICasoDeUsoMarcarTomado {
     private Conversor conversor;
 
     public CasoDeUsoMarcarTomado() {
-        this.medicamentoDAO = new MedicamentoDAO();
-        this.registroDAO = new RegistroDAO();
+        this.medicamentoDAO = new MedicamentoDAO(new Conexion());
+        this.registroDAO = new RegistroDAO(new Conexion());
         conversor = new Conversor();
     }
 

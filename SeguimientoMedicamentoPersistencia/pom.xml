@@ -17,16 +17,13 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.8.0.2131</version>
             </plugin>
-
-            <!-- Java Code Coverage[JaCoCo] -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.11</version>
-                <!--Eliminating some classes in Junit local code Coverage[JaCoCo-->
                 <configuration>
                     <includes>
-                        <include>**/persistencia/**</include>
+                        <include>persistencia/**</include>
                     </includes>
                     <excludes>
                         <exclude>**/com//in/TestServiceApplication.class</exclude>
@@ -48,6 +45,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 

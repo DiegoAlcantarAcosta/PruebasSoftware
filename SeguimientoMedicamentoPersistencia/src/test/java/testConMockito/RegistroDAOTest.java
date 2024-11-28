@@ -22,13 +22,14 @@ import org.mockito.Mock;
 import persistencia.RegistroDAO;
 
 class RegistroDAOTest {
-    
-    @InjectMocks
-    private RegistroDAO registroDAO;
     @Mock
     private Conexion conexionMock;
     @Mock
     private EntityManager entityManagerMock;
+    
+    @InjectMocks
+    private RegistroDAO registroDAO;
+    
 
     @BeforeEach
     void setUp() {

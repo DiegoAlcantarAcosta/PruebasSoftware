@@ -1,6 +1,7 @@
 package casoDeUsoAgregar;
 
 import Herramientas.Conversor;
+import conexionEM.Conexion;
 import dto.MedicamentoDTO;
 import dto.UsuarioDTO;
 import entidades.Medicamento;
@@ -19,8 +20,8 @@ public class CasoDeUsoAgregar implements ICasoDeUsoAgregar {
     private Conversor conversor;
 
     public CasoDeUsoAgregar() {
-        this.usuarioDAO = new UsuarioDAO();
-        this.medicamentoDAO = new MedicamentoDAO();
+        this.usuarioDAO = new UsuarioDAO(new Conexion());
+        this.medicamentoDAO = new MedicamentoDAO(new Conexion());
         conversor = new Conversor();
 
     }

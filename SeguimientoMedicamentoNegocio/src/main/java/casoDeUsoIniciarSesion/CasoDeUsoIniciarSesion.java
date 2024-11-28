@@ -2,6 +2,7 @@ package casoDeUsoIniciarSesion;
 
 import Herramientas.Conversor;
 import Herramientas.HashContra;
+import conexionEM.Conexion;
 import dto.UsuarioDTO;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IUsuarioDAO;
@@ -17,7 +18,7 @@ public class CasoDeUsoIniciarSesion implements ICasoDeUsoIniciarSesion{
     private HashContra hashContra;
     
     public CasoDeUsoIniciarSesion() {
-        this.usuarioDAO = new UsuarioDAO();
+        this.usuarioDAO = new UsuarioDAO(new Conexion());
         this.conversor = new Conversor();
         this.hashContra= new HashContra();
         

@@ -5,6 +5,7 @@
 package casoDeUsoEliminar;
 
 import Herramientas.Conversor;
+import conexionEM.Conexion;
 import dto.MedicamentoDTO;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IMedicamentoDAO;
@@ -22,7 +23,7 @@ public class CasoDeUsoEliminar implements ICasoDeUsoEliminar {
     private Conversor conversor;
     
     public CasoDeUsoEliminar() {
-        this.medicamentoDAO = new MedicamentoDAO();
+        this.medicamentoDAO = new MedicamentoDAO(new Conexion());
         conversor = new Conversor();
         
     }

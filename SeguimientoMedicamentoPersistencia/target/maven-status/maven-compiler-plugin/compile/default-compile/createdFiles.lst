@@ -2,7 +2,6 @@ entidades\Usuario_.class
 entidades\Medicamento_.class
 conexionEM\IConexion.class
 interfaces\IMedicamentoDAO.class
-persistencia\NewMain.class
 entidades\Registro.class
 conexionEM\Conexion.class
 persistencia\MedicamentoDAO.class

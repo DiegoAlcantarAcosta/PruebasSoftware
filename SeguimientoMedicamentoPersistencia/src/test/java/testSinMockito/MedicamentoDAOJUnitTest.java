@@ -40,14 +40,12 @@ public class MedicamentoDAOJUnitTest {
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Medicamento").executeUpdate();
         em.createQuery("DELETE FROM Usuario").executeUpdate();
-        
+
         Usuario usuarioCreado = new Usuario(101, "usuarioTest", "test123");
         em.persist(usuarioCreado);
-        
+
         em.getTransaction().commit();
-        usuario=usuarioCreado;
-        Long id=usuarioCreado.getId();
-        usuario = em.find(Usuario.class, id);
+        usuario = usuarioCreado;
     }
 
     @AfterAll
@@ -55,7 +53,6 @@ public class MedicamentoDAOJUnitTest {
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Medicamento").executeUpdate();
         em.createQuery("DELETE FROM Usuario").executeUpdate();
-        
         em.getTransaction().commit();
         if (em.isOpen()) {
             em.close();
@@ -65,34 +62,29 @@ public class MedicamentoDAOJUnitTest {
     @Test
     void testAgregarMedicamento() throws PersistenciaExcepcion {
         Medicamento medicamento = new Medicamento(123, "Aspirina", 2.5, "Oral", 1);
-//        Usuario usuario = new Usuario(1L,101, "usuarioTest", "test123");
         medicamento.setUsuario(usuario);
-        
+
         Medicamento medicamentoGuardado = medicamentoDAO.agregar(medicamento);
 
         assertNotNull(medicamentoGuardado);
-        assertNotNull(medicamentoGuardado.getId());  // La clave primaria debería ser asignada automáticamente
+        assertNotNull(medicamentoGuardado.getId());
         assertEquals("Aspirina", medicamentoGuardado.getNombre());
     }
 
     @Test
     void testObtenerMedicamento() throws PersistenciaExcepcion {
-
         Medicamento medicamento = new Medicamento();
         medicamento.setCodigo(123);
         medicamento.setNombre("Ibuprofeno");
         medicamento.setFrecuencia(2.0);
         medicamento.setTipoConsumo("Oral");
         medicamento.setCantidad(1);
-        medicamento.setUsuario(usuario);  // Asociamos un usuario a este medicamento
+        medicamento.setUsuario(usuario);
 
-        // Registrar el medicamento
         medicamentoDAO.agregar(medicamento);
 
-        // Obtener el medicamento usando los métodos de la DAO
         Medicamento encontrado = medicamentoDAO.obtener(123, 101);
 
-        // Verificar que el medicamento fue encontrado
         assertNotNull(encontrado);
         assertEquals(123, encontrado.getCodigo());
         assertEquals("Ibuprofeno", encontrado.getNombre());
@@ -112,24 +104,20 @@ public class MedicamentoDAOJUnitTest {
 
     @Test
     void testEditarMedicamento() throws PersistenciaExcepcion {
-
         Medicamento medicamento = new Medicamento();
         medicamento.setCodigo(124);
         medicamento.setNombre("Paracetamol");
         medicamento.setFrecuencia(3.0);
         medicamento.setTipoConsumo("Oral");
         medicamento.setCantidad(1);
-        medicamento.setUsuario(usuario);  // Asociamos un usuario a este medicamento
+        medicamento.setUsuario(usuario);
 
-        // Registrar el medicamento
         Medicamento registrado = medicamentoDAO.agregar(medicamento);
         registrado.setNombre("Aspirina");
         registrado.setFrecuencia(2.0);
 
-        // Editar el medicamento
         boolean resultado = medicamentoDAO.editar(registrado, 101);
 
-        // Verificar que el medicamento fue editado correctamente
         assertTrue(resultado);
         Medicamento editado = medicamentoDAO.obtener(124, 101);
         assertEquals("Aspirina", editado.getNombre());
@@ -138,25 +126,20 @@ public class MedicamentoDAOJUnitTest {
 
     @Test
     void testEliminarMedicamento() throws PersistenciaExcepcion {
-
         Medicamento medicamento = new Medicamento();
         medicamento.setCodigo(122);
         medicamento.setNombre("Paracetamol");
         medicamento.setFrecuencia(3.0);
         medicamento.setTipoConsumo("Oral");
         medicamento.setCantidad(1);
-        medicamento.setUsuario(usuario);  // Asociamos un usuario a este medicamento
+        medicamento.setUsuario(usuario);
 
-        // Registrar el medicamento
         Medicamento registrado = medicamentoDAO.agregar(medicamento);
 
-        // Eliminar el medicamento
         boolean resultado = medicamentoDAO.eliminar(122, 101);
 
-        // Verificar que el medicamento fue eliminado
         assertTrue(resultado);
 
-        // Intentar obtener el medicamento eliminado
         PersistenciaExcepcion exception = assertThrows(PersistenciaExcepcion.class, () -> {
             medicamentoDAO.obtener(123, 1);
         });

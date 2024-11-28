@@ -104,34 +104,43 @@ public class MedicamentoDAOTest {
 
     @Test
     public void testEditarMedicamentoExitoso() throws PersistenciaExcepcion {
+        
         Medicamento medicamento = new Medicamento();
-        medicamento.setCodigo(1);
+        medicamento.setId(1L);
         medicamento.setNombre("Paracetamol");
+        medicamento.setFrecuencia(8);
+        medicamento.setTipoConsumo("Oral");
+        medicamento.setCantidad(10);
 
-        when(mockQuery.setParameter("codigo", 1)).thenReturn(mockQuery);
+        when(mockQuery.setParameter("id", 1L)).thenReturn(mockQuery);
         when(mockQuery.setParameter("codigoUsuario", 1)).thenReturn(mockQuery);
         when(mockQuery.getSingleResult()).thenReturn(medicamento);
 
         boolean resultado = medicamentoDAO.editar(medicamento, 1);
 
         assertTrue(resultado);
-        verify(mockEntityManager).merge(medicamento);
+
+        verify(mockEntityManager).merge(any(Medicamento.class));
+
+        verify(mockEntityManager.getTransaction()).commit();
     }
 
     @Test
     public void testEditarMedicamentoNoExistente() {
-        when(mockQuery.setParameter("codigo", 1)).thenReturn(mockQuery);
+        when(mockQuery.setParameter("id", 1L)).thenReturn(mockQuery);
         when(mockQuery.setParameter("codigoUsuario", 1)).thenReturn(mockQuery);
         when(mockQuery.getSingleResult()).thenThrow(new NoResultException("No result"));
 
         Medicamento medicamento = new Medicamento();
-        medicamento.setCodigo(1);
+        medicamento.setId(1L);
 
         PersistenciaExcepcion thrown = assertThrows(PersistenciaExcepcion.class, () -> {
             medicamentoDAO.editar(medicamento, 1);
         });
 
         assertEquals("No se encontró el medicamento para editar.", thrown.getMessage());
+
+        verify(mockEntityManager.getTransaction()).rollback();
     }
 
     @Test

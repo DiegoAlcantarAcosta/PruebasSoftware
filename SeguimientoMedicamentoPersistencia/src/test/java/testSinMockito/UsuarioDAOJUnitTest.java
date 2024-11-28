@@ -20,9 +20,6 @@ public class UsuarioDAOJUnitTest {
     private EntityManager em;
     private Conexion conexion;
     private UsuarioDAO usuarioDAO;
-    
-
-
 
     @BeforeEach
     void setUp() {
@@ -36,12 +33,13 @@ public class UsuarioDAOJUnitTest {
 
     @AfterEach
     void tearDown() {
+        em.getTransaction().begin();
+        em.createQuery("DELETE FROM Usuario").executeUpdate();
+        em.getTransaction().commit();
         if (em.isOpen()) {
             em.close();
         }
     }
-
-   
 
     @Test
     void testRegistrarUsuario() throws PersistenciaExcepcion {
@@ -52,7 +50,6 @@ public class UsuarioDAOJUnitTest {
 
         Usuario registrado = usuarioDAO.registrar(usuario);
 
-        // Verificar que el usuario fue registrado correctamente
         assertNotNull(registrado);
         assertEquals("usuarioPrueba", registrado.getNombreUsuario());
         assertNotNull(registrado.getCodigo());
@@ -64,10 +61,8 @@ public class UsuarioDAOJUnitTest {
         usuario.setNombreUsuario("usuarioLogin");
         usuario.setContrasenia("login123");
 
-        // Registrar usuario primero
         usuarioDAO.registrar(usuario);
 
-        // Iniciar sesión con los datos correctos
         int codigo = usuarioDAO.iniciarSesion(usuario);
 
         assertEquals(usuario.getCodigo(), codigo);
@@ -93,13 +88,10 @@ public class UsuarioDAOJUnitTest {
         usuario.setNombreUsuario("usuarioBuscar");
         usuario.setContrasenia("buscar123");
 
-        // Registrar usuario
         Usuario registrado = usuarioDAO.registrar(usuario);
 
-        // Buscar usuario por código
         Usuario encontrado = usuarioDAO.buscarUsuarioPorCodigo(registrado.getCodigo());
 
-        // Verificar que el usuario fue encontrado
         assertNotNull(encontrado);
         assertEquals(registrado.getCodigo(), encontrado.getCodigo());
     }

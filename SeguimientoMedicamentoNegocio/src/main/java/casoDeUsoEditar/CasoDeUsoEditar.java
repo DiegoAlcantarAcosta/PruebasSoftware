@@ -1,6 +1,7 @@
 package casoDeUsoEditar;
 
 import Herramientas.Conversor;
+import conexionEM.Conexion;
 import dto.MedicamentoDTO;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IMedicamentoDAO;
@@ -14,7 +15,7 @@ public class CasoDeUsoEditar implements ICasoDeUsoEditar{
     private Conversor conversor;
     
     public CasoDeUsoEditar() {
-        this.medicamentoDAO = new MedicamentoDAO();
+        this.medicamentoDAO = new MedicamentoDAO(new Conexion());
         conversor = new Conversor();
         
     }

@@ -1,6 +1,7 @@
 package casoDeUsoObtener;
 
 import Herramientas.Conversor;
+import conexionEM.Conexion;
 import dto.MedicamentoDTO;
 import dto.UsuarioDTO;
 import entidades.Medicamento;
@@ -16,7 +17,7 @@ public class CasoDeUsoObtener implements ICasoDeUsoObtener {
     private Conversor conversor;
 
     public CasoDeUsoObtener() {
-        this.medicamentoDAO = new MedicamentoDAO();
+        this.medicamentoDAO = new MedicamentoDAO(new Conexion());
         conversor = new Conversor();
     }
 

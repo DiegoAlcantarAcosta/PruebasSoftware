@@ -2,6 +2,7 @@ package casoDeUsoRegistrarse;
 
 import Herramientas.Conversor;
 import Herramientas.HashContra;
+import conexionEM.Conexion;
 import dto.UsuarioDTO;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IUsuarioDAO;
@@ -20,7 +21,7 @@ public class CasoDeUsoRegistrarse implements ICasoDeUsoRegistrarse{
     private Conversor conversor;
     
     public CasoDeUsoRegistrarse() {
-        this.usuarioDAO = new UsuarioDAO();
+        this.usuarioDAO = new UsuarioDAO(new Conexion());
         conversor = new Conversor();
         
     }
@@ -33,7 +34,7 @@ public class CasoDeUsoRegistrarse implements ICasoDeUsoRegistrarse{
             usuarioDTO.setContrasenia(contra);
             Usuario usuario=new Usuario(usuarioDTO.getNombreUsuario(), usuarioDTO.getContrasenia());
             usuario.setMedicamentos(meds);
-            if(usuarioDAO.registrar(usuario)){
+            if(usuarioDAO.registrar(usuario)!=null){
                 return true;
             }
         } catch (PersistenciaExcepcion ex) {

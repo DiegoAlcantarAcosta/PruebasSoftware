@@ -25,7 +25,7 @@ import persistencia.RegistroDAO;
  *
  * @author USER
  */
-public class RegistroDAOJUnitTest {
+public class RegistroDAOTest {
     private static EntityManager em;
     private static Conexion conexion;
     private static RegistroDAO registroDAO;

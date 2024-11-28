@@ -16,7 +16,7 @@ import persistencia.UsuarioDAO;
  *
  * @author USER
  */
-public class UsuarioDAOJUnitTest {
+public class UsuarioDAOTest {
     private EntityManager em;
     private Conexion conexion;
     private UsuarioDAO usuarioDAO;

@@ -24,7 +24,7 @@ import persistencia.UsuarioDAO;
  *
  * @author USER
  */
-public class MedicamentoDAOJUnitTest {
+public class MedicamentoDAOTest {
 
     private static EntityManager em;
     private static Conexion conexion;

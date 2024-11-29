@@ -47,7 +47,5 @@ public class CasoDeUsoIniciarSesion implements ICasoDeUsoIniciarSesion{
     public void configurarCodigo()throws CasoDeUsoIniciarSesionException{
         
     }
-
-    
     
 }

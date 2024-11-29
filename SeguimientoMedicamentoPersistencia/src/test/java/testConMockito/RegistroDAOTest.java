@@ -21,7 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import persistencia.RegistroDAO;
 
-class RegistroDAOTest {
+public class RegistroDAOTest {
     @Mock
     private Conexion conexionMock;
     @Mock

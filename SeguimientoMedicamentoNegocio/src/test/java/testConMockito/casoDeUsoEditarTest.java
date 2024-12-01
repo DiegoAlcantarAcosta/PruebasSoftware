@@ -11,14 +11,21 @@ import dto.MedicamentoDTO;
 import entidades.Medicamento;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IMedicamentoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.AdditionalMatchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,7 +36,7 @@ import org.mockito.MockitoAnnotations;
  * @author USER
  */
 public class casoDeUsoEditarTest {
-    
+
     @Mock
     private IMedicamentoDAO medicamentoDAO;
 
@@ -45,56 +52,85 @@ public class casoDeUsoEditarTest {
     }
 
     @Test
-    void editarMedicamento_exito() {
-        MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
-        Medicamento medicamento = new Medicamento();
-        int codigoUsuario = 123;
+    void editarMedicamento_exito(){
         try {
-            when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(medicamento);
-            when(medicamentoDAO.editar(medicamento, codigoUsuario)).thenReturn(true);
-
+            MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
+            medicamentoDTO.setCodigo(123);
+            
+            Medicamento medicamento = new Medicamento();
+            medicamento.setId(1L);
+            
+            int codigoUsuario = 456;
+            
+            when(medicamentoDAO.obtener(123, codigoUsuario)).thenReturn(medicamento);
+            when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(new Medicamento());
+            when(medicamentoDAO.editar(any(Medicamento.class), eq(codigoUsuario))).thenReturn(true);
+            
             boolean resultado = casoDeUsoEditar.EditarMedicamento(medicamentoDTO, codigoUsuario);
+            
             assertTrue(resultado);
+            
+            verify(medicamentoDAO, times(1)).obtener(123, codigoUsuario);
             verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
-            verify(medicamentoDAO, times(1)).editar(medicamento, codigoUsuario);
-        } catch (Exception e) {
-            fail("Excepción no esperada: " + e.getMessage());
+            verify(medicamentoDAO, times(1)).editar(any(Medicamento.class), eq(codigoUsuario));
+        } catch (PersistenciaExcepcion ex) {
+            Logger.getLogger(casoDeUsoEditarTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CasoDeUsoEditarException ex) {
+            Logger.getLogger(casoDeUsoEditarTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Test
-    void editarMedicamento_falloEnPersistencia() {
-        MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
-        Medicamento medicamento = new Medicamento();
-        int codigoUsuario = 123;
+    void editarMedicamento_falloEnPersistencia(){
         try {
-            when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(medicamento);
-            when(medicamentoDAO.editar(medicamento, codigoUsuario)).thenThrow(new PersistenciaExcepcion("Error en persistencia"));
-
-            boolean resultado = casoDeUsoEditar.EditarMedicamento(medicamentoDTO, codigoUsuario);
-            assertFalse(resultado);
-            verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
-            verify(medicamentoDAO, times(1)).editar(medicamento, codigoUsuario);
-        } catch (Exception e) {
-            assertTrue(e instanceof CasoDeUsoEditarException);
+            MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
+            medicamentoDTO.setCodigo(123);
+            
+            int codigoUsuario = 456;
+            
+            when(medicamentoDAO.obtener(123, codigoUsuario))
+                    .thenThrow(new PersistenciaExcepcion("Error en persistencia"));
+            
+            CasoDeUsoEditarException exception = assertThrows(CasoDeUsoEditarException.class, () ->
+                    casoDeUsoEditar.EditarMedicamento(medicamentoDTO, codigoUsuario)
+            );
+            
+            assertEquals("Error en persistencia", exception.getMessage());
+            
+            verify(medicamentoDAO, times(1)).obtener(123, codigoUsuario);
+            verify(conversor, never()).medicamentoDTOaEntity(any());
+            verify(medicamentoDAO, never()).editar(any(), anyInt());
+        } catch (PersistenciaExcepcion ex) {
+            Logger.getLogger(casoDeUsoEditarTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Test
-    void editarMedicamento_noSeEdita() {
-        MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
-        Medicamento medicamento = new Medicamento();
-        int codigoUsuario = 123;
+    void editarMedicamento_falloEnEdicion(){
         try {
-            when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(medicamento);
-            when(medicamentoDAO.editar(medicamento, codigoUsuario)).thenReturn(false);
-
+            MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
+            medicamentoDTO.setCodigo(123);
+            
+            Medicamento medicamento = new Medicamento();
+            medicamento.setId(1L);
+            
+            int codigoUsuario = 456;
+            
+            when(medicamentoDAO.obtener(123, codigoUsuario)).thenReturn(medicamento);
+            when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(new Medicamento());
+            when(medicamentoDAO.editar(any(Medicamento.class), eq(codigoUsuario))).thenReturn(false);
+            
             boolean resultado = casoDeUsoEditar.EditarMedicamento(medicamentoDTO, codigoUsuario);
+            
             assertFalse(resultado);
+            
+            verify(medicamentoDAO, times(1)).obtener(123, codigoUsuario);
             verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
-            verify(medicamentoDAO, times(1)).editar(medicamento, codigoUsuario);
-        } catch (Exception e) {
-            fail("Excepción no esperada: " + e.getMessage());
+            verify(medicamentoDAO, times(1)).editar(any(Medicamento.class), eq(codigoUsuario));
+        } catch (PersistenciaExcepcion ex) {
+            Logger.getLogger(casoDeUsoEditarTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CasoDeUsoEditarException ex) {
+            Logger.getLogger(casoDeUsoEditarTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

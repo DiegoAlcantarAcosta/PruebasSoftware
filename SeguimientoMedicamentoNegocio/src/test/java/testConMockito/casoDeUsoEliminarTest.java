@@ -28,6 +28,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+import persistencia.MedicamentoDAO;
 
 /**
  *
@@ -39,7 +40,7 @@ public class casoDeUsoEliminarTest {
     private IMedicamentoDAO medicamentoDAO;
 
     @Mock
-    private Conexion conexion;
+    private Conversor conversor;
 
     @InjectMocks
     private CasoDeUsoEliminar casoDeUsoEliminar;
@@ -50,60 +51,51 @@ public class casoDeUsoEliminarTest {
     }
 
     @Test
-    void eliminarMedicamento_exito() {
+    void eliminarMedicamento_exito() throws Exception {
         int codigo = 123;
         int codigoUsuario = 456;
 
-        try {
-            when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenReturn(true);
+        when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenReturn(true);
 
-            boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
+        boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
 
-            assertTrue(resultado);
+        assertTrue(resultado);
 
-            verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
-        } catch (Exception e) {
-            fail("Excepción no esperada: " + e.getMessage());
-        }
+        verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
     }
 
     @Test
-    void eliminarMedicamento_noSeEncuentra() {
+    void eliminarMedicamento_fallo() throws Exception {
         int codigo = 123;
         int codigoUsuario = 456;
 
-        try {
-            when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenThrow(new PersistenciaExcepcion("El medicamento no fue encontrado para eliminar."));
+        when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenReturn(false);
 
-            boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
+        boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
 
-            assertFalse(resultado);
+        assertFalse(resultado);
 
-            verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
-        } catch (PersistenciaExcepcion e) {
-            assertTrue(e instanceof PersistenciaExcepcion);
-        } catch (Exception e) {
-            fail("Excepción no esperada: " + e.getMessage());
-        }
+        verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
     }
 
     @Test
     void eliminarMedicamento_falloEnPersistencia() {
-        int codigo = 123;
-        int codigoUsuario = 456;
-
         try {
-            when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenThrow(new PersistenciaExcepcion("Error al eliminar el medicamento"));
-
-            boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
-
-            assertFalse(resultado);
-
+            int codigo = 123;
+            int codigoUsuario = 456;
+            
+            when(medicamentoDAO.eliminar(codigo, codigoUsuario))
+                    .thenThrow(new PersistenciaExcepcion("Error en persistencia"));
+            
+            CasoDeUsoEliminarException exception = assertThrows(CasoDeUsoEliminarException.class, () ->
+                    casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario)
+            );
+            
+            assertEquals("Error en persistencia", exception.getMessage());
+            
             verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
-        } catch (PersistenciaExcepcion e) {
-            assertTrue(e instanceof PersistenciaExcepcion);
-        } catch (Exception e) {
-            fail("Excepción no esperada: " + e.getMessage());
+        } catch (PersistenciaExcepcion ex) {
+            Logger.getLogger(casoDeUsoEliminarTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

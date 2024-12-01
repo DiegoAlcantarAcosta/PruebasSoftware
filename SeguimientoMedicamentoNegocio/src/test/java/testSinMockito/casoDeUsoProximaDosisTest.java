@@ -44,7 +44,6 @@ public class casoDeUsoProximaDosisTest {
 
     @BeforeAll
     static void setUp() {
-        // Configuración inicial
         conexion = new Conexion();
         em = conexion.abrir();
         usuarioDAO = new UsuarioDAO(conexion);
@@ -61,14 +60,12 @@ public class casoDeUsoProximaDosisTest {
         Usuario usuarioCreado = new Usuario(101, "usuarioTest", "test123");
         em.persist(usuarioCreado);
 
-        // Crear medicamento para las pruebas
         medicamento = new Medicamento(123, "Aspirina", 2.5, "Oral", 1);
         medicamento.setUsuario(usuarioCreado);
         em.persist(medicamento);
 
-        // Crear registro de toma para las pruebas
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2024, Calendar.NOVEMBER, 30, 10, 0, 0); // Fecha: 30 de Noviembre de 2024 a las 10:00
+        calendar.set(2024, Calendar.NOVEMBER, 30, 10, 0, 0);
         registro = new Registro();
         registro.setMedicamento(medicamento);
         registro.setHoraConsumo(calendar.getTime());
@@ -80,7 +77,6 @@ public class casoDeUsoProximaDosisTest {
 
     @AfterAll
     static void tearDown() {
-        // Limpieza de datos
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Registro").executeUpdate();
         em.createQuery("DELETE FROM Medicamento").executeUpdate();
@@ -94,19 +90,16 @@ public class casoDeUsoProximaDosisTest {
     @Test
     void testConsultarProximaDosis(){
         try {
-            // Fecha esperada (la fecha que quieres que sea la próxima dosis)
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2024, Calendar.NOVEMBER, 30, 12, 00, 0); // Sábado, 30 de noviembre de 2024 a las 12:30
-            calendar.set(Calendar.MILLISECOND, 0);  // Ignorar los milisegundos
+            calendar.set(2024, Calendar.NOVEMBER, 30, 12, 00, 0); 
+            calendar.set(Calendar.MILLISECOND, 0); 
             Date expectedProximaDosis = calendar.getTime();
             
-            // Llamar al método que devuelve la próxima dosis
             Date actualProximaDosis = casoDeUsoProximaDosis.consultarUltimaToma(medicamento.getCodigo(), usuario.getCodigo());  // Suponiendo que los códigos son correctos
             calendar.setTime(actualProximaDosis);
             calendar.set(Calendar.MILLISECOND, 0);
             actualProximaDosis=calendar.getTime();
             
-            // Comparar las fechas
             assertEquals(expectedProximaDosis.getTime(), actualProximaDosis.getTime(), "Las fechas no coinciden");
         } catch (CasoDeUsoProximaDosisException ex) {
             Logger.getLogger(casoDeUsoProximaDosisTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,10 +109,8 @@ public class casoDeUsoProximaDosisTest {
     @Test
     void testConsultarProximaDosisMedicamentoNoExistente(){
         try {
-            // Intentar consultar una dosis para un medicamento no existente
             Date proximaDosis = casoDeUsoProximaDosis.consultarUltimaToma(9999, usuario.getCodigo());
             
-            // Verificar que no se obtiene una próxima dosis
             assertNull(proximaDosis);
         } catch (CasoDeUsoProximaDosisException ex) {
             Logger.getLogger(casoDeUsoProximaDosisTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,10 +120,8 @@ public class casoDeUsoProximaDosisTest {
     @Test
     void testConsultarProximaDosisConUsuarioIncorrecto(){
         try {
-            // Intentar consultar la próxima dosis con un usuario incorrecto
             Date proximaDosis = casoDeUsoProximaDosis.consultarUltimaToma(medicamento.getCodigo(), 9999);
             
-            // Verificar que no se obtiene una próxima dosis
             assertNull(proximaDosis);
         } catch (CasoDeUsoProximaDosisException ex) {
             Logger.getLogger(casoDeUsoProximaDosisTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,8 +130,6 @@ public class casoDeUsoProximaDosisTest {
 
     @Test
     void testConsultarProximaDosisConErrorDePersistencia() {
-        // Simular un error de persistencia (ejemplo: base de datos desconectada)
-        // Aquí se podría crear una prueba para manejar la excepción y verificar que el sistema reacciona de la manera esperada
 
         assertDoesNotThrow(() -> casoDeUsoProximaDosis.consultarUltimaToma(medicamento.getCodigo(), usuario.getCodigo()));
     }

@@ -66,10 +66,8 @@ public class casoDeUsoRegistrarseTest{
             when(hashContra.hashearPassword("password")).thenReturn("hashedPassword");
             when(usuarioDAO.registrar(any(Usuario.class))).thenReturn(usuario);
             
-            // Ejecución
             boolean resultado = casoDeUsoRegistrarse.registrarse(usuarioDTO);
             
-            // Verificación
             assertTrue(resultado);
             verify(hashContra).hashearPassword("password");
             verify(usuarioDAO).registrar(any(Usuario.class));

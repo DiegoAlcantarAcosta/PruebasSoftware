@@ -34,7 +34,7 @@ public class casoDeUsoEditarTest {
 
     @BeforeAll
     static void setUp() throws PersistenciaExcepcion {
-        // Configuración inicial
+        
         conexion = new Conexion();
         em = conexion.abrir();
         medicamentoDAO = new MedicamentoDAO(conexion);
@@ -44,7 +44,7 @@ public class casoDeUsoEditarTest {
         em.createQuery("DELETE FROM Medicamento").executeUpdate();
         em.createQuery("DELETE FROM Usuario").executeUpdate();
 
-        // Crear usuario para pruebas
+        
         Usuario usuarioCreado = new Usuario(101, "usuarioTest", "test123");
         em.persist(usuarioCreado);
 
@@ -54,7 +54,7 @@ public class casoDeUsoEditarTest {
 
     @AfterAll
     static void tearDown() {
-        // Limpieza de datos
+        
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Medicamento").executeUpdate();
         em.createQuery("DELETE FROM Usuario").executeUpdate();
@@ -66,18 +66,15 @@ public class casoDeUsoEditarTest {
 
     @Test
     void testEditarMedicamentoExitoso() throws PersistenciaExcepcion, CasoDeUsoEditarException {
-        // Agrega un medicamento a la base de datos
+        
         Medicamento medicamento = new Medicamento(1, "Nolotil", 2.5, "Oral", 1);
         medicamento.setUsuario(usuario);
         medicamentoDAO.agregar(medicamento);
 
-        // Prepara los DTOs para la edición
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(1, "Eutirox", 3.0, "Oral", 2);
 
-        // Llama al caso de uso
         boolean resultado = casoDeUsoEditar.EditarMedicamento(medicamentoDTO, 101);
 
-        // Verifica el resultado y los cambios
         assertTrue(resultado);
         Medicamento editado = medicamentoDAO.obtener(1, 101);
         assertNotNull(editado);
@@ -88,10 +85,9 @@ public class casoDeUsoEditarTest {
 
     @Test
     void testEditarMedicamentoNoExistente() {
-        // Prepara un DTO con un medicamento inexistente
+        
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(999, "Paracetamol", 1.0, "Oral", 1);
 
-        // Verifica que lanza excepción
         assertThrows(CasoDeUsoEditarException.class, () -> {
             casoDeUsoEditar.EditarMedicamento(medicamentoDTO, 101);
         });
@@ -99,17 +95,15 @@ public class casoDeUsoEditarTest {
 
     @Test
     void testEditarMedicamentoUsuarioIncorrecto() throws PersistenciaExcepcion {
-        // Agrega un medicamento a la base de datos
+        
         Medicamento medicamento = new Medicamento(2, "Aspirina", 2.5, "Oral", 1);
         medicamento.setUsuario(usuario);
         medicamentoDAO.agregar(medicamento);
 
-        // Prepara los DTOs para la edición con un usuario incorrecto
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(2, "Ibuprofeno", 3.0, "Oral", 2);
 
-        // Verifica que lanza excepción debido al usuario incorrecto
         assertThrows(CasoDeUsoEditarException.class, () -> {
-            casoDeUsoEditar.EditarMedicamento(medicamentoDTO, 999); // Usuario no relacionado con el medicamento
+            casoDeUsoEditar.EditarMedicamento(medicamentoDTO, 999); 
         });
     }
 }

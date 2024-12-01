@@ -77,28 +77,22 @@ public class casoDeUsoAgregarTest {
     @Test
     void agregarMedicamento_falloEnPersistencia() {
         try {
-            // Crea el UsuarioDTO y MedicamentoDTO de prueba
             UsuarioDTO usuarioDTO = new UsuarioDTO();
             usuarioDTO.setCodigo(123);
             
             MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
             
-            // Crea un medicamento temporal
             Medicamento medicamento = new Medicamento();
             
-            // Mockea el comportamiento del conversor y los DAOs
             when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(medicamento);
             when(usuarioDAO.buscarUsuarioPorCodigo(123)).thenThrow(new PersistenciaExcepcion("Error en persistencia"));
             
-            // Ejecuta el método y captura la excepción
             CasoDeUsoAgregarException exception = assertThrows(CasoDeUsoAgregarException.class, () -> {
                 casoDeUsoAgregar.AgregarMedicamento(usuarioDTO, medicamentoDTO);
             });
             
-            // Verifica el mensaje de la excepción
             assertEquals("Error en persistencia", exception.getMessage());
             
-            // Verifica las interacciones con los mocks
             verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
             verify(usuarioDAO, times(1)).buscarUsuarioPorCodigo(123);
             verify(medicamentoDAO, never()).agregar(any());

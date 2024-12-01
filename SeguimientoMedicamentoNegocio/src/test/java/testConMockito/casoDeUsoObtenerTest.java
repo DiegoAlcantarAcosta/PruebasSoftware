@@ -80,7 +80,6 @@ public class casoDeUsoObtenerTest {
         when(medicamentoDAO.obtener(codigo, usuarioDTO.getCodigo())).thenReturn(null);
         MedicamentoDTO resultado = casoDeUsoObtener.ObtenerMedicamento(codigo, usuarioDTO);
 
-        // Verificación
         assertNull(resultado);
         verify(medicamentoDAO).obtener(codigo, usuarioDTO.getCodigo());
         verifyNoInteractions(conversor); 

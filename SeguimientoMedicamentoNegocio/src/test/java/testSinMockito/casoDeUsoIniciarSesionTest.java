@@ -35,7 +35,7 @@ public class casoDeUsoIniciarSesionTest {
 
     @BeforeAll
     static void setUp() throws PersistenciaExcepcion {
-        // Configuración inicial
+        
         conexion = new Conexion();
         em = conexion.abrir();
         usuarioDAO = new UsuarioDAO(conexion);
@@ -44,7 +44,6 @@ public class casoDeUsoIniciarSesionTest {
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Usuario").executeUpdate();
 
-        // Crear un usuario para las pruebas
         Usuario usuarioCreado = new Usuario(101, "usuarioTest", "test123");
         em.persist(usuarioCreado);
 
@@ -54,7 +53,6 @@ public class casoDeUsoIniciarSesionTest {
 
     @AfterAll
     static void tearDown() {
-        // Limpieza de datos
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Usuario").executeUpdate();
         em.getTransaction().commit();
@@ -66,10 +64,8 @@ public class casoDeUsoIniciarSesionTest {
     @Test
     void testIniciarSesionExitoso() {
         try {
-            // Prepara los datos de entrada
             UsuarioDTO usuarioDTO = new UsuarioDTO("usuarioTest", "test123", 101);
             
-            // Iniciar sesión exitosamente
             int resultado = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
             
             assertEquals(101, resultado);
@@ -81,13 +77,11 @@ public class casoDeUsoIniciarSesionTest {
     @Test
     void testIniciarSesionConContrasenaIncorrecta(){
         try {
-            // Proporciona una contraseña incorrecta
             UsuarioDTO usuarioDTO = new UsuarioDTO("usuarioTest", "incorrecta", 101);
             
-            // Intentar iniciar sesión con la contraseña incorrecta
             int resultado = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
             
-            assertEquals(-1, resultado); // Se espera que devuelva -1 en caso de fallo
+            assertEquals(-1, resultado);
         } catch (CasoDeUsoIniciarSesionException ex) {
             Logger.getLogger(casoDeUsoIniciarSesionTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,13 +90,11 @@ public class casoDeUsoIniciarSesionTest {
     @Test
     void testIniciarSesionConUsuarioNoExistente(){
         try {
-            // Usuario que no existe
             UsuarioDTO usuarioDTO = new UsuarioDTO("usuarioInvalido", "test123", 999);
             
-            // Intentar iniciar sesión con un usuario no existente
             int resultado = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
             
-            assertEquals(-1, resultado); // Se espera que devuelva -1 en caso de fallo
+            assertEquals(-1, resultado);
         } catch (CasoDeUsoIniciarSesionException ex) {
             Logger.getLogger(casoDeUsoIniciarSesionTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -111,18 +103,15 @@ public class casoDeUsoIniciarSesionTest {
     @Test
     void testIniciarSesionConExcepcionDePersistencia(){
         try {
-            // Forzar una excepción en el DAO
             UsuarioDTO usuarioDTO = new UsuarioDTO("usuarioTest", "test123", 101);
             
-            // Eliminar el usuario de la base de datos para forzar un fallo
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Usuario").executeUpdate();
             em.getTransaction().commit();
             
-            // Intentar iniciar sesión con un usuario eliminado
             int resultado = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
             
-            assertEquals(-1, resultado); // Se espera que devuelva -1 en caso de fallo
+            assertEquals(-1, resultado); 
         } catch (CasoDeUsoIniciarSesionException ex) {
             Logger.getLogger(casoDeUsoIniciarSesionTest.class.getName()).log(Level.SEVERE, null, ex);
         }

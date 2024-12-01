@@ -6,6 +6,7 @@ package testConMockito;
 
 import Herramientas.Conversor;
 import casoDeUsoAgregar.CasoDeUsoAgregar;
+import casoDeUsoAgregar.CasoDeUsoAgregarException;
 import dto.MedicamentoDTO;
 import dto.UsuarioDTO;
 import entidades.Medicamento;
@@ -13,12 +14,15 @@ import entidades.Usuario;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IMedicamentoDAO;
 import interfaces.IUsuarioDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.never;
@@ -71,21 +75,35 @@ public class casoDeUsoAgregarTest {
     }
 
     @Test
-    void agregarMedicamento_falloEnPersistencia() throws Exception {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setCodigo(123);
-
-        MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
-        Medicamento medicamento = new Medicamento();
-
-        when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(medicamento);
-        when(usuarioDAO.buscarUsuarioPorCodigo(123)).thenThrow(new PersistenciaExcepcion("Error en persistencia"));
-
-        boolean resultado = casoDeUsoAgregar.AgregarMedicamento(usuarioDTO, medicamentoDTO);
-
-        assertFalse(resultado);
-        verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
-        verify(usuarioDAO, times(1)).buscarUsuarioPorCodigo(123);
-        verify(medicamentoDAO, never()).agregar(medicamento);
+    void agregarMedicamento_falloEnPersistencia() {
+        try {
+            // Crea el UsuarioDTO y MedicamentoDTO de prueba
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            usuarioDTO.setCodigo(123);
+            
+            MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
+            
+            // Crea un medicamento temporal
+            Medicamento medicamento = new Medicamento();
+            
+            // Mockea el comportamiento del conversor y los DAOs
+            when(conversor.medicamentoDTOaEntity(medicamentoDTO)).thenReturn(medicamento);
+            when(usuarioDAO.buscarUsuarioPorCodigo(123)).thenThrow(new PersistenciaExcepcion("Error en persistencia"));
+            
+            // Ejecuta el método y captura la excepción
+            CasoDeUsoAgregarException exception = assertThrows(CasoDeUsoAgregarException.class, () -> {
+                casoDeUsoAgregar.AgregarMedicamento(usuarioDTO, medicamentoDTO);
+            });
+            
+            // Verifica el mensaje de la excepción
+            assertEquals("Error en persistencia", exception.getMessage());
+            
+            // Verifica las interacciones con los mocks
+            verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
+            verify(usuarioDAO, times(1)).buscarUsuarioPorCodigo(123);
+            verify(medicamentoDAO, never()).agregar(any());
+        } catch (PersistenciaExcepcion ex) {
+            Logger.getLogger(casoDeUsoAgregarTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -24,11 +24,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+import persistencia.UsuarioDAO;
 
 /**
  *
@@ -37,93 +41,78 @@ import org.mockito.MockitoAnnotations;
 public class casoDeUsoIniciarSesionTest {
 
     @Mock
-    private IUsuarioDAO usuarioDAOMock;
+    private IUsuarioDAO usuarioDAO;
 
     @Mock
-    private Conversor conversorMock;
+    private Conversor conversor;
 
     @Mock
-    private HashContra hashContraMock;
+    private HashContra hashContra;
 
     @InjectMocks
     private CasoDeUsoIniciarSesion casoDeUsoIniciarSesion;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testIniciarSesionExito() throws CasoDeUsoIniciarSesionException, NoSuchAlgorithmException {
-        try {
-            // Preparar datos de entrada
-            String username = "usuarioTest";
-            String contrasena = "contrasenaTest";
-            UsuarioDTO usuarioDTO = new UsuarioDTO(username, contrasena);
-            
-            // Simular el comportamiento de las dependencias
-            when(hashContraMock.hashearPassword(contrasena)).thenReturn("hashedPassword");
-            when(conversorMock.usuarioDTOaEntity(usuarioDTO)).thenReturn(new Usuario(username, "hashedPassword"));
-            when(usuarioDAOMock.iniciarSesion(any())).thenReturn(1);  // Simulamos que el login es exitoso
-            
-            // Llamar al método
-            int result = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
-            
-            // Verificar que el resultado sea el esperado
-            assertEquals(1, result);
-            
-            // Verificar que las interacciones esperadas hayan ocurrido
-            verify(hashContraMock).hashearPassword(contrasena);
-            verify(conversorMock).usuarioDTOaEntity(usuarioDTO);
-            verify(usuarioDAOMock).iniciarSesion(any());
-        } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(casoDeUsoIniciarSesionTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    void testIniciarSesionSuccess() throws Exception {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setContrasenia("password");
+        Usuario usuario= new Usuario();
+
+        when(hashContra.hashearPassword("password")).thenReturn("hashedPassword");
+        when(conversor.usuarioDTOaEntity(usuarioDTO)).thenReturn(usuario);
+        when(usuarioDAO.iniciarSesion(usuario)).thenReturn(1);
+
+        int resultado = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
+
+        assertEquals(1, resultado);
+        verify(hashContra).hashearPassword("password");
+        verify(conversor).usuarioDTOaEntity(usuarioDTO);
+        verify(usuarioDAO).iniciarSesion(usuario);
     }
 
     @Test
-    public void testIniciarSesionPersistenciaExcepcion() throws CasoDeUsoIniciarSesionException, NoSuchAlgorithmException {
-        try {
-            // Preparar datos de entrada
-            String username = "usuarioTest";
-            String contrasena = "contrasenaTest";
-            UsuarioDTO usuarioDTO = new UsuarioDTO(username, contrasena);
-            
-            // Simular una excepción en el método iniciarSesion del DAO
-            when(hashContraMock.hashearPassword(contrasena)).thenReturn("hashedPassword");
-            when(conversorMock.usuarioDTOaEntity(usuarioDTO)).thenReturn(new Usuario(username, "hashedPassword"));
-            when(usuarioDAOMock.iniciarSesion(any())).thenThrow(new PersistenciaExcepcion("Error en la persistencia"));
-            
-            // Llamar al método y verificar que la excepción sea lanzada correctamente
-            assertThrows(CasoDeUsoIniciarSesionException.class, () -> {
-                casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
-            });
-            
-            verify(hashContraMock).hashearPassword(contrasena);
-            verify(conversorMock).usuarioDTOaEntity(usuarioDTO);
-            verify(usuarioDAOMock).iniciarSesion(any());
-        } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(casoDeUsoIniciarSesionTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    void testIniciarSesionPersistenciaExcepcion() throws Exception {
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setContrasenia("password");
+        Usuario usuario= new Usuario();
+
+        when(hashContra.hashearPassword("password")).thenReturn("hashedPassword");
+        when(conversor.usuarioDTOaEntity(usuarioDTO)).thenReturn(usuario);
+        when(usuarioDAO.iniciarSesion(usuario)).thenThrow(new PersistenciaExcepcion("Database error"));
+
+        CasoDeUsoIniciarSesionException exception = assertThrows(CasoDeUsoIniciarSesionException.class, () -> {
+            casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
+        });
+
+        assertEquals("Database error", exception.getMessage());
+        verify(hashContra).hashearPassword("password");
+        verify(conversor).usuarioDTOaEntity(usuarioDTO);
+        verify(usuarioDAO).iniciarSesion(usuario);
     }
 
     @Test
-    public void testIniciarSesionNoSuchAlgorithmException() throws CasoDeUsoIniciarSesionException {
-        // Preparar datos de entrada
-        String username = "usuarioTest";
-        String contrasena = "contrasenaTest";
-        UsuarioDTO usuarioDTO = new UsuarioDTO(username, contrasena);
+    void testIniciarSesionNoSuchAlgorithmException() throws Exception {
+        
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setContrasenia("password");
 
-        // Simular que el hasheo de la contraseña falla
-        try {
-            when(hashContraMock.hashearPassword(contrasena)).thenThrow(new NoSuchAlgorithmException("Algorithm not found"));
+        when(hashContra.hashearPassword("password")).thenThrow(new NoSuchAlgorithmException("Hashing error"));
 
-            // Llamar al método y verificar que no se lance una excepción personalizada
-            int result = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
-            assertEquals(-1, result);  // Asegurarse de que retorne -1 en caso de error
-        } catch (NoSuchAlgorithmException e) {
-            // Esto es esperado
-            assertTrue(e.getMessage().contains("Algorithm not found"));
-        }
+        int resultado = casoDeUsoIniciarSesion.iniciarSesion(usuarioDTO);
+
+        assertEquals(-1, resultado);
+        verify(hashContra).hashearPassword("password");
+        verifyNoInteractions(conversor, usuarioDAO);
+    }
+
+    @Test
+    void testConfigurarCodigo() {
+        assertDoesNotThrow(() -> casoDeUsoIniciarSesion.configurarCodigo());
     }
 }

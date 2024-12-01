@@ -36,6 +36,7 @@ public class CasoDeUsoEliminar implements ICasoDeUsoEliminar {
             }
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CasoDeUsoEliminarException(ex.getMessage());
         }
         return false;
     }

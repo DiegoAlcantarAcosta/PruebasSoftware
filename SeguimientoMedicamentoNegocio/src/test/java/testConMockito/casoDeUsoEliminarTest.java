@@ -51,21 +51,16 @@ public class casoDeUsoEliminarTest {
 
     @Test
     void eliminarMedicamento_exito() {
-        // Datos de entrada para el test
         int codigo = 123;
         int codigoUsuario = 456;
 
         try {
-            // Simular que el medicamento se encuentra y se elimina correctamente
             when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenReturn(true);
 
-            // Ejecutar el caso de uso
             boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
 
-            // Verificar que el resultado es verdadero
             assertTrue(resultado);
 
-            // Verificar que el método eliminar fue invocado con los parámetros correctos
             verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
         } catch (Exception e) {
             fail("Excepción no esperada: " + e.getMessage());
@@ -74,24 +69,18 @@ public class casoDeUsoEliminarTest {
 
     @Test
     void eliminarMedicamento_noSeEncuentra() {
-        // Datos de entrada para el test
         int codigo = 123;
         int codigoUsuario = 456;
 
         try {
-            // Simular que el medicamento no se encuentra
             when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenThrow(new PersistenciaExcepcion("El medicamento no fue encontrado para eliminar."));
 
-            // Ejecutar el caso de uso
             boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
 
-            // Verificar que el resultado es falso
             assertFalse(resultado);
 
-            // Verificar que el método eliminar fue invocado con los parámetros correctos
             verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
         } catch (PersistenciaExcepcion e) {
-            // Validar que la excepción esperada sea de tipo PersistenciaExcepcion
             assertTrue(e instanceof PersistenciaExcepcion);
         } catch (Exception e) {
             fail("Excepción no esperada: " + e.getMessage());
@@ -100,24 +89,18 @@ public class casoDeUsoEliminarTest {
 
     @Test
     void eliminarMedicamento_falloEnPersistencia() {
-        // Datos de entrada para el test
         int codigo = 123;
         int codigoUsuario = 456;
 
         try {
-            // Simular un fallo general durante la eliminación
             when(medicamentoDAO.eliminar(codigo, codigoUsuario)).thenThrow(new PersistenciaExcepcion("Error al eliminar el medicamento"));
 
-            // Ejecutar el caso de uso
             boolean resultado = casoDeUsoEliminar.EliminarMedicamento(codigo, codigoUsuario);
 
-            // Verificar que el resultado es falso
             assertFalse(resultado);
 
-            // Verificar que el método eliminar fue invocado con los parámetros correctos
             verify(medicamentoDAO, times(1)).eliminar(codigo, codigoUsuario);
         } catch (PersistenciaExcepcion e) {
-            // Validar que la excepción esperada sea de tipo PersistenciaExcepcion
             assertTrue(e instanceof PersistenciaExcepcion);
         } catch (Exception e) {
             fail("Excepción no esperada: " + e.getMessage());

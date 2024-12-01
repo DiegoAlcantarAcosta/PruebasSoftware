@@ -33,6 +33,7 @@ public class CasoDeUsoMarcarTomado implements ICasoDeUsoMarcarTomado {
     @Override
     public boolean tomaDeMedicamento(RegistroDTO registroDTO, MedicamentoDTO medicamentoDTO, UsuarioDTO usuarioDTO) throws CasoDeUsoMarcarTomadoException {
         try {
+            Date ahora = registroDTO.getHoraConsumo();
             Medicamento medicamento = medicamentoDAO.obtener(medicamentoDTO.getCodigo(), usuarioDTO.getCodigo());
             Registro registroTemp = registroDAO.consultarUltimaToma(medicamento);
             if (registroTemp != null) {
@@ -51,7 +52,7 @@ public class CasoDeUsoMarcarTomado implements ICasoDeUsoMarcarTomado {
                 finRango.setTime(siguienteToma);
                 finRango.add(Calendar.MINUTE, 10);
 
-                Date ahora = new Date();
+                
 
                 if (ahora.before(inicioRango.getTime())) {
                     long diferenciaMilis = siguienteToma.getTime() - ahora.getTime();

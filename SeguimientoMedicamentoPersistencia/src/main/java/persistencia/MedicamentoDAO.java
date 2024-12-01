@@ -6,6 +6,7 @@ import entidades.Medicamento;
 import entidades.Usuario;
 import interfaces.IMedicamentoDAO;
 import excepciones.PersistenciaExcepcion;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
@@ -25,9 +26,17 @@ public class MedicamentoDAO implements IMedicamentoDAO {
 
     try {
         Usuario usuario = em.find(Usuario.class, medicamento.getUsuario().getId());
+        List<Medicamento> medicamentosDuplicados = em.createQuery(
+                "SELECT m FROM Medicamento m WHERE m.nombre = :nombre AND m.usuario.codigo = :codigoUsuario",
+                Medicamento.class)
+                .setParameter("nombre", medicamento.getNombre())
+                .setParameter("codigoUsuario", medicamento.getUsuario().getCodigo())
+                .getResultList();
 
         if (usuario == null) {
             throw new PersistenciaExcepcion("Usuario no encontrado con ID: " + medicamento.getUsuario().getId());
+        } else if (!medicamentosDuplicados.isEmpty()) {
+            throw new PersistenciaExcepcion("Medicamento con nombre repetido");
         }
 
         medicamento.setUsuario(usuario);

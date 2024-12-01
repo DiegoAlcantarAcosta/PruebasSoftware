@@ -113,14 +113,14 @@ public class MedicamentoDAOTest {
         medicamento.setUsuario(usuario);
 
         Medicamento registrado = medicamentoDAO.agregar(medicamento);
-        registrado.setNombre("Aspirina");
+        registrado.setNombre("Omeprazol");
         registrado.setFrecuencia(2.0);
 
         boolean resultado = medicamentoDAO.editar(registrado, 101);
 
         assertTrue(resultado);
         Medicamento editado = medicamentoDAO.obtener(124, 101);
-        assertEquals("Aspirina", editado.getNombre());
+        assertEquals("Omeprazol", editado.getNombre());
         assertEquals(2.0, editado.getFrecuencia());
     }
 

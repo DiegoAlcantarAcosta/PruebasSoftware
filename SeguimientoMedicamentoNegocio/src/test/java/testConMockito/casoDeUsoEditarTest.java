@@ -76,7 +76,6 @@ public class casoDeUsoEditarTest {
             verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
             verify(medicamentoDAO, times(1)).editar(medicamento, codigoUsuario);
         } catch (Exception e) {
-            // Si ocurre una excepción, validamos que haya sido de tipo CasoDeUsoEditarException
             assertTrue(e instanceof CasoDeUsoEditarException);
         }
     }

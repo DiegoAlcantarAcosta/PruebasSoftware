@@ -19,18 +19,19 @@ public class CasoDeUsoRegistrarse implements ICasoDeUsoRegistrarse{
 
     private IUsuarioDAO usuarioDAO;
     private Conversor conversor;
+    private HashContra hashContra;
     
     public CasoDeUsoRegistrarse() {
         this.usuarioDAO = new UsuarioDAO(new Conexion());
         conversor = new Conversor();
-        
+        this.hashContra= new HashContra();
     }
     
     @Override
     public boolean registrarse(UsuarioDTO usuarioDTO) throws CasoDeUsoRegistrarseException {
         try {
             List<Medicamento> meds=new ArrayList<>();
-            String contra=HashContra.hashearPassword(usuarioDTO.getContrasenia());
+            String contra=hashContra.hashearPassword(usuarioDTO.getContrasenia());
             usuarioDTO.setContrasenia(contra);
             Usuario usuario=new Usuario(usuarioDTO.getNombreUsuario(), usuarioDTO.getContrasenia());
             usuario.setMedicamentos(meds);
@@ -39,6 +40,7 @@ public class CasoDeUsoRegistrarse implements ICasoDeUsoRegistrarse{
             }
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(CasoDeUsoRegistrarse.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CasoDeUsoRegistrarseException(ex.getMessage());
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(CasoDeUsoRegistrarse.class.getName()).log(Level.SEVERE, null, ex);
         }

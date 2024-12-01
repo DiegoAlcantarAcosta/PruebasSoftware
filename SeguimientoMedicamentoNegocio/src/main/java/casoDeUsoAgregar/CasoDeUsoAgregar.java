@@ -28,7 +28,6 @@ public class CasoDeUsoAgregar implements ICasoDeUsoAgregar {
 
     @Override
     public boolean AgregarMedicamento(UsuarioDTO usuarioDTO, MedicamentoDTO medicamentoDTO) throws CasoDeUsoAgregarException {
-
         try {
                 Medicamento medTemp = conversor.medicamentoDTOaEntity(medicamentoDTO);
                 medTemp.setUsuario(usuarioDAO.buscarUsuarioPorCodigo(usuarioDTO.getCodigo()));
@@ -36,7 +35,7 @@ public class CasoDeUsoAgregar implements ICasoDeUsoAgregar {
                 return true;
         } catch (PersistenciaExcepcion ex) {
             Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CasoDeUsoAgregarException(ex.getMessage());
         }
-        return false;
     }
 }

@@ -27,8 +27,7 @@ public class CasoDeUsoIniciarSesion implements ICasoDeUsoIniciarSesion{
     @Override
     public int iniciarSesion(UsuarioDTO usuarioDTO) throws CasoDeUsoIniciarSesionException {
         try {
-            
-            String contra=HashContra.hashearPassword(usuarioDTO.getContrasenia());
+            String contra=hashContra.hashearPassword(usuarioDTO.getContrasenia());
             usuarioDTO.setContrasenia(contra);
             return usuarioDAO.iniciarSesion(conversor.usuarioDTOaEntity(usuarioDTO));
                 

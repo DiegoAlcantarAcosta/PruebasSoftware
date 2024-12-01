@@ -4,6 +4,7 @@ import conexionEM.Conexion;
 import conexionEM.IConexion;
 import entidades.Usuario;
 import excepciones.PersistenciaExcepcion;
+import java.util.Collections;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,18 +45,32 @@ public class UsuarioDAOTest {
 
     @Test
     public void testRegistrarUsuario() throws PersistenciaExcepcion {
+        // Configurar el usuario de prueba
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario("testUser");
         usuario.setContrasenia("testPassword");
 
+        // Configurar mocks para la interacción con la base de datos
+        when(entityManagerMock.createQuery(
+                "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario", Usuario.class))
+                .thenReturn(typedQueryMock);
+
+        // Simular que no hay usuarios con el mismo nombre de usuario
+        when(typedQueryMock.setParameter("nombreUsuario", "testUser")).thenReturn(typedQueryMock);
+        when(typedQueryMock.getResultList()).thenReturn(Collections.emptyList());
+
+        // Simular las transacciones
         doNothing().when(transactionMock).begin();
         doNothing().when(transactionMock).commit();
-        
+
+        // Llamar al método a probar
         usuarioDAO.registrar(usuario);
-        
+
+        // Verificar interacciones con EntityManager y transacción
         verify(entityManagerMock, times(1)).persist(usuario);
         verify(transactionMock, times(1)).begin();
         verify(transactionMock, times(1)).commit();
+        verify(transactionMock, never()).rollback(); // Nunca debe llamarse a rollback en este caso
     }
 
     @Test

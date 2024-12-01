@@ -27,7 +27,7 @@ public class CasoDeUsoProximaDosis implements ICasoDeUsoProximaDosis{
         this.registroDAO = new RegistroDAO(new Conexion());
         conversor = new Conversor();
     }
-    
+ 
     @Override
     public Date consultarUltimaToma(int codigo, int codigoUsuario) throws CasoDeUsoProximaDosisException {
         try {
@@ -43,6 +43,6 @@ public class CasoDeUsoProximaDosis implements ICasoDeUsoProximaDosis{
             Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-}
-    
+    }
+
 }

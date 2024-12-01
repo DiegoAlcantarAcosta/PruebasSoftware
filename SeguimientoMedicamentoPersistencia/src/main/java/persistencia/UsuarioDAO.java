@@ -5,6 +5,7 @@ import conexionEM.IConexion;
 import entidades.Usuario;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IUsuarioDAO;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
@@ -24,9 +25,19 @@ public class UsuarioDAO implements IUsuarioDAO {
 
         try {
             transaction.begin();
+            List<Usuario> usuarioConElMismoNombre = em.createQuery(
+                "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario",
+                Usuario.class)
+                .setParameter("nombreUsuario", usuario.getNombreUsuario())
+                .getResultList();
             em.persist(usuario);
-            transaction.commit();
-            return usuario;
+            if(usuarioConElMismoNombre.isEmpty()){
+               transaction.commit();
+                return usuario; 
+            }else{
+                throw new PersistenciaExcepcion("Ese nombre de usuario ya está en uso");
+            }
+            
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();

@@ -58,13 +58,8 @@ public class TDDTest {
 
     @Test
     void testObtenerRegistrosRecientes_Exito() throws PersistenciaExcepcion {
-        // Simular un medicamento válido con código 1
         Medicamento medicamento = new Medicamento(1, "Paracetamol", 2, "ml", 2);
-
-        // Ejecutar el método
         List<Registro> registros = registroDAO.obtenerRegistrosRecientes(medicamento);
-
-        // Verificar resultados
         assertNotNull(registros, "La lista de registros no debe ser nula");
         assertEquals(3, registros.size(), "La lista debe contener 3 registros");
         assertTrue(registros.stream().allMatch(r -> r.getMedicamento().equals(medicamento)), 
@@ -73,28 +68,20 @@ public class TDDTest {
 
     @Test
     void testObtenerRegistrosRecientes_NoHayRegistros() {
-        // Simular un medicamento con código diferente de 1
         Medicamento medicamento = new Medicamento(2, "Ibuprofeno", 2, "ml", 2);
-
-        // Ejecutar y verificar excepción
         PersistenciaExcepcion exception = assertThrows(PersistenciaExcepcion.class, 
                 () -> registroDAO.obtenerRegistrosRecientes(medicamento),
                 "Debe lanzar PersistenciaExcepcion");
-
         assertEquals("No hay registros de ese medicamento", exception.getMessage(), 
                 "El mensaje de la excepción no coincide");
     }
 
     @Test
     void testObtenerRegistrosRecientes_MedicamentoNulo() {
-        // Simular un medicamento nulo
         Medicamento medicamento = null;
-
-        // Ejecutar y verificar excepción
         PersistenciaExcepcion exception = assertThrows(PersistenciaExcepcion.class, 
                 () -> registroDAO.obtenerRegistrosRecientes(medicamento),
                 "Debe lanzar PersistenciaExcepcion");
-
         assertEquals("El medicamento no puede ser nulo", exception.getMessage(), 
                 "El mensaje de la excepción no coincide");
     }

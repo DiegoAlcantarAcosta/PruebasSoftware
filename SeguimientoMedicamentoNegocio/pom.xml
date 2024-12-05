@@ -47,6 +47,31 @@
                 <version>0.8.11</version>
                 <configuration>
                     <excludes>
+                        <exclude>casoDeUsoAgregar/CasoDeUsoAgregarException</exclude>
+                        <exclude>casoDeUsoAgregar/ICasoDeUsoAgregar</exclude>
+                        
+                        <exclude>casoDeUsoEditar/CasoDeUsoEditarException</exclude>
+                        <exclude>casoDeUsoEditar/ICasoDeUsoEditar</exclude>
+                        
+                        <exclude>casoDeUsoEliminar/CasoDeUsoEliminarException</exclude>
+                        <exclude>casoDeUsoEliminar/ICasoDeUsoEliminar</exclude>
+                        
+                        <exclude>casoDeUsoIniciarSesion/CasoDeUsoIniciarSesionException</exclude>
+                        <exclude>casoDeUsoIniciarSesion/ICasoDeUsoIniciarSesion</exclude>
+                        
+                        <exclude>casoDeUsoMarcarTomado/CasoDeUsoMarcarTomadoException</exclude>
+                        <exclude>casoDeUsoMarcarTomado/ICasoDeUsoMarcarTomado</exclude>
+                        
+                        <exclude>casoDeUsoObtener/CasoDeUsoObtenerException</exclude>
+                        <exclude>casoDeUsoObtener/ICasoDeUsoObtener</exclude>
+                        
+                        <exclude>casoDeUsoProximaDosis/CasoDeUsoProximaDosisException</exclude>
+                        <exclude>casoDeUsoProximaDosis/ICasoDeUsoProximaDosis</exclude>
+                        
+                        <exclude>casoDeUsoRegistrarse/CasoDeUsoRegistrarseException</exclude>
+                        <exclude>casoDeUsoRegistrarse/ICasoDeUsoRegistrarse</exclude>
+                        
+                        
                         <exclude>**/com//in/TestServiceApplication.class</exclude>
                     </excludes>
                 </configuration>

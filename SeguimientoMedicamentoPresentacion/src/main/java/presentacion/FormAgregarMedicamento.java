@@ -105,6 +105,11 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
         });
 
         txtFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtFrecuencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFrecuenciaActionPerformed(evt);
+            }
+        });
         txtFrecuencia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFrecuenciaKeyTyped(evt);
@@ -216,7 +221,9 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
     private void btnAgregarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMedicamentoActionPerformed
         if (txtNombre.getText().isEmpty() || txtFrecuencia.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
+        }else if(Integer.parseInt( txtCantidad.getText())<=0 || Integer.parseInt( txtFrecuencia.getText())<=0 ){
+            JOptionPane.showMessageDialog(rootPane,"La cantidad y la frecuencia deben ser mayores a 0");
+        }else {
             MedicamentoDTO medicamentoDTO = new MedicamentoDTO(Integer.parseInt(txtCodigo.getText()),
                     txtNombre.getText(),
                     Double.parseDouble(txtFrecuencia.getText()),
@@ -252,7 +259,7 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
     private void txtFrecuenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFrecuenciaKeyTyped
         char c = evt.getKeyChar();
 
-        if (!Character.isDigit(c)) {
+        if (!Character.isDigit(c) && c != '.') {
             evt.consume();
         }
     }//GEN-LAST:event_txtFrecuenciaKeyTyped
@@ -273,6 +280,10 @@ public class FormAgregarMedicamento extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtFrecuenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFrecuenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFrecuenciaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;

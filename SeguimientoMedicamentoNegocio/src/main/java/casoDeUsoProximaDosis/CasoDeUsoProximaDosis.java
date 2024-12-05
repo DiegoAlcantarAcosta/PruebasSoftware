@@ -40,9 +40,8 @@ public class CasoDeUsoProximaDosis implements ICasoDeUsoProximaDosis{
 
             return calendar.getTime();
         } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return null;
     }
 
 }

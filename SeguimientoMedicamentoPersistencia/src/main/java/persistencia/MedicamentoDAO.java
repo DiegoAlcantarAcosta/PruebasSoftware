@@ -91,16 +91,28 @@ public class MedicamentoDAO implements IMedicamentoDAO {
                     .setParameter("id", medicamento.getId())
                     .setParameter("codigoUsuario", codigoUsuario)
                     .getSingleResult();
-
+            List<Medicamento> medicamentosDuplicados = em.createQuery(
+                    "SELECT m FROM Medicamento m WHERE m.nombre = :nombre AND m.usuario.codigo = :codigoUsuario",
+                    Medicamento.class)
+                    .setParameter("nombre", medicamento.getNombre())
+                    .setParameter("codigoUsuario", codigoUsuario)
+                    .getResultList();
+            
+            
             if (medicamentoBuscado != null) {
-                medicamentoBuscado.setNombre(medicamento.getNombre());
-                medicamentoBuscado.setFrecuencia(medicamento.getFrecuencia());
-                medicamentoBuscado.setTipoConsumo(medicamento.getTipoConsumo());
-                medicamentoBuscado.setCantidad(medicamento.getCantidad());
+                if (!medicamentosDuplicados.isEmpty()) {
+                    throw new PersistenciaExcepcion("Medicamento con nombre repetido");
+                }else{
+                    medicamentoBuscado.setNombre(medicamento.getNombre());
+                    medicamentoBuscado.setFrecuencia(medicamento.getFrecuencia());
+                    medicamentoBuscado.setTipoConsumo(medicamento.getTipoConsumo());
+                    medicamentoBuscado.setCantidad(medicamento.getCantidad());
 
-                em.merge(medicamentoBuscado);
-                em.getTransaction().commit();
-                return true;
+                    em.merge(medicamentoBuscado);
+                    em.getTransaction().commit();
+                    return true;
+                }
+                
             } else {
                 em.getTransaction().rollback();
                 throw new PersistenciaExcepcion("No se encontró el medicamento para editar.");

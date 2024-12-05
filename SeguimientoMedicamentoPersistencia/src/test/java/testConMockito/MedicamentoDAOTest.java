@@ -4,6 +4,8 @@ import conexionEM.IConexion;
 import entidades.Medicamento;
 import entidades.Usuario;
 import excepciones.PersistenciaExcepcion;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import static org.mockito.Mockito.*;
@@ -104,17 +106,21 @@ public class MedicamentoDAOTest {
 
     @Test
     public void testEditarMedicamentoExitoso() throws PersistenciaExcepcion {
-        
         Medicamento medicamento = new Medicamento();
         medicamento.setId(1L);
-        medicamento.setNombre("Paracetamol");
+        medicamento.setNombre("Omeprazol");
         medicamento.setFrecuencia(8);
         medicamento.setTipoConsumo("Oral");
         medicamento.setCantidad(10);
 
-        when(mockQuery.setParameter("id", 1L)).thenReturn(mockQuery);
+        when(mockQuery.setParameter("id", medicamento.getId())).thenReturn(mockQuery);
         when(mockQuery.setParameter("codigoUsuario", 1)).thenReturn(mockQuery);
         when(mockQuery.getSingleResult()).thenReturn(medicamento);
+
+        List<Medicamento> medicamentosDuplicados = new ArrayList<>();
+        when(mockQuery.setParameter("nombre", medicamento.getNombre())).thenReturn(mockQuery);
+        when(mockQuery.setParameter("codigoUsuario", 1)).thenReturn(mockQuery);
+        when(mockQuery.getResultList()).thenReturn(medicamentosDuplicados);
 
         boolean resultado = medicamentoDAO.editar(medicamento, 1);
 
@@ -122,7 +128,7 @@ public class MedicamentoDAOTest {
 
         verify(mockEntityManager).merge(any(Medicamento.class));
 
-        verify(mockEntityManager.getTransaction()).commit();
+        verify(mockTransaction).commit();
     }
 
     @Test

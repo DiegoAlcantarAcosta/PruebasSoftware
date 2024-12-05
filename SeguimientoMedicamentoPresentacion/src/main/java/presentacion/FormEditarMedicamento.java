@@ -107,6 +107,11 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
         labelFrecuencia.setText("Frecuencia:");
 
         txtFrecuencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        txtFrecuencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFrecuenciaActionPerformed(evt);
+            }
+        });
         txtFrecuencia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFrecuenciaKeyTyped(evt);
@@ -225,7 +230,8 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
 
     private void txtFrecuenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFrecuenciaKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+
+        if (!Character.isDigit(c) && c != '.') {
             evt.consume();
         }
     }//GEN-LAST:event_txtFrecuenciaKeyTyped
@@ -264,6 +270,10 @@ public class FormEditarMedicamento extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtFrecuenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFrecuenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFrecuenciaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;

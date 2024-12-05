@@ -66,6 +66,7 @@ public class CasoDeUsoMarcarTomado implements ICasoDeUsoMarcarTomado {
                     long horasTarde = minutosTarde / 60;
                     minutosTarde = minutosTarde % 60;
                     Registro registro = conversor.registroDTOaEntity(registroDTO);
+                    registro.setHoraConsumo(ahora);
                     registro.setMedicamento(medicamento);
                     registroDAO.tomaDeMedicamento(registro);
                     throw new CasoDeUsoMarcarTomadoException("Lo tomaste por " + horasTarde + " horas y " + minutosTarde + " minutos tarde.");

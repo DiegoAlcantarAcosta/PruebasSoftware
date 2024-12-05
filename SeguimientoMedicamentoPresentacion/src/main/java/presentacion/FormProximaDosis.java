@@ -32,9 +32,12 @@ public class FormProximaDosis extends javax.swing.JFrame {
         labelTipoConsumo.setText("Tipo de Consumo: "+medicamentoDTO.getTipoConsumo());
         labelCantidad.setText("Cantidad: "+medicamentoDTO.getCantidad());
         try {
-            
             Date date=casoDeUsoProximaDosis.consultarUltimaToma(medicamentoDTO.getCodigo(), usuarioDTO.getCodigo());
-            labelProximaDosis.setText(date.toString());
+            if(date!=null){
+               labelProximaDosis.setText(date.toString()); 
+            }else{
+                labelProximaDosis.setText("Este medicamento no se ha tomado aun");
+            }
         } catch (CasoDeUsoProximaDosisException ex) {
             Logger.getLogger(FormProximaDosis.class.getName()).log(Level.SEVERE, null, ex);
         }

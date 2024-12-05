@@ -30,7 +30,6 @@ public class CasoDeUsoEditar implements ICasoDeUsoEditar{
                 return true;
             }
         } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
             throw new CasoDeUsoEditarException(ex.getMessage());
         }
         return false;

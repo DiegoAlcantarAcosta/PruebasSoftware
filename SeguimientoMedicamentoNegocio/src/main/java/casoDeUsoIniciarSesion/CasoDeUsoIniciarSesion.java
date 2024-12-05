@@ -33,7 +33,6 @@ public class CasoDeUsoIniciarSesion implements ICasoDeUsoIniciarSesion{
                 
             
         } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(CasoDeUsoIniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CasoDeUsoIniciarSesionException(ex.getMessage());
             
         } catch (NoSuchAlgorithmException ex) {

@@ -75,8 +75,8 @@ public class casoDeUsoAgregarTest {
     }
 
     @Test
-    void agregarMedicamento_falloEnPersistencia() {
-        try {
+    void agregarMedicamento_falloEnPersistencia() throws PersistenciaExcepcion {
+        
             UsuarioDTO usuarioDTO = new UsuarioDTO();
             usuarioDTO.setCodigo(123);
             
@@ -96,8 +96,6 @@ public class casoDeUsoAgregarTest {
             verify(conversor, times(1)).medicamentoDTOaEntity(medicamentoDTO);
             verify(usuarioDAO, times(1)).buscarUsuarioPorCodigo(123);
             verify(medicamentoDAO, never()).agregar(any());
-        } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(casoDeUsoAgregarTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 }

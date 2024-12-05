@@ -34,7 +34,6 @@ public class CasoDeUsoAgregar implements ICasoDeUsoAgregar {
                 medicamentoDAO.agregar(medTemp);
                 return true;
         } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
             throw new CasoDeUsoAgregarException(ex.getMessage());
         }
     }

@@ -6,6 +6,9 @@ import entidades.Medicamento;
 import entidades.Registro;
 import excepciones.PersistenciaExcepcion;
 import interfaces.IRegistroDAO;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
@@ -74,5 +77,23 @@ public class RegistroDAO implements IRegistroDAO {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Registro> obtenerRegistrosRecientes(Medicamento medicamento)throws PersistenciaExcepcion{
+        try {
+            List<Registro> registrosRecientes = new ArrayList<>();
+
+            if (medicamento.getCodigo() == 1) {
+                registrosRecientes.add(new Registro(new Date(), 1, true, medicamento));
+                registrosRecientes.add(new Registro(new Date(), 2, true, medicamento));
+                registrosRecientes.add(new Registro(new Date(), 3, true, medicamento));
+                return registrosRecientes;
+            } else {
+                throw new PersistenciaExcepcion("No hay registros de ese medicamento");
+            }
+        } catch (NullPointerException e) {
+            throw new PersistenciaExcepcion("El medicamento no puede ser nulo");
+        }
+
     }
 }

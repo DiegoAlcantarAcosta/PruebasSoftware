@@ -70,8 +70,8 @@ public class casoDeUsoMarcarTomadoTest {
     }
 
     @Test
-    public void testTomaDeMedicamento_ExitoPrimeraToma() throws CasoDeUsoMarcarTomadoException {
-        try {
+    public void testTomaDeMedicamento_ExitoPrimeraToma() throws CasoDeUsoMarcarTomadoException, PersistenciaExcepcion {
+        
             when(medicamentoDAO.obtener(2001, 1001)).thenReturn(medicamento);
             when(registroDAO.consultarUltimaToma(medicamento)).thenReturn(null);
             
@@ -79,14 +79,12 @@ public class casoDeUsoMarcarTomadoTest {
             
             assertTrue(resultado);
             verify(registroDAO).tomaDeMedicamento(any(Registro.class));
-        } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(casoDeUsoMarcarTomadoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     @Test
-    public void testTomaDeMedicamento_AntesDeTiempo() throws CasoDeUsoMarcarTomadoException {
-        try {
+    public void testTomaDeMedicamento_AntesDeTiempo() throws CasoDeUsoMarcarTomadoException, PersistenciaExcepcion {
+        
             Calendar calendar = Calendar.getInstance();
             ultimoRegistro = new Registro(calendar.getTime(), 1, true);
             
@@ -98,9 +96,6 @@ public class casoDeUsoMarcarTomadoTest {
             } catch (CasoDeUsoMarcarTomadoException ex) {
                 assertTrue(ex.getMessage().contains("La siguiente toma"));
             }
-        } catch (PersistenciaExcepcion ex) {
-            Logger.getLogger(casoDeUsoMarcarTomadoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     @Test
